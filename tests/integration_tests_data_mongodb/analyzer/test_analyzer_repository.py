@@ -5,9 +5,7 @@ from cleansecpy.data.mongodb.analyzer.analyzer_seeder import AnalyzerRepositoryS
 from cleansecpy.data.mongodb.options import MongoRepositoryOptions
 
 from cleansecpy.domain.analyzer.analyzer import Analyzer
-from tests.test_helpers import TestHelpers
-
-# Arrange
+from cleansecpy.domain.analyzer.analyzer_id import AnalyzerId
 
 
 @pytest.fixture
@@ -36,9 +34,7 @@ def seeder(options):
 
 @pytest.fixture
 def analyzer():
-    return Analyzer("TestAnalyzer", "1.0")
-
-# Tests
+    return Analyzer(AnalyzerId("Test"), "TestAnalyzer", "1.0")
 
 
 def test_add_returns_analyzer(

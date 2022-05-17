@@ -6,7 +6,7 @@ from cleansecpy.data.mongodb.analyzer.analyzer_repository import MongoAnalyzerRe
 from cleansecpy.data.mongodb.analyzer.analyzer_seeder import AnalyzerRepositorySeeder
 from cleansecpy.data.mongodb.options import MongoRepositoryOptions
 
-# Arrange
+
 @pytest.fixture
 def options():
     return MongoRepositoryOptions(
@@ -15,19 +15,22 @@ def options():
         "analyzers"
     )
 
+
 @pytest.fixture
 def database(options):
     return options.client[options.database_name]
+
 
 @pytest.fixture
 def repository(options):
     return MongoAnalyzerRepository(options)
 
+
 @pytest.fixture
 def seeder(options):
     return AnalyzerRepositorySeeder(options)
 
-# Tests
+
 def test_create_collection_with_validation(options, database, seeder: AnalyzerRepositorySeeder):
     # Act
     seeder._drop_collection()
@@ -40,6 +43,7 @@ def test_create_collection_with_validation(options, database, seeder: AnalyzerRe
     assert len(rules) == 1
     assert len(rules.get("$jsonSchema")['required']) == 2
 
+
 def test_add_documents(repository: MongoAnalyzerRepository, seeder: AnalyzerRepositorySeeder):
     # Act
     seeder._drop_collection()
@@ -48,12 +52,14 @@ def test_add_documents(repository: MongoAnalyzerRepository, seeder: AnalyzerRepo
     # Assert
     assert repository.count() == 2
 
+
 def test_drop_collection(seeder: AnalyzerRepositorySeeder):
     # Act
     seeder._drop_collection()
 
     # Assert
     assert seeder._collection_exists() == False
+
 
 def test_seed(repository: MongoAnalyzerRepository, seeder: AnalyzerRepositorySeeder):
     # Act
@@ -62,6 +68,7 @@ def test_seed(repository: MongoAnalyzerRepository, seeder: AnalyzerRepositorySee
 
     # Assert
     assert repository.count() == 2, "two analyzers was expected"
+
 
 def test_seed_raises_exception(seeder: AnalyzerRepositorySeeder):
     # Act

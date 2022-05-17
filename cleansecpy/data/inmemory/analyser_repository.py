@@ -1,6 +1,7 @@
 import uuid
 from typing import List, Dict
 from cleansecpy.domain.analyzer.analyzer import Analyzer
+from cleansecpy.domain.analyzer.analyzer_id import AnalyzerId
 
 from cleansecpy.domain.analyzer.analyzer_repository import AnalyzerRepository
 
@@ -14,6 +15,9 @@ class InMemoryAnalyzerRepository(AnalyzerRepository):
 
     def __init__(self):
         self._analyzers: Dict[str, Analyzer] = {}
+
+    def next_id(self) -> AnalyzerId:
+        return AnalyzerId(uuid.uuid4())
 
     def find_by_id(self, analyzer_id: str) -> Analyzer:
         return self._analyzers.get(analyzer_id)

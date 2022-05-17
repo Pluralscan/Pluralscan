@@ -17,8 +17,8 @@ class TestInMemoryanalyzerRepository(unittest.TestCase):
 
         # Assert
         self.assertIsNotNone(result)
-        self.assertIsNotNone(result.id)
-        self.assertTrue(TestHelpers.is_valid_uuid(result.id))
+        self.assertIsNotNone(result.project_id)
+        self.assertTrue(TestHelpers.is_valid_uuid(result.project_id))
 
     def test_get_all_returns_projects(self):
         # Arrange
@@ -37,7 +37,7 @@ class TestInMemoryanalyzerRepository(unittest.TestCase):
         # Arrange
         project = Project()
         self.repository.add(project)
-        project_id = project.id
+        project_id = project.project_id
 
         # Act
         result = self.repository.find_by_id(project_id)

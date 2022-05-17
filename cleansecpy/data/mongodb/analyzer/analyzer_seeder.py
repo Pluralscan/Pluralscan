@@ -9,6 +9,7 @@ from cleansecpy.domain.executable.executable_type import ExecutableType
 
 
 class AnalyzerRepositorySeeder:
+    """AnalyzerRepositorySeeder"""
 
     def __init__(self, options: MongoRepositoryOptions):
         self._collection_name = options.collection_name
@@ -16,12 +17,14 @@ class AnalyzerRepositorySeeder:
         self._validator = AnalyzerRepositoryValidation(options)
 
     def seed(self):
+        """seed"""
         if (self._collection_exists()):
             raise Exception()
         self._create_collection_with_validation()
         self._add_documents()
 
     def reset_and_seed(self):
+        """reset_and_seed"""
         self._drop_collection()
         self.seed()
 
@@ -54,6 +57,8 @@ class AnalyzerRepositorySeeder:
         ]
 
         self._database[self._collection_name].insert_many([
-            AnalyzerDocument(ObjectId(), "roslynator.commandline", "0.2.0", executable=executables[0]),
-            AnalyzerDocument(ObjectId(), "roslynator.commandline", "0.3.2", executable=executables[1]),
+            AnalyzerDocument(ObjectId(), "roslynator.commandline",
+                             "0.2.0", executable=executables[0]),
+            AnalyzerDocument(ObjectId(), "roslynator.commandline",
+                             "0.3.2", executable=executables[1]),
         ])

@@ -12,4 +12,5 @@ class Source:
     source_id: SourceId
     package_id: PackageId
     name: str
+    path: str
     langage: Language = Language.UNKNOWN

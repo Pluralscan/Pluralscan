@@ -1,9 +1,7 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 
 from cleansecpy.domain.package.package_id import PackageId
-from cleansecpy.domain.source.source import Source
-from cleansecpy.domain.source.source_collection import SourceCollection
 
 
 
@@ -11,12 +9,5 @@ from cleansecpy.domain.source.source_collection import SourceCollection
 class Package:
     """Package entity."""
     package_id: PackageId
-    path: str = None
-    name: str = ''
-    url: str = ''
-    description: str = None
-    sources: SourceCollection = None
-    created_on: datetime = None
-
-    def add_source(self, source: Source):
-        self.sources.append(source)
+    description: str = ""
+    created_on: datetime = field(default_factory=datetime.now)

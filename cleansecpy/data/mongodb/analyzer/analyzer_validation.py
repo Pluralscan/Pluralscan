@@ -6,7 +6,7 @@ from cleansecpy.data.mongodb.options import MongoRepositoryOptions
 
 
 class AnalyzerRepositoryValidation:
-
+    """AnalyzerRepositoryValidation"""
     def __init__(self, options: MongoRepositoryOptions):
         self._default_file = os.path.join(
             os.path.dirname(__file__), "validation_command.json")
@@ -15,7 +15,7 @@ class AnalyzerRepositoryValidation:
 
     def read_validation_command(self, json_file: str = None) -> OrderedDict:
         """Read MongoDB validation command from json file and return an ordered dictionary."""
-        json_file = json_file if json_file != None else self._default_file
+        json_file = json_file if json_file is not None else self._default_file
         with open(json_file, 'r') as file:
             rules = json.loads(file.read())
         rules['collMod'] = self._collection_name

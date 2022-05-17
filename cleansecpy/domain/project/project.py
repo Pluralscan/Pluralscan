@@ -1,9 +1,11 @@
 from dataclasses import dataclass
-from typing import List
 
 from cleansecpy.domain.project.project_id import ProjectId
 
 @dataclass
 class Project:
-    id: ProjectId = None
+    """Project"""
+    project_id: ProjectId = None
     name: str = ""
+    description: str = ""
+    
