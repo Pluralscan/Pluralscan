@@ -1,0 +1,25 @@
+{
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./tests",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestArgs": [
+        "-v",
+        "--cov=cleansecpy/",
+        "--cov-report=xml",
+        "--pdb",
+        "tests/"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.autoTestDiscoverOnSaveEnabled": false,
+    "files.exclude": {
+        "**/__pycache__": true
+    },
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "autopep8"
+}

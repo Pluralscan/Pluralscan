@@ -1,0 +1,22 @@
+{
+    "collMod": "",
+    "validator": {
+        "$jsonSchema": {
+            "bsonType": "object",
+            "required": [
+                "name",
+                "version"
+            ],
+            "properties": {
+                "name": {
+                    "bsonType": "string",
+                    "description": "must be a string and is required"
+                },
+                "version": {
+                    "bsonType": "string",
+                    "description": "must be a string and is required"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,82 @@
+import unittest
+from cleansecpy.data.inmemory.project_repository import InMemoryProjectRepository
+from cleansecpy.domain.project.project import Project
+
+from tests.test_helpers import TestHelpers
+
+class TestInMemoryanalyzerRepository(unittest.TestCase):
+    def setUp(self):
+        self.repository = InMemoryProjectRepository()
+
+    def test_add_returns_project(self):
+        # Arrange
+        project = Project()
+
+        # Act
+        result = self.repository.add(project)
+
+        # Assert
+        self.assertIsNotNone(result)
+        self.assertIsNotNone(result.id)
+        self.assertTrue(TestHelpers.is_valid_uuid(result.id))
+
+    def test_get_all_returns_projects(self):
+        # Arrange
+        project = Project()
+        self.repository.add(project)
+        self.repository.add(project)
+
+        # Act
+        analyzers = self.repository.get_all()
+
+        # Assert
+        self.assertIsNotNone(analyzers)
+        self.assertEqual(len(analyzers), 2)
+
+    def test_find_by_id_returns_project(self):
+        # Arrange
+        project = Project()
+        self.repository.add(project)
+        project_id = project.id
+
+        # Act
+        result = self.repository.find_by_id(project_id)
+
+        # Assert
+        self.assertIsNotNone(result)
+
+    def test_update_returns_project(self):
+        # Arrange
+        project = Project()
+        self.repository.add(project)
+
+        # Act
+        project.name = "Custom Name"
+        result = self.repository.update(project)
+
+        # Assert
+        self.assertIsNotNone(result)
+
+    def test_given_valid_input_remove_returns(self):
+        # Arrange
+        project = Project()
+        self.repository.add(project)
+        project_id = project.id
+
+        # Act
+        def callable():
+            self.repository.remove(project_id)
+
+        # Assert
+        self.assertTrue(callable)
+
+    def test_given_invalid_input_remove_raises(self):
+        # Arrange
+        project_id = ""
+
+        # Act
+        def callable():
+            self.repository.remove(project_id)
+
+        # Assert
+        self.assertRaises(Exception, callable)

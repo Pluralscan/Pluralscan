@@ -1,0 +1,1 @@
+PROJECT_COLLECTION_NAME:str = "projects"
