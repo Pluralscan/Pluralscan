@@ -29,7 +29,7 @@ class IssueBuilder(AbstractIssueBuilder):
 
     def reset(self) -> None:
         """Reset current builder."""
-        self._breach = Issue(None, None, False, None, None)
+        self._breach = Issue(None, None, False, None)
 
     @property
     def breach(self) -> Issue:

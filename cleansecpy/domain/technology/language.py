@@ -25,8 +25,7 @@ class Language(Enum):
         alternative or alias comparaison.
         """
         for member in cls:
-            insensitive_condition = str(
-                member.value).lower() == str(value).lower()
+            insensitive_condition = str(member.value).lower() == str(value).lower()
             alias_condition = str(member.alias).lower() == str(value).lower()
             if insensitive_condition or alias_condition:
                 return member

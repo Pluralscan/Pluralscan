@@ -3,7 +3,6 @@ import pytest
 from cleansecpy.domain.technology.language import Language
 
 
-
 def test_given_invalid_value_raises_exception():
     with pytest.raises(Exception):
         Language("test")

@@ -4,10 +4,12 @@ from cleansecpy.domain.issue.issue_severity import IssueSeverity
 from cleansecpy.domain.rule.rule_id import RuleId
 
 
-@dataclass
+@dataclass(frozen=True)
 class Issue():
-    """Infraction"""
-    rule_id: RuleId
-    severity: IssueSeverity
-    is_suppresed: bool  # Explictly disabled insides source
-    location: IssueLocation
+    """Issue Value Object"""
+    rule_id: RuleId = None
+    severity: IssueSeverity = None
+    message: str = None
+    is_suppresed: bool = False
+    """Indicates that the rule is explicitly ignored inside the source."""
+    location: IssueLocation = None

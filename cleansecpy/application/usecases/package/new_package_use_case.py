@@ -14,7 +14,7 @@ class NewPackageCommand:
 
     @classmethod
     def map_to_package(self, path: str) -> Package:
-        return Package(path, name=self.name, url=self.url, description=self.description)
+        return Package(name=self.name, url=self.url, description=self.description)
 
 # Output
 @dataclass

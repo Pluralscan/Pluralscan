@@ -6,6 +6,6 @@ from cleansecpy.domain.project.project_id import ProjectId
 class Project:
     """Project"""
     project_id: ProjectId = None
-    name: str = ""
-    description: str = ""
+    name: str = None
+    description: str = None
     

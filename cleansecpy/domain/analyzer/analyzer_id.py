@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True, init=False)
 class AnalyzerId:
-    """An immutable Analyzer identifier."""
+    """Analyzer identifier value object."""
 
     def __init__(self, identity):
         self.identity = identity

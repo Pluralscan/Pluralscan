@@ -1,5 +1,4 @@
 import os
-
 from bson import ObjectId
 from cleansecpy.data.mongodb.analyzer.analyzer_document import AnalyzerDocument
 from cleansecpy.data.mongodb.analyzer.analyzer_validation import AnalyzerRepositoryValidation
@@ -44,12 +43,14 @@ class AnalyzerRepositorySeeder:
         executables = [
             Executable(
                 ExecutableType.WIN64_EXE,
+                "Roslynator.exe",
                 os.path.join(
                     r"C:\\opt\\roslynator.commandline.0.2.0\\tools\\net48", "Roslynator.exe"),
                 options=f"analyze --output {output_dir}.20.xml"
             ),
             Executable(
                 ExecutableType.WIN64_EXE,
+                "Roslynator.exe",
                 os.path.join(
                     r"C:\\opt\\roslynator.commandline.0.3.2\\tools\\net48", "Roslynator.exe"),
                 options=f"analyze --output {output_dir}.320.xml"

@@ -4,13 +4,14 @@ import requests
 
 
 from cleansecpy.infrastructure.downloader import DownloadResult, IDownloader, DownloaderOptions
+from cleansecpy.libs.utils.uri import UriUtils
 
 
 class GitDownloader(IDownloader):
     supported_extensions = [".git"]
 
     def download(self, uri, options: DownloaderOptions = ...) -> DownloadResult:
-        extension = Utils.get_uri_extension(uri)
+        extension = UriUtils.get_uri_extension(uri)
 
         if not extension in self.supported_extensions:
             raise ValueError("Unsupported uri extension.")
@@ -21,9 +22,9 @@ class GitDownloader(IDownloader):
             print(traceback.print_exc())
             return DownloadResult(error="")
 
-    def _clone(uri: str, options: DownloaderOptions) -> DownloadResult:
+    def _clone(self, uri: str, options: DownloaderOptions) -> DownloadResult:
         response = requests.get(uri)
-        archive_path = options.output_dir + Utils.get_uri_filename(uri)
+        archive_path = options.output_dir + UriUtils.get_uri_filename(uri)
         with open(archive_path, 'wb') as stream:
             stream.write(response.content)
         return DownloadResult(path=archive_path)

@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
-from typing import List
+from typing import List, Tuple
 
 from cleansecpy.domain.executable.executable import Executable
 
@@ -9,8 +9,13 @@ from cleansecpy.domain.executable.executable import Executable
 class ProcessOptions():
     """ProcessOptions"""
     executable: Executable
-    arguments: List[str] = []
+    output_dir: str = None
+    arguments: List[Tuple[str, str]] = None
 
+@dataclass
+class ProcessRunResult():
+    """ProcessRunResult"""
+    output_files: List[str]
 
 class AbstractProcessRunner(metaclass=ABCMeta):
     """AbstractProcessRunner"""
@@ -21,6 +26,6 @@ class AbstractProcessRunner(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def execute_with_output(self, options: ProcessOptions):
-        """Execute a process and redirect output."""
+    def execute_with_report(self, options: ProcessOptions) -> ProcessRunResult:
+        """Execute a process and return raw report result."""
         raise NotImplementedError
