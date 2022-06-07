@@ -5,7 +5,7 @@ from cleansecpy.domain.analyzer.analyzer import Analyzer
 from cleansecpy.domain.analyzer.analyzer_id import AnalyzerId
 
 
-class AnalyzerRepository(metaclass=ABCMeta):
+class AbstractAnalyzerRepository(metaclass=ABCMeta):
     """Abstract Analyzer repository."""
     def __del__(self):
         print(f"[!]  Garbage AnalyzerRepository -> {self.__class__.__name__}")

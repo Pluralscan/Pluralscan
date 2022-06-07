@@ -25,6 +25,20 @@
                 "PYTEST_ADDOPTS": "--no-cov"
             },
             "justMyCode": false
-        }
+        },
+
+        {
+            "name": "Python: Django",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}\\webapp\\manage.py",
+            "args": [
+                "runserver",
+            ],
+            "env": {
+                "DJANGO_DEBUG": "ON"
+            },
+            "django": true
+        },
     ]
 }

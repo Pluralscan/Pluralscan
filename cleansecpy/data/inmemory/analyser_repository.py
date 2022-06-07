@@ -3,10 +3,10 @@ from typing import List, Dict
 from cleansecpy.domain.analyzer.analyzer import Analyzer
 from cleansecpy.domain.analyzer.analyzer_id import AnalyzerId
 
-from cleansecpy.domain.analyzer.analyzer_repository import AnalyzerRepository
+from cleansecpy.domain.analyzer.analyzer_repository import AbstractAnalyzerRepository
 
 
-class InMemoryAnalyzerRepository(AnalyzerRepository):
+class InMemoryAnalyzerRepository(AbstractAnalyzerRepository):
     """
     Type: Concrete Repository\n
     Provide an In Memory DAO for persist analyzers.\n

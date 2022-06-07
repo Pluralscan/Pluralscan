@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 
 from typing import Set
-from cleansecpy.application.processor.report.report_processor import AbstractReportProcessor
+from cleansecpy.application.processor.reports.report_processor import AbstractReportProcessor
 from cleansecpy.domain.diagnosys.diagnosys import Diagnosys
 from cleansecpy.domain.issue.issue import Issue
 
@@ -35,7 +35,7 @@ class RoslynatorReportProcessor(AbstractReportProcessor):
         #if not isinstance(data, [str]):
         #    raise ValueError("Invalid input type. An of report files path is expected.")
 
-        if len(data) is 0:
+        if len(data) == 0:
             raise RuntimeError("No reports provided.")
 
         if len(data) > 1:

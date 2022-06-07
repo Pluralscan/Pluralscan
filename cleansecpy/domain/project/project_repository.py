@@ -5,7 +5,7 @@ from cleansecpy.domain.project.project import Project
 
 
 
-class ProjectRepository(metaclass=ABCMeta):
+class AbstractProjectRepository(metaclass=ABCMeta):
     """
     Type: Abstract Repository\n
     DAO contract for projects persistence.

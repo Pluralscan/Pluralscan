@@ -2,10 +2,10 @@ from typing import Dict, List
 import uuid
 from cleansecpy.domain.project.project import Project
 
-from cleansecpy.domain.project.project_repository import ProjectRepository
+from cleansecpy.domain.project.project_repository import AbstractProjectRepository
 
 
-class InMemoryProjectRepository(ProjectRepository):
+class InMemoryProjectRepository(AbstractProjectRepository):
     """InMemoryProjectRepository"""
     def __init__(self):
         self.projects: Dict[str, Project] = {}

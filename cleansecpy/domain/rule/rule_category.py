@@ -1,7 +1,7 @@
 from dataclasses import dataclass
-from typing import List
 
-@dataclass
+@dataclass(frozen=True)
 class RuleCategory:
-    id: str
+    """RuleCategory"""
+    short_name: str
     name: str

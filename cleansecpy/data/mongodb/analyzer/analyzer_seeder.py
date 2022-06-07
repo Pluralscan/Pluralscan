@@ -1,10 +1,9 @@
-import os
 from bson import ObjectId
 from cleansecpy.data.mongodb.analyzer.analyzer_document import AnalyzerDocument
 from cleansecpy.data.mongodb.analyzer.analyzer_validation import AnalyzerRepositoryValidation
 from cleansecpy.data.mongodb.options import MongoRepositoryOptions
 from cleansecpy.domain.executable.executable import Executable
-from cleansecpy.domain.executable.executable_type import ExecutableType
+from cleansecpy.domain.executable.executable_platform import ExecutablePlatform
 
 
 class AnalyzerRepositorySeeder:
@@ -17,7 +16,7 @@ class AnalyzerRepositorySeeder:
 
     def seed(self):
         """seed"""
-        if (self._collection_exists()):
+        if self._collection_exists():
             raise Exception()
         self._create_collection_with_validation()
         self._add_documents()
@@ -39,27 +38,37 @@ class AnalyzerRepositorySeeder:
         self._database[self._collection_name].drop()
 
     def _add_documents(self):
-        output_dir = os.path.abspath("C:\\opt")
         executables = [
             Executable(
-                ExecutableType.WIN64_EXE,
-                "Roslynator.exe",
-                os.path.join(
-                    r"C:\\opt\\roslynator.commandline.0.2.0\\tools\\net48", "Roslynator.exe"),
-                options=f"analyze --output {output_dir}.20.xml"
+                platform=ExecutablePlatform.WIN,
+                name="Roslynator Fork",
+                location="/resources/tools/resolynator-fork-0.3.3.0/Roslynator.exe",
+                version="0.3.3.0",
+                arguments=[]
             ),
             Executable(
-                ExecutableType.WIN64_EXE,
-                "Roslynator.exe",
-                os.path.join(
-                    r"C:\\opt\\roslynator.commandline.0.3.2\\tools\\net48", "Roslynator.exe"),
-                options=f"analyze --output {output_dir}.320.xml"
+                platform=ExecutablePlatform.DOTNET,
+                name="Roslynator",
+                version="0.3.3.0",
+                arguments=['dotnet', 'roslynator']
+            ),
+            Executable(
+                platform=ExecutablePlatform.DOTNET,
+                name="Sonar Dotnet",
+                version="5.6.0.48455-net5.0",
+                arguments=[
+                    'dotnet',
+                    '/resources/tools/sonar-scanner-msbuild-5.6.0.48455-net5.0/SonarScanner.MSBuild.dll',
+                    '[SONAR_ACTION]'
+                    '/k:"[SONAR_PROJECT_NAME]"'
+                    '/d:sonar.host.url="[SONAR_SERVER_URL]"'
+                    '/d:sonar.login="[SONAR_SERVER_TOKEN]"'
+                ]
             )
         ]
 
         self._database[self._collection_name].insert_many([
-            AnalyzerDocument(ObjectId(), "roslynator.commandline",
-                             "0.2.0", executable=executables[0]),
-            AnalyzerDocument(ObjectId(), "roslynator.commandline",
-                             "0.3.2", executable=executables[1]),
+            AnalyzerDocument(ObjectId(), "Roslynator Fork", executable=executables[0]),
+            AnalyzerDocument(ObjectId(), "Roslynator Dotnet", executable=executables[1]),
+            AnalyzerDocument(ObjectId(), "Sonar Dotnet", executable=executables[2]),
         ])

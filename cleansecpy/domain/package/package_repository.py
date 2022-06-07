@@ -4,7 +4,7 @@ from cleansecpy.domain.package.package import Package
 from cleansecpy.domain.package.package_id import PackageId
 
 
-class PackageRepository(metaclass=ABCMeta):
+class AbstractPackageRepository(metaclass=ABCMeta):
     """
     Type: Abstract Repository\n
     DAO contract for package persistence.

@@ -1,13 +1,13 @@
 from dataclasses import dataclass, field
 from typing import Tuple
 
-from cleansecpy.domain.executable.executable_type import ExecutableType
+from cleansecpy.domain.executable.executable_platform import ExecutablePlatform
 
 
 @dataclass(frozen=True)
 class Executable:
     """Executable Value Object."""
-    executable_type: ExecutableType = None
+    platform: ExecutablePlatform = None
     name: str = None
     location: str = None
     version: str = None
@@ -16,6 +16,9 @@ class Executable:
     def as_dict(self):
         """Convert executable properties to dictionary."""
         return {
-            'type': self.executable_type.value,
+            'platform': self.platform.value,
+            'name': self.name,
             'location': self.location,
+            'version': self.version,
+            'arguments': self.arguments
         }

@@ -50,7 +50,7 @@ def test_add_documents(repository: MongoAnalyzerRepository, seeder: AnalyzerRepo
     seeder._add_documents()
 
     # Assert
-    assert repository.count() == 2
+    assert repository.count() == 3
 
 
 def test_drop_collection(seeder: AnalyzerRepositorySeeder):

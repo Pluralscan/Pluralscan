@@ -1,10 +1,10 @@
 from dataclasses import dataclass, field
 from typing import Set
-
-from cleansecpy.domain.analyzer.analyzer_id import AnalyzerId
-from cleansecpy.domain.analyzer.analyzer_target import AnalyzerTarget
 from cleansecpy.domain.executable.executable import Executable
 from cleansecpy.domain.technology.technology import Technology
+
+from .analyzer_id import AnalyzerId
+from .analyzer_target import AnalyzerTarget
 
 
 @dataclass

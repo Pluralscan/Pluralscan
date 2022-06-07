@@ -8,7 +8,6 @@ class AnalyzerDocument(SON):
     """Analyzer mongo document."""
     _id: ObjectId = None
     name: str = None
-    version: str = None
     executable: Executable = None
 
     def __post_init__(self):
@@ -20,7 +19,5 @@ class AnalyzerDocument(SON):
             self.__setitem__('_id', str(self._id))
         if self.name is not None:
             self.__setitem__('name', self.name)
-        if self.version is not None:
-            self.__setitem__('version', self.version)
         if self.executable is not None:
             self.__setitem__('executable', SON(self.executable.as_dict()))

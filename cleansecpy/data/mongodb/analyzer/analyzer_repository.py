@@ -6,10 +6,10 @@ from cleansecpy.data.mongodb.analyzer.analyzer_mapper import AnalyzerMapper
 from cleansecpy.data.mongodb.options import MongoRepositoryOptions
 from cleansecpy.domain.analyzer.analyzer import Analyzer
 from cleansecpy.domain.analyzer.analyzer_id import AnalyzerId
-from cleansecpy.domain.analyzer.analyzer_repository import AnalyzerRepository
+from cleansecpy.domain.analyzer.analyzer_repository import AbstractAnalyzerRepository
 
 
-class MongoAnalyzerRepository(AnalyzerRepository):
+class MongoAnalyzerRepository(AbstractAnalyzerRepository):
     """Concrete class for storing and access analyzer entities into
     a MongoDB NoSQL Database."""
 

@@ -2,10 +2,10 @@ from typing import Dict, List
 import uuid
 from cleansecpy.domain.package.package import Package
 
-from cleansecpy.domain.package.package_repository import PackageRepository
+from cleansecpy.domain.package.package_repository import AbstractPackageRepository
 
 
-class InMemoryPackageRepository(PackageRepository):
+class InMemoryPackageRepository(AbstractPackageRepository):
     """
     Type: Concrete Repository\n
     Provide an In Memory DAO for persist packages.\n

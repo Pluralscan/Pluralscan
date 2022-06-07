@@ -1,22 +1,86 @@
 # CleanSecPy
 
-## Definitions
+Perform's code quality and security analysis with many tools.
 
-- **SAST**: Source code analysis tools, also known as Static Application Security Testing (SAST) Tools, can help analyze source code or compiled versions of code to help find security flaws. **SAST tools can be added into your IDE**. Such tools can help you detect issues during software development. SAST tool feedback can save time and effort, especially when compared to finding vulnerabilities later in the development cycle.
+## Abstract
 
-## Requirements
+CleanSecPy is a **POC/POW project** that try to demonstrate how to realize a complexe business oriented software in Python.
 
-### Development
-- pytest (unit and integration testing)
-- pytest-cov (code coverage and reporting)
-- pep8 (code formating)
-- pylint (linter)
+The repository is structured into many layers *(Multi Module N-Tier Architecture)* and follow principles inspired from:
+- Clean Architecture
+- Hexagonal Architecture
+- Domain Driven Design (DDD)
 
-### Dependencies
+## Goals
 
-See `requirements.txt`.
+- Fetch source code packages from **various locations** *(Github, Gitlab, Disk...)*.
+- Perform code analysis on a package with **various analyzer's** *(Roslyn, Sonar, Security Code Scan...)*.
+- Centralize and persist analysis reports into a **generic business model representation**.
 
-## Run
+## Stack
+
+### Python
+
+- Python 3.10 (Runtime)
+- Poetry (Package Management)
+- Django 4.0.5 (Backend Web Framework)
+- Django Rest Framework (API)
+- pytest
+- pytest-cov
+
+### NodeJS
+
+- Node 16.13.0 (Runtime)
+- Svelte (Frontend Web Framework)
+
+### Data Management
+
+- MongoDB
+
+### Containerization
+
+- Docker
+
+## Development
+
+### Core
+
+Location: cleansecpy
+
+#### Domain
+
+Contains all the entities related to the business.
+
+### Commandline
+
+TODO.
+
+### Web Application
+
+#### Svelte SPA (Single Page Application)
+
+##### Install
+
+```
+cd webapp/frontend
+npm install
+```
+
+##### Run Svelte Rollup Dev Server (Hot Reloading)
+
+```
+cd webapp/frontend
+npm run dev
+```
+
+#### Django Backend SSR (Server Side Rendering)
+
+##### Run development server on Windows
+
+```powershell
+cd scripts
+./run_django_dev.ps1
+```
 
 ## Tests
 

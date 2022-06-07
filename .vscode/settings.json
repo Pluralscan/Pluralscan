@@ -8,6 +8,7 @@
     ],
     "python.testing.pytestArgs": [
         "-v",
+        "-s",
         "--cov=cleansecpy/",
         "--cov-report=xml",
         "--pdb",
@@ -19,9 +20,10 @@
     "files.exclude": {
         "**/__pycache__": true
     },
+    "python.linting.pylintPath": "${workspaceFolder}\\.venv\\Scripts\\pylint.exe",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
-    "python.formatting.provider": "autopep8",
+    "python.formatting.provider": "black",
     "python.formatting.autopep8Args": [
         "--max-line-length=240"
     ]
