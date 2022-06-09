@@ -1,0 +1,17 @@
+# https://docs.docker.com/engine/reference/builder/#dockerignore-file
+*/.docker*
+*/.github*
+*/.notes*
+*/.vscode*
+*/dist*
+*/docs*
+*/scripts*
+*/tests*
+.env
+.git*
+.pylintrc
+coverage.xml
+*/__pycache__*
+*.md
+LICENCE
+pytest.ini

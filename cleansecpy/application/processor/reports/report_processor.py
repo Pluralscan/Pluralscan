@@ -9,6 +9,6 @@ class AbstractReportProcessor(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def transform_to_diagnosys(self, data) -> Diagnosys | Exception:
+    def transform_to_diagnosys(self, data) -> Diagnosys:
         """Execute a process without output result."""
         raise NotImplementedError

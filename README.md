@@ -41,6 +41,26 @@ The repository is structured into many layers *(Multi Module N-Tier Architecture
 
 - Docker
 
+## Docker
+
+### Build fresh image
+
+```powershell
+mkdir cleansecpy
+cd cleansecpy
+git clone
+# Following command used the Dockerfile to build a new container image.
+docker build -t cleansecpy .
+```
+
+### Run image
+
+```powershell
+docker run -dp 5400:5400 --env DJANGO_DEBUG=ON cleansecpy
+```
+
+Navigate to http://localhost:5400
+
 ## Development
 
 ### Core

@@ -24,7 +24,7 @@ class Analyzer:
     executables: Set[Executable] = field(default_factory=set)
     technologies: Set[Technology] = field(default_factory=set)
 
-    def get_executable_by_version(self, version: str) -> Executable | None:
+    def get_executable_by_version(self, version: str) -> Executable:
         """get_executable_by_version"""
         for executable in self.executables:
             if executable.version is version:

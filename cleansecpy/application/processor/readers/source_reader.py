@@ -42,7 +42,7 @@ class AbstractSourceReader(metaclass=ABCMeta):
     """AbstractSourceReader"""
 
     @abstractmethod
-    def fetch(self, uri: str, options: FetchOptions = FetchOptions()) -> SourceResult | Exception:
+    def fetch(self, uri: str, options: FetchOptions = FetchOptions()) -> SourceResult:
         """Fetch and save source files into storage destination."""
         raise NotImplementedError
 

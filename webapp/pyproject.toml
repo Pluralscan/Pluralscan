@@ -5,11 +5,13 @@ description = ""
 authors = ["Luidgi Gromat <gromat.luidgi@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+cleansecpy = "^0.1.0"
+python = "^3.9"
 Django = "^4.0.5"
 whitenoise = "^6.1.0"
 djangorestframework = "^3.13.1"
 Markdown = "^3.3.7"
+pymongo = "^4.1.1"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"

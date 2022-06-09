@@ -26,7 +26,7 @@ class SonarExecRunner(AbstractExecRunner):
     def __init__(self, reports_output_dir: str) -> None:
         self._reports_output_dir = reports_output_dir
 
-    def execute(self, options: SonarExecOptions) -> ProcessRunResult | Exception:
+    def execute(self, options: SonarExecOptions) -> ProcessRunResult:
         raise NotImplementedError
 
     def execute_with_report(self, options: SonarExecOptions) -> ProcessRunResult:

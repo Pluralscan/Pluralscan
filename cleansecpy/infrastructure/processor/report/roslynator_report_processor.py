@@ -8,7 +8,7 @@ from cleansecpy.domain.issue.issue import Issue
 class RoslynatorReportProcessor(AbstractReportProcessor):
     """WinExeProcessRunner"""
 
-    def transform_to_diagnosys(self, data) -> Diagnosys | Exception:
+    def transform_to_diagnosys(self, data) -> Diagnosys:
         """transform_to_diagnosys"""
         report = self._validate_input(data)
         issues = self.read_report(report)

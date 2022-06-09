@@ -26,9 +26,9 @@ SECRET_KEY = 'django-insecure-1-n#o$+d!r!2v%a##$r#9qp24_!86f_8z2@m+488+%ginuwy!q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = "DJANGO_DEBUG" in os.environ and os.environ["DJANGO_DEBUG"] == "ON"
 
-
-ALLOWED_HOSTS = []
-
+# When running on production, ALLOWED_HOSTS env variable MUST be set.
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(";")
+ALLOWED_HOSTS = ["*"] if not any(ALLOWED_HOSTS) else ALLOWED_HOSTS
 
 # Application definition (Order Matter!)
 INSTALLED_APPS = [
@@ -58,7 +58,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['backend/templates'],
+        'DIRS': [BASE_DIR / 'backend/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

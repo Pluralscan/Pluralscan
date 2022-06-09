@@ -19,7 +19,7 @@ class RoslynatorExecRunner(AbstractExecRunner):
         self._reports_output_dir = reports_output_dir
         self._report_file_path = report_file_path
 
-    def execute(self, options: ExecRunnerOptions) -> ProcessRunResult | Exception:
+    def execute(self, options: ExecRunnerOptions) -> ProcessRunResult:
         location = options.executable.location
         arguments = [x for xs in options.executable.arguments for x in xs]
         with Popen([location, *arguments]) as process:

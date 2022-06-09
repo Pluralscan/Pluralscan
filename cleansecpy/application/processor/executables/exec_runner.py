@@ -25,7 +25,7 @@ class AbstractExecRunner(metaclass=ABCMeta):
     """Contract that's define methods for execute external tools."""
 
     @abstractmethod
-    def execute(self, options: ExecRunnerOptions) -> None | Exception:
+    def execute(self, options: ExecRunnerOptions) -> None:
         """Execute a process without output result."""
         raise NotImplementedError
 

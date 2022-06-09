@@ -20,7 +20,7 @@ class MongoAnalyzerRepository(AbstractAnalyzerRepository):
     def next_id(self) -> AnalyzerId:
         return AnalyzerId(ObjectId())
 
-    def find_by_id(self, analyzer_id: str) -> Analyzer | None:
+    def find_by_id(self, analyzer_id: str) -> Analyzer:
         document = self._collection.find_one({"_id": ObjectId(analyzer_id)})
         return AnalyzerMapper.from_document(document)
 
