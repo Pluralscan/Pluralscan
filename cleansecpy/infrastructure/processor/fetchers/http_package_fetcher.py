@@ -35,7 +35,7 @@ class HttpPackageFetcher(AbstractPackageFetcher):
             options = PackageFetcherOptions()
 
         try:
-            return self._download_archive(uri, options)
+            return self._download_archive(uri)
         except:
             print(traceback.print_exc())
             return DownloadPackageResult(error="")
@@ -49,4 +49,4 @@ class HttpPackageFetcher(AbstractPackageFetcher):
         archive_path = os.path.join(self._options.output_dir, "")
         with open(archive_path, "wb") as stream:
             stream.write(response.content)
-        return DownloadPackageResult(path=archive_path)
+        return DownloadPackageResult(output_dir=archive_path)
