@@ -1,5 +1,5 @@
 import unittest
-from cleansecpy.data.inmemory.project_repository import InMemoryProjectRepository
+from cleansecpy.data.inmemory.projects.project_repository import InMemoryProjectRepository
 from cleansecpy.domain.project.project import Project
 
 from tests.test_helpers import TestHelpers

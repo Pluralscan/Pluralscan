@@ -1,0 +1,14 @@
+{
+    "collMod": "scans",
+    "validator": {
+        "$jsonSchema": {
+            "bsonType": "object",
+            "required": [
+
+            ],
+            "properties": {
+
+            }
+        }
+    }
+}

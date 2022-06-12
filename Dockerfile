@@ -22,7 +22,6 @@ COPY . .
 
 # Install python dependencies
 #RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
-
 RUN pip install -r requirements.txt
 RUN python -m venv $VENV_PATH
 RUN . $VENV_PATH/bin/activate

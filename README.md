@@ -13,53 +13,83 @@ The repository is structured into many layers *(Multi Module N-Tier Architecture
 
 ## Goals
 
-- Fetch source code packages from **various locations** *(Github, Gitlab, Disk...)*.
+- Fetch source code packages from **various locations** *(Git, Github, Gitlab, Disk...)*.
 - Perform code analysis on a package with **various analyzer's** *(Roslyn, Sonar, Security Code Scan...)*.
 - Centralize and persist analysis reports into a **generic business model representation**.
 
-## Stack
+## Try with Docker
 
-### Python
+### Build fresh image
 
-- Python 3.10 (Runtime)
+```bash
+mkdir cleansecpy
+cd cleansecpy
+git clone https://github.com/gromatluidgi/cleansecpy.git
+docker build -t luciustack/cleansecpy .
+```
+
+### Run image
+
+```bash
+docker run -dp 5400:5400 --env DJANGO_DEBUG=ON luciustack/cleansecpy
+```
+
+Navigate to http://localhost:5400
+
+## Stack Overview
+
+### Core Business Packages
+
+- Python 3.9 (Runtime)
 - Poetry (Package Management)
 - Django 4.0.5 (Backend Web Framework)
+- **Gunicorn** (Web Server)
+- **pytest**
+- **pytest-cov**
+
+### Commandline CLI Application
+
+- **Python 3.9** as language and runtime environment
+
+### Backend Web Application (SSR + API)
+
+- **Python 3.9** as language and runtime environment
 - Django Rest Framework (API)
-- pytest
-- pytest-cov
 
-### NodeJS
+### Front-end Web Application
 
-- Node 16.13.0 (Runtime)
-- Svelte (Frontend Web Framework)
+- **NodeJS 16.13.0** as runtime environment
+- **Typescript** as main language
+- **Svelte 3** as front-end framework -
+- **Carbon Design System for Svelte** - 
+- **jest** to run tests
+- **ts-jest** which allow to write tests in Typescript
+- **svelte-jester** - https://github.com/svelteness/svelte-jester
 
-### Data Management
+### Data Management & Persistence
 
+- Memory
 - MongoDB
 
 ### Containerization
 
 - Docker
 
-## Docker
+### Cloud Infrastructure
 
-### Build fresh image
+- Azure App Service
 
-```powershell
-mkdir cleansecpy
-cd cleansecpy
-git clone
-# Following command used the Dockerfile to build a new container image.
-docker build -t cleansecpy .
-```
+### Static Code Analyzis Tools
 
-### Run image
+- Security Code Scan
+- Roslyn
+- Roslynator
+- SonarQube
+- KICS
 
-```powershell
-docker run -dp 5400:5400 --env DJANGO_DEBUG=ON cleansecpy
-```
+## Project Structures
 
-Navigate to http://localhost:5400
+### Inside the cleansecpy folder
 
 ## Development
 
@@ -77,30 +107,59 @@ TODO.
 
 ### Web Application
 
-#### Svelte SPA (Single Page Application)
+#### **Svelte SPA (Single Page Application)**
 
 ##### Install
 
-```
+```bash
 cd webapp/frontend
 npm install
 ```
 
 ##### Run Svelte Rollup Dev Server (Hot Reloading)
 
-```
+```bash
 cd webapp/frontend
 npm run dev
 ```
 
-#### Django Backend SSR (Server Side Rendering)
+##### Check
 
-##### Run development server on Windows
+To verifiy if the project is error free, you can use the CLI tool svelte-check. It acts like an editor asking for errors against all of .svelte files.
+
+```bash
+npx svelte-check
+```
+
+##### Add another Svelte website from template
+```bash
+cd webapp
+npx degit sveltejs/template new_svelte_front
+cd new_svelte_front
+npm install
+```
+
+#### **Django Backend API + SSR (Server Side Rendering)**
+
+##### Run development server (Windows)
 
 ```powershell
 cd scripts
 ./run_django_dev.ps1
 ```
+
+##### Add a new application into Django project
+
+```powershell
+cd webapp/backend
+poetry run django-admin startapp new_app_name
+```
+
+##### Debug
+
+From VS Code Debug View, run the "Debug Django WebApp" profile for start a dev web service with debuging.
+
+More info about django-admin runserver: https://docs.djangoproject.com/en/4.0/ref/django-admin/#runserver
 
 ## Tests
 
@@ -116,36 +175,4 @@ https://coverage.readthedocs.io/
 ```powershell
 py -m coverage html --skip-empty
 cd htmlcov
-```
-
-## Console Cli
-
-### Commands
-
-#### **cleansecpy project**
-
-| Title                      | Description                                                                                                     |
-| -------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| cleansecpy project command | The **cleansecpy project** command provides a convenient option to add, remove, and list projects.|
-
-##### Synopsis
-
-```shell
-python -m cleansecpy package [<PROJECT_ID>] [command]
-
-python -m cleansecpy package [command] -h|--help
-```
-
-#### **cleansecpy package**
-
-| Title                      | Description                                                                                                     |
-| -------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| cleansecpy package command | The **cleansecpy package** command provides a convenient option to add, remove, and list packages in a project. |
-
-##### Synopsis
-
-```shell
-python -m cleansecpy package [<PROJECT_ID>] [command]
-
-python -m cleansecpy package [command] -h|--help
 ```

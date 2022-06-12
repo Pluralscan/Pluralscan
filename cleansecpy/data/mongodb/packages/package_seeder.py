@@ -5,7 +5,7 @@ from cleansecpy.data.mongodb.packages.package_validation import (
     PackageRepositoryValidation,
 )
 
-
+# TODO: Abstract seeder.
 class PackageRepositorySeeder:
     """PackageRepositorySeeder"""
 
@@ -18,7 +18,7 @@ class PackageRepositorySeeder:
         if self._collection_exists():
             raise Exception()
         self._create_collection_with_validation()
-        self._add_packages()
+        self._add_documents()
 
     def reset_and_seed(self):
         self._drop_collection()
@@ -37,7 +37,7 @@ class PackageRepositorySeeder:
     def _drop_collection(self):
         self._database[self._collection_name].drop()
 
-    def _add_packages(self):
+    def _add_documents(self):
         self._database[self._collection_name].insert_many(
             [
                 PackageDocument(_id=ObjectId(), name="", path=""),

@@ -1,37 +1,45 @@
-import logging
 from typing import List
 from bson import ObjectId
+from cleansecpy.data.mongodb.options import MongoRepositoryOptions
 
-from pymongo import MongoClient
+from cleansecpy.data.mongodb.packages.package_document import PackageDocument
 from cleansecpy.data.mongodb.packages.package_mapper import PackageMapper
 
 from cleansecpy.domain.package.package import Package
+from cleansecpy.domain.package.package_id import PackageId
 from cleansecpy.domain.package.package_repository import AbstractPackageRepository
-
-PACKAGE_COLLECTION_NAME: str = "packages"
 
 
 class MongoPackageRepository(AbstractPackageRepository):
     """MongoPackageRepository"""
-    logger = logging.getLogger(__name__)
 
-    def __init__(self, client: MongoClient):
-        self._collection = client.test[PACKAGE_COLLECTION_NAME]
+    def __init__(self, options: MongoRepositoryOptions):
+        self._database = options.client[options.database_name]
+        self._collection = self._database[options.collection_name]
 
-    def find_by_id(self, project_id: str) -> Package:
-        document = self._collection.find_one({"_id": ObjectId(project_id)})
+    def next_id(self) -> PackageId:
+        return PackageId(ObjectId())
+
+    def find_by_id(self, package_id: str) -> Package:
+        document = self._collection.find_one({"_id": ObjectId(package_id)})
         return PackageMapper.from_document(document)
 
     def get_all(self) -> List[Package]:
-        pass
+        documents: List[PackageDocument] = []
+        for document in self._collection.find():
+            documents.append(document)
+        return PackageMapper.from_documents(documents)
 
     def update(self, package: Package) -> Package:
         pass
 
     def add(self, package: Package) -> Package:
         document = PackageMapper.to_document(package)
-        document._id = self._collection.insert_one(document).inserted_id
+        document["_id"] = self._collection.insert_one(document).inserted_id
         return PackageMapper.from_document(document)
 
-    def remove(self, project_id: str):
+    def remove(self, package_id: str):
+        pass
+
+    def count(self) -> int:
         pass

@@ -11,6 +11,7 @@ class Executable:
     name: str = None
     location: str = None
     version: str = None
+    semantic_version: str = None
     arguments: frozenset[Tuple[str, str]] = field(default_factory=frozenset)
 
     def as_dict(self):
@@ -20,5 +21,6 @@ class Executable:
             'name': self.name,
             'location': self.location,
             'version': self.version,
+            'semantic_version': self.semantic_version,
             'arguments': self.arguments
         }

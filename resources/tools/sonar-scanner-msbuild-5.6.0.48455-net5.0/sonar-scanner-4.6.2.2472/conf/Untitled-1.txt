@@ -1,0 +1,3 @@
+dotnet C:\_dev\CleanSecPy\resources\tools\sonar-scanner-msbuild-5.6.0.48455-net5.0\SonarScanner.MSBuild.dll begin /k:"Test" /d:sonar.host.url="http://localhost:9000"  /d:sonar.login="52d488bf5da1ba60096763b44b82949d532ba65b"
+dotnet build
+dotnet C:\_dev\CleanSecPy\resources\tools\sonar-scanner-msbuild-5.6.0.48455-net5.0\SonarScanner.MSBuild.dll end /d:sonar.login="52d488bf5da1ba60096763b44b82949d532ba65b"

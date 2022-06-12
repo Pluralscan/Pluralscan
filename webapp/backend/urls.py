@@ -14,22 +14,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from rest_framework import routers
 from backend.authentication import views  # pylint: disable=import-error
 from backend.spa.views import SpaView # pylint: disable=import-error
-from backend.analyzers.views import AnalyzerViewSet  # pylint: disable=import-error
+from backend.analyzers.views import AnalyzerViewSet # pylint: disable=import-error
+from backend.packages.views import PackageViewSet  # pylint: disable=import-error
 
 
 router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet)
 router.register(r"groups", views.GroupViewSet)
 router.register(r"analyzers", AnalyzerViewSet, basename="analyzer")
+router.register(r"packages", PackageViewSet, basename="package")
 
-
+# Order matters
 urlpatterns = [
-    path('', SpaView.as_view(), name="spa"),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
+    re_path(r'^.*$', SpaView.as_view(), name="spa"),
 ]

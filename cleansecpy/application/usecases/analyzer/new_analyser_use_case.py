@@ -10,7 +10,6 @@ class NewAnalyzerCommand(Validable):
     """New Analyzer Command"""
 
     name: str
-    version: str
 
 
 # Output
@@ -44,6 +43,6 @@ class NewAnalyzerUseCase(
 
     def handle(self, command: NewAnalyzerCommand) -> NewAnalyzerResult:
         analyzer_id = self._analyzer_repository.next_id()
-        analyzer = Analyzer(analyzer_id, command.name, command.version)
+        analyzer = Analyzer(analyzer_id, command.name)
         analyzer = self._analyzer_repository.add(analyzer)
         return NewAnalyzerResult(analyzer)

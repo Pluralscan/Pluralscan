@@ -7,12 +7,13 @@
         "test_*.py"
     ],
     "python.testing.pytestArgs": [
+        "-c",
+        "pytest.ini",
         "-v",
         "-s",
         "--cov=cleansecpy/",
         "--cov-report=xml",
-        "--pdb",
-        "tests/"
+        "--pdb"
     ],
     "python.testing.pytestEnabled": true,
     "python.testing.unittestEnabled": false,
@@ -20,7 +21,7 @@
     "files.exclude": {
         "**/__pycache__": true
     },
-    "python.linting.pylintPath": "${workspaceFolder}\\.venv\\Scripts\\pylint.exe",
+    //"python.linting.pylintPath": "${workspaceFolder}\\.venv\\Scripts\\pylint.exe",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
     "python.formatting.provider": "black",

@@ -4,7 +4,7 @@ import os
 from subprocess import Popen
 import subprocess
 from typing import List
-from cleansecpy.application.processor.executables.exec_runner import (
+from cleansecpy.application.processors.executables.exec_runner import (
     AbstractExecRunner,
     ExecRunnerOptions,
     ProcessRunResult,

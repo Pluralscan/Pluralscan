@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from cleansecpy.data.inmemory.package_repository import InMemoryPackageRepository
+from cleansecpy.data.inmemory.packages.package_repository import InMemoryPackageRepository
 from cleansecpy.data.mongodb.packages.package_repository import MongoPackageRepository
 
 

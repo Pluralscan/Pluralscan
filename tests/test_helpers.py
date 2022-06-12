@@ -12,6 +12,12 @@ REPORTS_DIR = Path.joinpath(RESOURCES_DIR, 'reports')
 
 class TestHelpers:
     """TestHelpers"""
+
+    @staticmethod
+    def debug_info() -> None:
+        print(f'Root directory: {ROOT_DIR}')
+        print(f'Resources directory: {RESOURCES_DIR}')
+
     @staticmethod
     def is_valid_uuid(value: str) -> bool:
         """is_valid_uuid"""

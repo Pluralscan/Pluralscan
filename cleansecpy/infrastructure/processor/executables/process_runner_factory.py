@@ -1,4 +1,4 @@
-from cleansecpy.application.processor.executables.exec_runner import AbstractExecRunner
+from cleansecpy.application.processors.executables.exec_runner import AbstractExecRunner
 from cleansecpy.domain.executable.executable import Executable
 from cleansecpy.domain.executable.executable_platform import ExecutablePlatform
 

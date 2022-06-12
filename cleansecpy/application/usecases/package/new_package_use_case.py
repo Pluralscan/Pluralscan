@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from abc import ABCMeta, abstractmethod
-from cleansecpy.application.processor.fetchers.package_fetcher import (
+from cleansecpy.application.processors.fetchers.package_fetcher import (
     AbstractPackageFetcher,
 )
 from cleansecpy.domain.package.package import Package

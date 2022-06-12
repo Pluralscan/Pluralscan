@@ -7,7 +7,7 @@ from cleansecpy.libs.utils.validable import Validable
 
 # Input
 @dataclass(frozen=True)
-class ListAnalyzerCommand(Validable):
+class ListAnalyzersCommand(Validable):
     """List Analyzer Command"""
 
     limit: int = 100
@@ -15,33 +15,33 @@ class ListAnalyzerCommand(Validable):
 
 # Output
 @dataclass(frozen=True)
-class ListAnalyzerResult:
+class ListAnalyzersResult:
     """ListAnalyzerResult"""
 
     analyzers: List[Analyzer]
 
 
 # Contract
-class AbstractListAnalyzerUseCase(
+class AbstractListAnalyzersUseCase(
     metaclass=ABCMeta
 ):  # pylint: disable=too-few-public-methods
     """AbstractListAnalyzerUseCase"""
 
     @abstractmethod
-    def handle(self, command: ListAnalyzerCommand) -> ListAnalyzerResult:
+    def handle(self, command: ListAnalyzersCommand) -> ListAnalyzersResult:
         """handle"""
         raise NotImplementedError
 
 
 # Default Implementation
-class ListAnalyzerUseCase(
-    AbstractListAnalyzerUseCase
+class ListAnalyzersUseCase(
+    AbstractListAnalyzersUseCase
 ):  # pylint: disable=too-few-public-methods
     """NewAnalyzerUseCase"""
 
     def __init__(self, analyzer_repository: AbstractAnalyzerRepository):
         self._analyzer_repository = analyzer_repository
 
-    def handle(self, command: ListAnalyzerCommand) -> ListAnalyzerResult:
+    def handle(self, command: ListAnalyzersCommand) -> ListAnalyzersResult:
         analyzers = self._analyzer_repository.get_all()
-        return ListAnalyzerResult(analyzers)
+        return ListAnalyzersResult(analyzers)

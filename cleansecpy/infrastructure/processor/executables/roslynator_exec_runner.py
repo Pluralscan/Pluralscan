@@ -3,7 +3,7 @@ from subprocess import Popen
 import subprocess
 from os.path import exists
 
-from cleansecpy.application.processor.executables.exec_runner import (
+from cleansecpy.application.processors.executables.exec_runner import (
     AbstractExecRunner,
     ExecRunnerOptions,
     ProcessRunResult,

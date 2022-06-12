@@ -9,6 +9,15 @@ class AbstractPackageRepository(metaclass=ABCMeta):
     Type: Abstract Repository\n
     DAO contract for package persistence.
     """
+
+    def __del__(self):
+        print(f"[!]  Garbage PackageRepository -> {self.__class__.__name__}")
+
+    @abstractmethod
+    def next_id(self) -> PackageId:
+        """next_id"""
+        raise NotImplementedError()
+
     @abstractmethod
     def find_by_id(self, package_id: PackageId) -> Package:
         """Find package by id."""
@@ -32,4 +41,9 @@ class AbstractPackageRepository(metaclass=ABCMeta):
     @abstractmethod
     def remove(self, package_id: str):
         """Remove a package."""
+        raise NotImplementedError()
+
+    @abstractmethod
+    def count(self) -> int:
+        """count"""
         raise NotImplementedError()
