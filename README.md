@@ -40,20 +40,20 @@ Navigate to http://localhost:5400
 
 ### Core Business Packages
 
-- Python 3.9 (Runtime)
-- Poetry (Package Management)
-- Django 4.0.5 (Backend Web Framework)
+- **Python 3.10*** (Runtime)
+- **Poetry** (Package Management)
+- **Django 4.0.5** (Backend Web Framework)
 - **Gunicorn** (Web Server)
 - **pytest**
 - **pytest-cov**
 
 ### Commandline CLI Application
 
-- **Python 3.9** as language and runtime environment
+- **Python 3.10*** as language and runtime environment
 
 ### Backend Web Application (SSR + API)
 
-- **Python 3.9** as language and runtime environment
+- **Python 3.10*** as language and runtime environment
 - Django Rest Framework (API)
 
 ### Front-end Web Application
@@ -121,6 +121,15 @@ npm install
 ```bash
 cd webapp/frontend
 npm run dev
+```
+
+##### Build and upgrade front-end libs (until npm)
+
+###### Powershell
+```powershell
+cd webapp/frontend
+npm run build
+Copy-Item -Path "dist" -Destination "..\webapp\frontend\libs" -Recurse
 ```
 
 ##### Check

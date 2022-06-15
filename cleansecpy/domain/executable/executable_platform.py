@@ -7,3 +7,6 @@ class ExecutablePlatform(Enum):
     INTERNAL = 'internal'
     WIN = 'win_exe'
     DOTNET = 'dotnet'
+
+    def __repr__(self) -> str:
+        return self.value

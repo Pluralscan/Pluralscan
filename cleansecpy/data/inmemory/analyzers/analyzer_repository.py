@@ -4,6 +4,8 @@ from cleansecpy.domain.analyzer.analyzer import Analyzer
 from cleansecpy.domain.analyzer.analyzer_id import AnalyzerId
 
 from cleansecpy.domain.analyzer.analyzer_repository import AbstractAnalyzerRepository
+from cleansecpy.domain.executable.executable import Executable
+from cleansecpy.domain.executable.executable_platform import ExecutablePlatform
 
 
 class InMemoryAnalyzerRepository(AbstractAnalyzerRepository):
@@ -15,10 +17,17 @@ class InMemoryAnalyzerRepository(AbstractAnalyzerRepository):
 
     def __init__(self):
         self._analyzers: Dict[str, Analyzer] = {
-            "Sonar": Analyzer(
-                analyzer_id="Sonar",
-                name="Sonar",
-                fullname="Sonar 1.0",
+            "RoslynatorFork": Analyzer(
+                analyzer_id="RoslynatorFork",
+                name="Roslynator Fork",
+                executables=[
+                    Executable(
+                        platform=ExecutablePlatform.WIN,
+                        name="Roslynator.exe",
+                        location="resources/tools/roslynator-fork-0.3.3.0/Roslynator.exe",
+                        version="0.3.3.0"
+                    )
+                ]
             )
         }
 

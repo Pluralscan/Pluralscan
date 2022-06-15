@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
-from cleansecpy.domain.setting.setting import Setting
+from cleansecpy.domain.settings.setting import Setting
 
 class AbstractSettingRepository(metaclass=ABCMeta):
     """Abstract Setting repository."""

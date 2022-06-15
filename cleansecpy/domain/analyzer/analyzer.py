@@ -13,7 +13,6 @@ class Analyzer:
 
     analyzer_id: AnalyzerId = None
     name: str = None
-    fullname: str = None
     supported_targets: Set[AnalyzerTarget] = field(default_factory=set)
     localization: str = 'en'
     """A tool object should contain a property named language whose value is a string specifying
