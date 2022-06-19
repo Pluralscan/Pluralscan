@@ -12,6 +12,10 @@ class ExecRunnerOptions:
     executable: Executable
     arguments: List[Tuple[str, str]] = None
 
+    def __post_init__(self):
+        if self.executable is None:
+            raise ValueError("Executable must be defined.")
+
 
 @dataclass
 class ProcessRunResult:

@@ -2,7 +2,7 @@ import pytest
 from cleansecpy.application.processors.fetchers.package_fetcher import PackageFetcherOptions
 
 from cleansecpy.infrastructure.processor.fetchers.git_package_fetcher import GitPackageFetcher
-from tests.test_helpers import SOURCES_DIR
+from __tests__.test_helpers import SOURCES_DIR
 
 
 @pytest.fixture

@@ -6,7 +6,7 @@ from cleansecpy.infrastructure.processor.executables.sonar_exec_runner import (
     SonarExecOptions,
     SonarExecRunner,
 )
-from tests.test_helpers import REPORTS_DIR, SOURCES_DIR, TOOLS_DIR
+from __tests__.test_helpers import REPORTS_DIR, SOURCES_DIR, TOOLS_DIR
 
 
 @pytest.fixture

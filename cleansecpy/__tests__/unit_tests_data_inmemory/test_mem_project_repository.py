@@ -2,7 +2,7 @@ import unittest
 from cleansecpy.data.inmemory.projects.project_repository import InMemoryProjectRepository
 from cleansecpy.domain.project.project import Project
 
-from tests.test_helpers import TestHelpers
+from __tests__.test_helpers import TestHelpers
 
 class TestInMemoryanalyzerRepository(unittest.TestCase):
     def setUp(self):

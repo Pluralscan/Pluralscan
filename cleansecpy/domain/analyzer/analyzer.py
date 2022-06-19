@@ -22,12 +22,12 @@ class Analyzer:
     technologies: Set[Technology] = field(default_factory=set)
 
     def get_executable_by_version(self, version: str) -> Executable:
-        """get_executable_by_version"""
+        """Retrieve a single executable with a specific version."""
         for executable in self.executables:
             if executable.version is version:
                 return executable
         return None
 
     def add_executable(self, executable: Executable):
-        """add_executable"""
+        """Provide a new executable to the analyzer."""
         self.executables.add(executable)

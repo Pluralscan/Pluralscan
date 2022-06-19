@@ -1,14 +1,11 @@
 <script lang="ts">
 	import Router from "svelte-spa-router";
-	import QuickScan from "./analyzers/QuickScan.svelte";
-	import Dashboard from "./dashboard/Dashboard.svelte";
-	import Projects from "./projects/Projects.svelte";
+	import Home from "./home/Home.svelte";
+	import Analyzers from "./analyzers/Analyzers.svelte";
 
 	const routes = {
-		"/": Dashboard,
-		"/dashboard": Dashboard,
-		"/projects": Projects,
-		"/quick-scan": QuickScan,
+		"/": Home,
+		"/analyzers": Analyzers,
 	};
 	import "carbon-components-svelte/css/all.css";
 </script>

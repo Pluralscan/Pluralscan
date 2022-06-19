@@ -15,7 +15,7 @@ class GitPackageFetcher(AbstractPackageFetcher):
     supported_extensions = [".git"]
 
     def __init__(self, options: PackageFetcherOptions = PackageFetcherOptions()):
-        super().__init__(options)
+        pass
 
     def get_info(self, uri: str) -> PackageInfoResult:
         return super().get_info(uri)

@@ -4,7 +4,7 @@ Perform's code quality and security analysis with many tools.
 
 ## Abstract
 
-CleanSecPy is a **POC/POW project** that try to demonstrate how to realize a complexe business oriented software in Python.
+CleanSecPy is a **POC/POW project** that try to demonstrate how to realize a complexe business oriented software in Python by following **clean architecture practices**.
 
 The repository is structured into many layers *(Multi Module N-Tier Architecture)* and follow principles inspired from:
 - Clean Architecture
@@ -51,25 +51,27 @@ Navigate to http://localhost:5400
 
 - **Python 3.10*** as language and runtime environment
 
-### Backend Web Application (SSR + API)
+### Backend Web Application (API + SPA Rendering)
 
 - **Python 3.10*** as language and runtime environment
-- Django Rest Framework (API)
+- [Django Rest Framework]() as web framework used for API and serving SPA
+- [django-cors-headers](https://github.com/adamchainz/django-cors-headers) for handling cors
 
 ### Front-end Web Application
 
 - **NodeJS 16.13.0** as runtime environment
 - **Typescript** as main language
-- **Svelte 3** as front-end framework -
-- **Carbon Design System for Svelte** - 
-- **jest** to run tests
-- **ts-jest** which allow to write tests in Typescript
-- **svelte-jester** - https://github.com/svelteness/svelte-jester
+- **Svelte 3** as front-end framework
+- [Carbon Design System for Svelte]() as design framework 
+- [jest]() to run unit and integration tests
+- [ts-jest]() which allow to write tests in Typescript
+- [svelte-jester](https://github.com/svelteness/svelte-jester)
+- [tailwindcss](https://tailwindcss.com/)
 
 ### Data Management & Persistence
 
 - Memory
-- MongoDB
+- MongoDB 5+
 
 ### Containerization
 
@@ -78,6 +80,7 @@ Navigate to http://localhost:5400
 ### Cloud Infrastructure
 
 - Azure App Service
+- Azure Registry
 
 ### Static Code Analyzis Tools
 
@@ -93,6 +96,16 @@ Navigate to http://localhost:5400
 
 ## Development
 
+### Recommended IDE Setup
+
+[VSCode](https://code.visualstudio.com/) with:
+
+#### **Extensions for Python**
+
+#### **Extensions for Svelte**
+
+- [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
+
 ### Core
 
 Location: cleansecpy
@@ -100,6 +113,8 @@ Location: cleansecpy
 #### Domain
 
 Contains all the entities related to the business.
+
+
 
 ### Commandline
 

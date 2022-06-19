@@ -50,7 +50,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Jest Tests API Client",
+            "name": "Debug Jest Tests API Client",
             "program": "${workspaceRoot}\\cleansecpy-api-client\\node_modules\\jest\\bin\\jest.js",
             "args": [
                 "-i",

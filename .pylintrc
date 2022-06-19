@@ -91,6 +91,7 @@ disable=raw-checker-failed,
         useless-suppression,
         deprecated-pragma,
         use-symbolic-message-instead,
+        too-many-instance-attributes,
         C0114, # missing-module-docstring
 
 # Enable the message, report, category or checker with the given id(s). You can

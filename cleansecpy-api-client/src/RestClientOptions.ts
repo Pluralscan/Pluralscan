@@ -3,9 +3,11 @@
  */
 export class RestClientOptions {
 
-    constructor(apiUrl: string){
+    constructor(apiUrl: string, enabledCache: boolean = false) {
         this.apiUrl = apiUrl;
+        this.enabledCache = enabledCache;
     }
 
     apiUrl: string;
+    enabledCache: boolean
 }

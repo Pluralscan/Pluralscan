@@ -8,7 +8,7 @@ from cleansecpy.domain.executable.executable_platform import ExecutablePlatform
 from cleansecpy.infrastructure.processor.executables.roslynator_exec_runner import (
     RoslynatorExecRunner,
 )
-from tests.test_helpers import REPORTS_DIR, SOURCES_DIR, TOOLS_DIR
+from __tests__.test_helpers import REPORTS_DIR, SOURCES_DIR, TOOLS_DIR
 
 
 @pytest.fixture

@@ -22,7 +22,7 @@ from backend.analyzers.views import AnalyzerViewSet # pylint: disable=import-err
 from backend.packages.views import PackageViewSet  # pylint: disable=import-error
 
 
-router = routers.DefaultRouter()
+router = routers.SimpleRouter(trailing_slash=False)
 router.register(r"users", views.UserViewSet)
 router.register(r"groups", views.GroupViewSet)
 router.register(r"analyzers", AnalyzerViewSet, basename="analyzer")

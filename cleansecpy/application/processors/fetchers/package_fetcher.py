@@ -1,5 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
+from typing import List
+from cleansecpy.domain.technology.language import Language
 
 
 @dataclass
@@ -22,15 +24,15 @@ class PackageInfoResult:
     """Data returned when querying a package details."""
     name: str = None
     full_name: str = None
+    description: str = None
+    version: str = None
+    url: str = None
+    languages: List[Language] = None
     error: str = None
     success: bool = error is None
 
 class AbstractPackageFetcher(metaclass=ABCMeta):
     """AbstractPackageFetcher"""
-
-    @abstractmethod
-    def __init__(self, options: PackageFetcherOptions = PackageFetcherOptions()):
-        self._options: PackageFetcherOptions = options
 
     @abstractmethod
     def can_fetch(self, uri: str) -> bool:

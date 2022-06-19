@@ -1,3 +1,4 @@
+import dataclasses
 import os
 import traceback
 import requests
@@ -11,16 +12,24 @@ from cleansecpy.libs.utils.http import HttpUtils
 from cleansecpy.libs.utils.uri import UriUtils
 
 
+@dataclasses
+class HttpPackageFetcherOptions:
+    """HttpPackageFetcherOptions"""
+
+    output_dir: str = None
+    credentials = None
+
+
 class HttpPackageFetcher(AbstractPackageFetcher):
     """HttpPackageFetcher"""
 
     supported_extensions = [".zip"]
 
-    def __init__(self, options: PackageFetcherOptions()):
-        super().__init__(options)
+    def __init__(self, options: HttpPackageFetcherOptions()):
+        self._options = options
 
     def get_info(self, uri: str) -> PackageInfoResult:
-        return super().get_info(uri)
+        return PackageInfoResult()
 
     def can_fetch(self, uri: str) -> bool:
         return False
