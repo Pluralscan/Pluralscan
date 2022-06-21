@@ -1,10 +1,10 @@
-# CleanSecPy
+# Pluralscan
 
 Perform's code quality and security analysis with many tools.
 
 ## Abstract
 
-CleanSecPy is a **POC/POW project** that try to demonstrate how to realize a complexe business oriented software in Python by following **clean architecture practices**.
+Pluralscan is a **POC/POW project** that try to demonstrate how to realize a complexe business oriented software in Python by following **clean architecture practices**.
 
 The repository is structured into many layers *(Multi Module N-Tier Architecture)* and follow principles inspired from:
 - Clean Architecture
@@ -22,16 +22,16 @@ The repository is structured into many layers *(Multi Module N-Tier Architecture
 ### Build fresh image
 
 ```bash
-mkdir cleansecpy
-cd cleansecpy
-git clone https://github.com/gromatluidgi/cleansecpy.git
-docker build -t luciustack/cleansecpy .
+mkdir pluralscan
+cd pluralscan
+git clone https://github.com/gromatluidgi/pluralscan.git
+docker build -t luciustack/pluralscan .
 ```
 
 ### Run image
 
 ```bash
-docker run -dp 5400:5400 --env DJANGO_DEBUG=ON luciustack/cleansecpy
+docker run -dp 5400:5400 --env DJANGO_DEBUG=ON luciustack/pluralscan
 ```
 
 Navigate to http://localhost:5400
@@ -46,6 +46,7 @@ Navigate to http://localhost:5400
 - **Gunicorn** (Web Server)
 - **pytest**
 - **pytest-cov**
+- [python-rq](https://python-rq.org/) for queuing jobs and process them in background with workers **(Redis is required)**
 
 ### Commandline CLI Application
 
@@ -72,6 +73,7 @@ Navigate to http://localhost:5400
 
 - Memory
 - MongoDB 5+
+- Redis
 
 ### Containerization
 
@@ -90,31 +92,44 @@ Navigate to http://localhost:5400
 - SonarQube
 - KICS
 
-## Project Structures
-
-### Inside the cleansecpy folder
-
 ## Development
 
 ### Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) with:
 
-#### **Extensions for Python**
+#### Extensions for Python
 
-#### **Extensions for Svelte**
+- [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+
+#### Extensions for Svelte
 
 - [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
 
 ### Core
 
-Location: cleansecpy
+**Location:** pluralscan-core
+**Language:** Python 3.10
+**Architecture:** Clean Architecture/Onion Architecture/Ports & Adapters (Hexagonal)... all these are pretty much names for the same thing, and they all boil down to the dependency inversion principle: **high-level modules** (the domain) **MUST NOT** depend on **low-level** ones (the infrastructure)
 
 #### Domain
 
 Contains all the entities related to the business.
 
+#### Application
 
+The Application package references the Domain package.
+This project is using DTO to define commands, queries, and their respective use cases. This package also defines interfaces (abstractions) that are used for things like Data Access or Business Logic Processing inside the use-cases. However, the implementation for the interfaces lives in the Infrastructure package.
+
+#### Data
+
+The data folder contains sub-packages related to data access implementation.
+
+Pluralsec currently provides implementation for persist data insides **Memory** and **MongoDB**.
+
+#### Infrastructure
+
+This package contains the implementation for the interfaces defined in the Application package.
 
 ### Commandline
 

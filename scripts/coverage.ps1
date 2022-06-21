@@ -1,1 +1,1 @@
-pytest --cov-report term --cov=cleansecpy ..\tests
+pytest --cov-report term --cov=pluralscan ..\tests

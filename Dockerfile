@@ -26,10 +26,10 @@ RUN pip install -r requirements.txt
 RUN python -m venv $VENV_PATH
 RUN . $VENV_PATH/bin/activate
 
-# Build cleansecpy core
+# Build pluralscan core
 RUN poetry build -vvv
 
-# Install cleansecpy core
+# Install pluralscan core
 RUN $VENV_PATH/bin/pip install ./dist/*.whl
 
 # Build webapp

@@ -9,7 +9,7 @@
         "pytest.ini",
         "-v",
         "-s",
-        "--cov=cleansecpy/",
+        "--cov=pluralscan/",
         "--cov-report=xml",
         "--pdb"
     ],

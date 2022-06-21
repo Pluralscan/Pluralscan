@@ -24,7 +24,7 @@
             "name": "Debug Django WebApp",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}\\webapp\\manage.py",
+            "program": "${workspaceFolder}\\pluralscan-webapp\\manage.py",
             "args": [
                 "runserver",
             ],
@@ -39,7 +39,7 @@
             "name": "Debug Commandline",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}\\webapp\\manage.py",
+            "program": "${workspaceFolder}\\pluralscan-webapp\\manage.py",
             "args": [
             ],
             "env": {
@@ -51,11 +51,11 @@
             "type": "node",
             "request": "launch",
             "name": "Debug Jest Tests API Client",
-            "program": "${workspaceRoot}\\cleansecpy-api-client\\node_modules\\jest\\bin\\jest.js",
+            "program": "${workspaceRoot}\\pluralscan-api-client\\node_modules\\jest\\bin\\jest.js",
             "args": [
                 "-i",
                 "-c",
-                "${workspaceRoot}/cleansecpy-api-client/jest.config.ts"
+                "${workspaceRoot}/pluralscan-api-client/jest.config.ts"
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",

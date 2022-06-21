@@ -1,1 +1,1 @@
-pip install -r .\cleansecpy\requirements.txt
+pip install -r .\pluralscan\requirements.txt

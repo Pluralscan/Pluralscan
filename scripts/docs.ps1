@@ -1,1 +1,1 @@
-pydoc .\cleansecpy -p 8090
+pydoc .\pluralscan -p 8090

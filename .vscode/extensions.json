@@ -3,6 +3,7 @@
         "ms-python.python",
         "ms-vscode.powershell",
         "ryanluker.vscode-coverage-gutters",
-        "svelte.svelte-vscode"
+        "svelte.svelte-vscode",
+        "ms-azuretools.vscode-docker"
     ]
 }

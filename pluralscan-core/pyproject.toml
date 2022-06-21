@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "pluralscan"
+version = "0.1.0"
+description = ""
+authors = ["Luidgi Gromat <gromat.luidgi@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pytest-env = "^0.6.2"
+PyGithub = "^1.55"
+GitPython = "^3.1.27"
+python-gitlab = "^3.5.0"
+rq = "^1.10.1"
+
+[tool.poetry.dev-dependencies]
+pylint = "^2.14.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,4 +1,4 @@
-# Coding Convention
+# Pluralscan - Convention
 
 ## Underscore Meaning
 

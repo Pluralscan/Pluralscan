@@ -8,7 +8,6 @@ urlpatterns = [
     path("analyzers/<int:pk>", AnalyzerListView.as_view()),
 ]
 ```
-
 ### ListAPIView
 
 ```python
@@ -29,7 +28,6 @@ class AnalyzerListView(ListAPIView):
 ### API Routing
 
 ##### Registration
-
 
 ### GenericViewSet
 ```python

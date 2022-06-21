@@ -1,4 +1,6 @@
-# Domain Driven Design (DDD)
+# Pluralscan - Coding Style & Recommended Practices
+
+## Domain Driven Design (DDD)
 
 Domain Driven Design is a software development approach for build complexe software in accordance with the domain.
 When a developer adhere to this approach, he needs to understand that's he/she is here to resolve business issue's; and thus coding is just a tool to solve the problem.
@@ -34,5 +36,5 @@ DDD is compatible with most N-Tier *(Layered)* Architecture and can be very powe
 - Entity class should not have public property setters, setting a property should be a behavior method
 - Entities should not have bidirectional relations (depending on the bounded context, either an egg can have a chicken or a chicken can have eggs, but not both)
 - Entity relations should not reflect the complete set of DB foreign key relationships, should be bare down to the minimum for performing the behavior inside the bounded context
-- Entity relations should not hold a reference to another entity class, it can only keep the id of another entity
+- Entity relations should **not hold a reference to another entity class**, it can only keep the id of another entity
 - If a business transaction needs a reference to other entities in relation, aggregates should be used instead (aggregates can hold a reference to other aggregate roots, which are entity classes by definition)
