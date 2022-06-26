@@ -1,11 +1,10 @@
 import uuid
-from typing import List, Dict
+from typing import Dict, List
+
 from pluralscan.domain.analyzer.analyzer import Analyzer
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
-
-from pluralscan.domain.analyzer.analyzer_repository import AbstractAnalyzerRepository
-from pluralscan.domain.executable.executable import Executable
-from pluralscan.domain.executable.executable_platform import ExecutablePlatform
+from pluralscan.domain.analyzer.analyzer_repository import \
+    AbstractAnalyzerRepository
 
 
 class InMemoryAnalyzerRepository(AbstractAnalyzerRepository):
@@ -16,20 +15,7 @@ class InMemoryAnalyzerRepository(AbstractAnalyzerRepository):
     """
 
     def __init__(self):
-        self._analyzers: Dict[str, Analyzer] = {
-            "RoslynatorFork": Analyzer(
-                analyzer_id="RoslynatorFork",
-                name="Roslynator Fork",
-                executables=[
-                    Executable(
-                        platform=ExecutablePlatform.WIN,
-                        name="Roslynator.exe",
-                        location="resources/tools/roslynator-fork-0.3.3.0/Roslynator.exe",
-                        version="0.3.3.0"
-                    )
-                ]
-            )
-        }
+        self._analyzers: Dict[str, Analyzer] = {}
 
     def next_id(self) -> AnalyzerId:
         return AnalyzerId(uuid.uuid4())
@@ -52,9 +38,11 @@ class InMemoryAnalyzerRepository(AbstractAnalyzerRepository):
 
     def add(self, analyzer: Analyzer) -> Analyzer:
         str_uuid = str(uuid.uuid4())
-        analyzer.analyzer_id = str_uuid
 
-        self._analyzers[str_uuid] = analyzer
+        if analyzer.analyzer_id is None:
+            analyzer.analyzer_id = str_uuid
+
+        self._analyzers[analyzer.analyzer_id] = analyzer
 
         return analyzer
 

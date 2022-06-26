@@ -2,8 +2,8 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True, init=False)
-class DiagnosysId:
-    """An immutable Diagnosys identifier."""
+class DiagnosisId:
+    """An immutable Diagnosis identifier."""
 
     def __init__(self, identity):
         self.identity = identity

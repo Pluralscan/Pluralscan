@@ -1,8 +1,9 @@
-from typing import Dict, List
 import uuid
-from pluralscan.domain.project.project import Project
+from typing import Dict, List
 
-from pluralscan.domain.project.project_repository import AbstractProjectRepository
+from pluralscan.domain.project.project import Project
+from pluralscan.domain.project.project_repository import \
+    AbstractProjectRepository
 
 
 class InMemoryProjectRepository(AbstractProjectRepository):

@@ -1,11 +1,12 @@
-from pymongo import MongoClient
 import pytest
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
-from pluralscan.data.mongodb.packages.package_repository import MongoPackageRepository
-from pluralscan.data.mongodb.packages.package_seeder import PackageRepositorySeeder
-
+from pluralscan.data.mongodb.packages.package_repository import \
+    MongoPackageRepository
+from pluralscan.data.mongodb.packages.package_seeder import \
+    PackageRepositorySeeder
 from pluralscan.domain.package.package import Package
 from pluralscan.domain.package.package_id import PackageId
+from pymongo import MongoClient
 
 
 @pytest.fixture

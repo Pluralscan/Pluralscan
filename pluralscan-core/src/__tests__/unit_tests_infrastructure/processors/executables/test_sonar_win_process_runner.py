@@ -1,12 +1,11 @@
 from pathlib import Path
+
 import pytest
+from __tests__.test_helpers import REPORTS_DIR, SOURCES_DIR, TOOLS_DIR
 from pluralscan.domain.executable.executable import Executable
 from pluralscan.domain.executable.executable_platform import ExecutablePlatform
 from pluralscan.infrastructure.processor.executables.sonar_exec_runner import (
-    SonarExecOptions,
-    SonarExecRunner,
-)
-from __tests__.test_helpers import REPORTS_DIR, SOURCES_DIR, TOOLS_DIR
+    SonarExecOptions, SonarExecRunner)
 
 
 @pytest.fixture

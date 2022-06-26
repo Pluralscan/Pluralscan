@@ -1,7 +1,6 @@
 import unittest
 
 
-
 class TestNewCommandUseCase(unittest.TestCase):
     """TestNewCommandUseCase"""
     def setUp(self):

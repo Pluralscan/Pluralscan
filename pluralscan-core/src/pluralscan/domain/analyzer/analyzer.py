@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from typing import Set
+
 from pluralscan.domain.executable.executable import Executable
 from pluralscan.domain.technology.technology import Technology
 
@@ -13,6 +14,7 @@ class Analyzer:
 
     analyzer_id: AnalyzerId = None
     name: str = None
+    description: str = None
     supported_targets: Set[AnalyzerTarget] = field(default_factory=set)
     localization: str = 'en'
     """A tool object should contain a property named language whose value is a string specifying

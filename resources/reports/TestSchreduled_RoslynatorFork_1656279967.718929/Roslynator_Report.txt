@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Roslynator>
+  <CodeAnalysis>
+    <Summary>
+      <Diagnostic Id="CS0169" Title="Le champ n'est jamais utilisé" Count="1" />
+      <Diagnostic Id="CS8618" Title="Un champ non-nullable doit contenir une valeur non-null lors de la fermeture du constructeur. Envisagez de déclarer le champ comme nullable." Count="1" />
+    </Summary>
+    <Projects />
+  </CodeAnalysis>
+</Roslynator>

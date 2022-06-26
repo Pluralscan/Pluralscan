@@ -1,10 +1,8 @@
 import uuid
-import datetime
-from datetime import timezone
-from typing import List, Dict
+from typing import Dict, List
+
 from pluralscan.domain.scans.scan import Scan
 from pluralscan.domain.scans.scan_id import ScanId
-
 from pluralscan.domain.scans.scan_repository import AbstractScanRepository
 
 
@@ -16,13 +14,7 @@ class InMemoryScanRepository(AbstractScanRepository):
     """
 
     def __init__(self):
-        self._scans: Dict[str, Scan] = {
-            "Scan01": Scan(
-                scan_id=ScanId("Scan01"),
-                created_on=datetime.datetime.now(timezone.utc),
-                modified_on=datetime.datetime.now(timezone.utc),
-            )
-        }
+        self._scans: Dict[str, Scan] = {}
 
     def next_id(self) -> ScanId:
         return ScanId(uuid.uuid4())
@@ -44,12 +36,19 @@ class InMemoryScanRepository(AbstractScanRepository):
         return scan
 
     def add(self, scan: Scan) -> Scan:
-        str_uuid = str(uuid.uuid4())
-        scan.scan_id = str_uuid
+        if scan.scan_id is None:
+            str_uuid = str(uuid.uuid4())
+            scan.scan_id = str_uuid
 
-        self._scans[str_uuid] = scan
+        self._scans[scan.scan_id] = scan
 
         return scan
+
+    def add_bulk(self, scans: List[Scan]) -> List[Scan]:
+        _scans = []
+        for scan in scans:
+            _scans.append(self.add(scan))
+        return _scans
 
     def remove(self, scan_id: str):
         scan = self.find_by_id(scan_id)

@@ -1,6 +1,7 @@
 from typing import List
 
-from pluralscan.data.mongodb.analyzers.analyzer_document import AnalyzerDocument
+from pluralscan.data.mongodb.analyzers.analyzer_document import \
+    AnalyzerDocument
 from pluralscan.domain.analyzer.analyzer import Analyzer
 
 

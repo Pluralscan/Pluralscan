@@ -1,14 +1,11 @@
 from json import dumps
-import typer
 
+import typer
 from pluralscan.application.usecases.package.new_package_use_case import (
-    NewPackageCommand,
-    NewPackageUseCase,
-)
+    NewPackageCommand, NewPackageUseCase)
 from pluralscan.data import AbstractRepositoryFactory
-from pluralscan.infrastructure.processor.fetchers.http_package_fetcher import (
-    HttpPackageFetcher,
-)
+from pluralscan.infrastructure.processor.fetchers.http_package_fetcher import \
+    HttpPackageFetcher
 
 app = typer.Typer()
 

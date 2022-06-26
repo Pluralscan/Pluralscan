@@ -13,14 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from backend.analyzers.views import \
+    AnalyzerViewSet  # pylint: disable=import-error
+from backend.authentication import views  # pylint: disable=import-error
+from backend.packages.views import \
+    PackageViewSet  # pylint: disable=import-error
+from backend.spa.views import SpaView  # pylint: disable=import-error
 from django.contrib import admin
 from django.urls import include, path, re_path
 from rest_framework import routers
-from backend.authentication import views  # pylint: disable=import-error
-from backend.spa.views import SpaView # pylint: disable=import-error
-from backend.analyzers.views import AnalyzerViewSet # pylint: disable=import-error
-from backend.packages.views import PackageViewSet  # pylint: disable=import-error
-
 
 router = routers.DefaultRouter()
 router.trailing_slash = ''

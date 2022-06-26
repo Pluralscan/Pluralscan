@@ -1,12 +1,14 @@
-from pluralscan.infrastructure.processor.reports.roslynator_report_processor import RoslynatorReportProcessor
+from pluralscan.infrastructure.processor.reports.roslynator_report_processor import \
+    RoslynatorReportProcessor
+
 
 def test_transform_to_diagnosys():
     path = r"C:\\_dev\\CleanSecPy\\resources\\sources\\AnalyzerTests\\RESULTS\\result.txt"
     processor = RoslynatorReportProcessor()
 
-    diagnosys = processor.transform_to_diagnosys([path])
+    diagnosis = processor.transform_to_diagnosys([path])
 
-    assert diagnosys is not None
+    assert diagnosis is not None
 
 def test_read_report():
     path = r"C:\\_dev\\CleanSecPy\\resources\\sources\\AnalyzerTests\\RESULTS\\result.txt"

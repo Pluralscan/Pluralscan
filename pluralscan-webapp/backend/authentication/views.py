@@ -1,8 +1,8 @@
-from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
-from rest_framework import permissions
+from django.contrib.auth.models import Group, User
+from rest_framework import permissions, viewsets
 
-from .serializers import GroupSerializer, UserSerializer  # pylint: disable=import-error
+from .serializers import (GroupSerializer,  # pylint: disable=import-error
+                          UserSerializer)
 
 
 class UserViewSet(viewsets.ModelViewSet):

@@ -1,8 +1,8 @@
-from dataclasses import dataclass
 from abc import ABCMeta, abstractmethod
-from pluralscan.application.processors.fetchers.package_fetcher import (
-    AbstractPackageFetcher,
-)
+from dataclasses import dataclass
+
+from pluralscan.application.processors.fetchers.package_fetcher import \
+    AbstractPackageFetcher
 from pluralscan.domain.package.package import Package
 
 

@@ -1,13 +1,12 @@
 import os
-from subprocess import Popen
+import pathlib
 import subprocess
 from os.path import exists
+from subprocess import Popen
 
 from pluralscan.application.processors.executables.exec_runner import (
-    AbstractExecRunner,
-    ExecRunnerOptions,
-    ProcessRunResult,
-)
+    AbstractExecRunner, ExecRunnerOptions, ProcessRunResult)
+from pluralscan.infrastructure.config import Config
 
 
 class RoslynatorExecRunner(AbstractExecRunner):
@@ -21,8 +20,12 @@ class RoslynatorExecRunner(AbstractExecRunner):
 
     def execute(self, options: ExecRunnerOptions) -> ProcessRunResult:
         location = options.executable.location
-        arguments = [x for xs in options.executable.arguments for x in xs]
-        with Popen([location, *arguments]) as process:
+        process_args = (
+            options.executable.get_command_by_action(options.action).arguments
+            + options.arguments
+        )
+
+        with Popen([location, *process_args]) as process:
             exit_code = process.wait()
             if exit_code == 0:
                 return ProcessRunResult(None, True)
@@ -40,10 +43,15 @@ class RoslynatorExecRunner(AbstractExecRunner):
                 "A report file path must be specified when requesting a process report."
             )
 
-        location = options.executable.location
-        arguments = [x for xs in options.executable.arguments for x in xs]
+        location = str(
+            pathlib.Path.joinpath(Config.TOOLS_DIR, options.executable.location)
+        )
         # Combine executable default arguments with options extra arguments.
-        process_args = arguments + [x for xs in options.arguments for x in xs]
+        process_args = (
+            options.executable.get_command_by_action(options.action).arguments
+            + options.arguments
+            + ["-o", self._report_file_path]
+        )
 
         if not exists(self._reports_output_dir):
             os.makedirs(self._reports_output_dir)

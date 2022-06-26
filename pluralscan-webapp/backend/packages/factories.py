@@ -1,16 +1,19 @@
 # IOC
-from pymongo import MongoClient
-from pluralscan.application.processors.fetchers.package_fetcher import AbstractPackageFetcher
-from pluralscan.application.usecases.package.get_remote_package_info_use_case import (
-    GetRemotePackageInfoUseCase,
-)
-from pluralscan.application.usecases.package.list_packages_use_case import ListPackagesUseCase
-from pluralscan.data.inmemory.packages.package_repository import InMemoryPackageRepository
+from pluralscan.application.processors.fetchers.package_fetcher import \
+    AbstractPackageFetcher
+from pluralscan.application.usecases.package.get_remote_package_info_use_case import \
+    GetRemotePackageInfoUseCase
+from pluralscan.application.usecases.package.list_packages_use_case import \
+    ListPackagesUseCase
+from pluralscan.data.inmemory.packages.package_repository import \
+    InMemoryPackageRepository
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
-from pluralscan.data.mongodb.packages.package_repository import MongoPackageRepository
-from pluralscan.infrastructure.processor.fetchers.git_package_fetcher import (
-    GitPackageFetcher,
-)
+from pluralscan.data.mongodb.packages.package_repository import \
+    MongoPackageRepository
+from pluralscan.infrastructure.processor.fetchers.git_package_fetcher import \
+    GitPackageFetcher
+from pymongo import MongoClient
+
 
 # Database Clients
 def mongo_client():

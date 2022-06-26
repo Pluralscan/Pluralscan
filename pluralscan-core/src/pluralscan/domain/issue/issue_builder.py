@@ -1,7 +1,7 @@
 # Builder Contract
 from abc import ABCMeta, abstractmethod
-from pluralscan.domain.issue.issue import Issue
 
+from pluralscan.domain.issue.issue import Issue
 from pluralscan.domain.issue.issue_location import IssueLocation
 
 

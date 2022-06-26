@@ -1,7 +1,6 @@
-from dataclasses import dataclass
-
-from enum import Enum
 from abc import ABCMeta, abstractmethod
+from dataclasses import dataclass
+from enum import Enum
 from typing import List
 
 from pluralscan.domain.source.source import Source

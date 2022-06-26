@@ -1,12 +1,15 @@
 from typing import List
+
 from bson import ObjectId
-from pymongo import ReturnDocument
-from pluralscan.data.mongodb.analyzers.analyzer_document import AnalyzerDocument
+from pluralscan.data.mongodb.analyzers.analyzer_document import \
+    AnalyzerDocument
 from pluralscan.data.mongodb.analyzers.analyzer_mapper import AnalyzerMapper
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
 from pluralscan.domain.analyzer.analyzer import Analyzer
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
-from pluralscan.domain.analyzer.analyzer_repository import AbstractAnalyzerRepository
+from pluralscan.domain.analyzer.analyzer_repository import \
+    AbstractAnalyzerRepository
+from pymongo import ReturnDocument
 
 
 class MongoAnalyzerRepository(AbstractAnalyzerRepository):

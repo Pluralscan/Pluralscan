@@ -1,9 +1,12 @@
 from bson import ObjectId
-from pluralscan.data.mongodb.analyzers.analyzer_document import AnalyzerDocument
-from pluralscan.data.mongodb.analyzers.analyzer_validation import AnalyzerRepositoryValidation
+from pluralscan.data.mongodb.analyzers.analyzer_document import \
+    AnalyzerDocument
+from pluralscan.data.mongodb.analyzers.analyzer_validation import \
+    AnalyzerRepositoryValidation
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
 from pluralscan.domain.executable.executable import Executable
 from pluralscan.domain.executable.executable_platform import ExecutablePlatform
+
 
 # TODO: Abstract seeder.
 class AnalyzerRepositorySeeder:

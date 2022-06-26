@@ -1,6 +1,9 @@
 from abc import ABCMeta, abstractmethod
-from pluralscan.application.usecases.rules.commands.new_rule_request import NewRuleRequest
-from pluralscan.application.usecases.rules.results.new_rule_result import NewRuleResult
+
+from pluralscan.application.usecases.rules.commands.new_rule_request import \
+    NewRuleRequest
+from pluralscan.application.usecases.rules.results.new_rule_result import \
+    NewRuleResult
 
 
 class AbstractNewRuleUseCase(metaclass=ABCMeta):

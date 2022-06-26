@@ -1,7 +1,8 @@
 from typing import List
-from pluralscan.domain.project.project import Project
 
-from pluralscan.domain.project.project_repository import AbstractProjectRepository
+from pluralscan.domain.project.project import Project
+from pluralscan.domain.project.project_repository import \
+    AbstractProjectRepository
 
 
 class MongoProjectRepository(AbstractProjectRepository):

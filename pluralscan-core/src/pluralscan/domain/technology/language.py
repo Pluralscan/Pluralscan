@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List
 
+
 @dataclass
 class Language(Enum):
     """Language"""
@@ -10,6 +11,8 @@ class Language(Enum):
     COBOL = ("cobol", "Cobol", ["cbl"])
     CSHARP = ("csharp", "C#", [".cs"])
     VBSHARP = ("vbsharp", "VB#", [".vb"])
+    JAVASCRIPT = ('javascript', "JS", [".js"])
+    HTML = ('html', 'HTML', ['.html'])
 
     def __new__(cls, code: str, alias: str, extensions: List[str]):
         entry = object.__new__(cls)

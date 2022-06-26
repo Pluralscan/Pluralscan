@@ -1,9 +1,9 @@
 from bson import ObjectId
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
 from pluralscan.data.mongodb.packages.package_document import PackageDocument
-from pluralscan.data.mongodb.packages.package_validation import (
-    PackageRepositoryValidation,
-)
+from pluralscan.data.mongodb.packages.package_validation import \
+    PackageRepositoryValidation
+
 
 # TODO: Abstract seeder.
 class PackageRepositorySeeder:

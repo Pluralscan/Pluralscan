@@ -1,5 +1,4 @@
 import pytest
-
 from pluralscan.domain.technology.language import Language
 
 

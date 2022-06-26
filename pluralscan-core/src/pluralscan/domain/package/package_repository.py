@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
+
 from pluralscan.domain.package.package import Package
 from pluralscan.domain.package.package_id import PackageId
 
@@ -21,6 +22,16 @@ class AbstractPackageRepository(metaclass=ABCMeta):
     @abstractmethod
     def find_by_id(self, package_id: PackageId) -> Package:
         """Find package by id."""
+        raise NotImplementedError()
+
+    @abstractmethod
+    def find_by_name(self, name: str) -> Package:
+        """Find package by name."""
+        raise NotImplementedError()
+
+    @abstractmethod
+    def find_by_location(self, location: str) -> Package:
+        """Find package by location."""
         raise NotImplementedError()
 
     @abstractmethod

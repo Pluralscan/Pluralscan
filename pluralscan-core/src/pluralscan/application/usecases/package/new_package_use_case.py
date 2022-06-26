@@ -1,10 +1,12 @@
-from dataclasses import dataclass
 from abc import ABCMeta, abstractmethod
-from pluralscan.application.processors.fetchers.package_fetcher import (
-    AbstractPackageFetcher,
-)
+from dataclasses import dataclass
+
+from pluralscan.application.processors.fetchers.package_fetcher import \
+    AbstractPackageFetcher
 from pluralscan.domain.package.package import Package
-from pluralscan.domain.package.package_repository import AbstractPackageRepository
+from pluralscan.domain.package.package_repository import \
+    AbstractPackageRepository
+
 
 # Input
 @dataclass(frozen=True)
@@ -23,11 +25,13 @@ class NewPackageCommand:
 # Output
 @dataclass
 class NewPackageResult:
+    """NewPackageResult"""
     package: Package
 
 
 # Contract
 class AbstractNewPackageUseCase(metaclass=ABCMeta):
+    """AbstractNewPackageUseCase"""
     @abstractmethod
     def handle(self, command: NewPackageCommand) -> NewPackageResult:
         raise NotImplementedError
@@ -35,6 +39,7 @@ class AbstractNewPackageUseCase(metaclass=ABCMeta):
 
 # Default Implementation
 class NewPackageUseCase(AbstractNewPackageUseCase):
+    """NewPackageUseCase"""
     def __init__(
         self,
         package_fetcher: AbstractPackageFetcher,

@@ -1,14 +1,13 @@
-from dataclasses import dataclass
 import re
 import traceback
-import requests
+from dataclasses import dataclass
+
 import gitlab
+import requests
 from pluralscan.application.processors.fetchers.package_fetcher import (
-    AbstractPackageFetcher,
-    DownloadPackageResult,
-    PackageInfoResult,
-)
+    AbstractPackageFetcher, DownloadPackageResult, PackageInfoResult)
 from pluralscan.libs.utils.uri import UriUtils
+
 
 @dataclass
 class GitlabPackageFetcherOptions:

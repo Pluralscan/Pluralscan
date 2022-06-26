@@ -1,7 +1,8 @@
-from dataclasses import dataclass
 from abc import ABCMeta, abstractmethod
+from dataclasses import dataclass
 
 from pluralscan.domain.project.project import Project
+
 
 @dataclass
 class NewProjectRequest:

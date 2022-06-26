@@ -1,9 +1,11 @@
-from dataclasses import dataclass
 from abc import ABCMeta, abstractmethod
+from dataclasses import dataclass
 from typing import List
+
 from pluralscan.domain.scans.scan import Scan
 from pluralscan.domain.scans.scan_repository import AbstractScanRepository
 from pluralscan.libs.utils.validable import Validable
+
 
 # Input
 @dataclass(frozen=True)

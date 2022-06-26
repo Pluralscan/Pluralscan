@@ -1,8 +1,9 @@
-from pymongo import MongoClient
 import pytest
-
-from pluralscan.data.mongodb.analyzers.analyzer_validation import AnalyzerRepositoryValidation
+from pluralscan.data.mongodb.analyzers.analyzer_validation import \
+    AnalyzerRepositoryValidation
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
+from pymongo import MongoClient
+
 
 # Arrange
 @pytest.fixture

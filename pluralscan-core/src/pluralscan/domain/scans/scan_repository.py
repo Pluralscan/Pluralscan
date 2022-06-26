@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
+
 from .scan import Scan
 from .scan_id import ScanId
 
@@ -30,6 +31,11 @@ class AbstractScanRepository(metaclass=ABCMeta):
     @abstractmethod
     def add(self, scan: Scan) -> Scan:
         """Add a new scan."""
+        raise NotImplementedError()
+
+    @abstractmethod
+    def add_bulk(self, scans: List[Scan]) -> List[Scan]:
+        """Add many scans into storage."""
         raise NotImplementedError()
 
     @abstractmethod

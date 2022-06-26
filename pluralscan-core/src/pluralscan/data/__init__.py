@@ -1,6 +1,8 @@
+from pluralscan.data.inmemory.packages.package_repository import \
+    InMemoryPackageRepository
+from pluralscan.data.mongodb.packages.package_repository import \
+    MongoPackageRepository
 from pymongo import MongoClient
-from pluralscan.data.inmemory.packages.package_repository import InMemoryPackageRepository
-from pluralscan.data.mongodb.packages.package_repository import MongoPackageRepository
 
 
 class AbstractRepositoryFactory:

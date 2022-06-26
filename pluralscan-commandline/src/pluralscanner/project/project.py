@@ -1,7 +1,6 @@
 import typer
-
-from pluralscan.application.usecases.project.new_project_use_case import NewProjectUseCase
-
+from pluralscan.application.usecases.project.new_project_use_case import \
+    NewProjectUseCase
 
 app = typer.Typer()
 

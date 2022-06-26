@@ -5,7 +5,7 @@ from pymongo import MongoClient
 
 @dataclass
 class MongoRepositoryOptions:
-    """Repository options."""
+    """Common set of options defined for a MongoDB repository."""
     client: MongoClient
     database_name: str
     collection_name: str

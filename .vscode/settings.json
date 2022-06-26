@@ -9,8 +9,6 @@
         "pytest.ini",
         "-v",
         "-s",
-        "--cov=pluralscan/",
-        "--cov-report=xml",
         "--pdb"
     ],
     "python.testing.pytestEnabled": true,

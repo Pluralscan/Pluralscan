@@ -1,29 +1,26 @@
 import re
-from rest_framework.viewsets import GenericViewSet
-from rest_framework.permissions import AllowAny
-from rest_framework.mixins import ListModelMixin
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework.request import Request
+
 import rest_framework.status as status
-from pluralscan.application.processors.fetchers.package_fetcher import (
-    AbstractPackageFetcher,
-)
-from pluralscan.application.usecases.package.get_remote_package_info_use_case import (
-    GetRemotePackageInfoCommand,
-)
-from pluralscan.application.usecases.package.list_packages_use_case import (
-    ListPackagesCommand,
-)
+from pluralscan.application.processors.fetchers.package_fetcher import \
+    AbstractPackageFetcher
+from pluralscan.application.usecases.package.get_remote_package_info_use_case import \
+    GetRemotePackageInfoCommand
+from pluralscan.application.usecases.package.list_packages_use_case import \
+    ListPackagesCommand
 from pluralscan.domain.package.package_origin import PackageOrigin
-from pluralscan.infrastructure.processor.fetchers.github_package_fetcher import (
-    GithubPackageFetcher,
-)
-from pluralscan.infrastructure.processor.fetchers.gitlab_package_fetcher import (
-    GitlabPackageFetcher,
-)
-from .serializers import PackageSerializer
+from pluralscan.infrastructure.processor.fetchers.github_package_fetcher import \
+    GithubPackageFetcher
+from pluralscan.infrastructure.processor.fetchers.gitlab_package_fetcher import \
+    GitlabPackageFetcher
+from rest_framework.decorators import action
+from rest_framework.mixins import ListModelMixin
+from rest_framework.permissions import AllowAny
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
+
 from .factories import get_remote_package_info_use_case, list_packages_use_case
+from .serializers import PackageSerializer
 
 
 class PackageViewSet(ListModelMixin, GenericViewSet):

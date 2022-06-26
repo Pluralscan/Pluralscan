@@ -1,8 +1,10 @@
 import unittest
-from pluralscan.data.inmemory.projects.project_repository import InMemoryProjectRepository
-from pluralscan.domain.project.project import Project
 
 from __tests__.test_helpers import TestHelpers
+from pluralscan.data.inmemory.projects.project_repository import \
+    InMemoryProjectRepository
+from pluralscan.domain.project.project import Project
+
 
 class TestInMemoryanalyzerRepository(unittest.TestCase):
     def setUp(self):

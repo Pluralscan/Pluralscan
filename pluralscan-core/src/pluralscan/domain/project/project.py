@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from pluralscan.domain.project.project_id import ProjectId
 
+
 @dataclass
 class Project:
     """Project"""

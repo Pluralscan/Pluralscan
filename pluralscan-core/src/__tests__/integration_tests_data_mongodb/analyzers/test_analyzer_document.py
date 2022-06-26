@@ -1,6 +1,7 @@
-from bson import ObjectId
 import pytest
-from pluralscan.data.mongodb.analyzers.analyzer_document import AnalyzerDocument
+from bson import ObjectId
+from pluralscan.data.mongodb.analyzers.analyzer_document import \
+    AnalyzerDocument
 
 
 @pytest.mark.parametrize(

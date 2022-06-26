@@ -1,13 +1,13 @@
 from typing import List
+
 from bson import ObjectId
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
-
 from pluralscan.data.mongodb.packages.package_document import PackageDocument
 from pluralscan.data.mongodb.packages.package_mapper import PackageMapper
-
 from pluralscan.domain.package.package import Package
 from pluralscan.domain.package.package_id import PackageId
-from pluralscan.domain.package.package_repository import AbstractPackageRepository
+from pluralscan.domain.package.package_repository import \
+    AbstractPackageRepository
 
 
 class MongoPackageRepository(AbstractPackageRepository):

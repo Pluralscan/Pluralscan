@@ -4,6 +4,7 @@ from typing import Any, Set
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
 from pluralscan.domain.rule.rule_category import RuleCategory
 from pluralscan.domain.rule.rule_id import RuleId
+from pluralscan.domain.technology.language import Language
 
 
 @dataclass
@@ -11,6 +12,7 @@ class Rule:
     '''Rule'''
     rule_id: RuleId
     analyzer_id: AnalyzerId
+    language: Language = None
     categories: Set[RuleCategory] = field(default_factory=set)
     description: str = None
     analog_rules: Set[RuleId] = field(default_factory=set)

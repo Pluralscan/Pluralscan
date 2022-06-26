@@ -4,7 +4,6 @@ from typing import List
 from pluralscan.domain.project.project import Project
 
 
-
 class AbstractProjectRepository(metaclass=ABCMeta):
     """
     Type: Abstract Repository\n

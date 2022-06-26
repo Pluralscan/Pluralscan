@@ -1,5 +1,5 @@
-import os
 import json
+import os
 from collections import OrderedDict
 
 from pluralscan.data.mongodb.options import MongoRepositoryOptions

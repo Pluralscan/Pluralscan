@@ -1,15 +1,9 @@
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
 from typing import List
+
+from pluralscan.domain.package.package_origin import PackageOrigin
 from pluralscan.domain.technology.language import Language
-
-
-@dataclass
-class PackageFetcherOptions:
-    """PackageFetcherOptions"""
-
-    output_dir: str = None
-    credentials = None
 
 
 @dataclass
@@ -51,4 +45,13 @@ class AbstractPackageFetcher(metaclass=ABCMeta):
     @abstractmethod
     def download(self, uri: str) -> DownloadPackageResult:
         """Download and save package to fetcher output directory."""
+        raise NotImplementedError
+
+
+class AbstractPackageFetcherFactory(metaclass=ABCMeta):
+    """AbstractPackageFetcherFactory"""
+
+    @abstractmethod
+    def create(self, origin: PackageOrigin, working_dir: str) -> AbstractPackageFetcher:
+        """create"""
         raise NotImplementedError

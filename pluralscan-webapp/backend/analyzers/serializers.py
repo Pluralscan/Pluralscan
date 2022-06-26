@@ -1,5 +1,7 @@
 from typing import Dict
+
 from rest_framework import serializers
+
 
 class EnumValueField(serializers.Field):
     labels = {}

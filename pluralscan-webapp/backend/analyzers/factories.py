@@ -1,15 +1,14 @@
-from pymongo import MongoClient
-from pluralscan.application.usecases.analyzer.list_analysers_use_case import (
-    ListAnalyzersUseCase,
-)
-from pluralscan.application.usecases.analyzer.new_analyser_use_case import (
-    NewAnalyzerUseCase,
-)
-from pluralscan.data.inmemory.analyzers.analyzer_repository import InMemoryAnalyzerRepository
-from pluralscan.data.mongodb.analyzers.analyzer_repository import (
-    MongoAnalyzerRepository,
-)
+from pluralscan.application.usecases.analyzer.list_analysers_use_case import \
+    ListAnalyzersUseCase
+from pluralscan.application.usecases.analyzer.new_analyser_use_case import \
+    NewAnalyzerUseCase
+from pluralscan.data.inmemory.analyzers.analyzer_repository import \
+    InMemoryAnalyzerRepository
+from pluralscan.data.mongodb.analyzers.analyzer_repository import \
+    MongoAnalyzerRepository
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
+from pymongo import MongoClient
+
 
 # Database Clients
 def mongo_client():

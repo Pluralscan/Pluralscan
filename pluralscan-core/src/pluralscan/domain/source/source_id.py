@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass(frozen=True, init=False)
 class SourceId:
     """A package ID."""

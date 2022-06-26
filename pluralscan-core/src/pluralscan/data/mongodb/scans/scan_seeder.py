@@ -1,7 +1,8 @@
 from bson import ObjectId
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
 from pluralscan.data.mongodb.scans.scan_document import ScanDocument
-from pluralscan.data.mongodb.scans.scan_validation import ScanRepositoryValidation
+from pluralscan.data.mongodb.scans.scan_validation import \
+    ScanRepositoryValidation
 
 
 # TODO: Abstract seeder

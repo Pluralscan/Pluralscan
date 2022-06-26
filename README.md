@@ -1,10 +1,11 @@
 # Pluralscan
 
-Perform's code quality and security analysis with many tools.
+Pluralscan is a quality and security analysis platform aimed to provides a single solution for :
+- 
 
 ## Abstract
 
-Pluralscan is a **POC/POW project** that try to demonstrate how to realize a complexe business oriented software in Python by following **clean architecture practices**.
+Pluralscan should be currently considered as a **POC/POW project** that try to demonstrate how to realize a complexe business oriented software in Python by following **clean architecture practices**.
 
 The repository is structured into many layers *(Multi Module N-Tier Architecture)* and follow principles inspired from:
 - Clean Architecture
@@ -24,17 +25,30 @@ The repository is structured into many layers *(Multi Module N-Tier Architecture
 ```bash
 mkdir pluralscan
 cd pluralscan
-git clone https://github.com/gromatluidgi/pluralscan.git
-docker build -t luciustack/pluralscan .
+git clone https://github.com/pluralscan/pluralscan.git
+docker build -t pluralscan/pluralscan .
 ```
 
 ### Run image
 
 ```bash
-docker run -dp 5400:5400 --env DJANGO_DEBUG=ON luciustack/pluralscan
+docker run -dp 5400:5400 --env DJANGO_DEBUG=ON pluralscan/pluralscan
 ```
 
 Navigate to http://localhost:5400
+
+## TODO
+
+- Core: abstract filesystem for store and retrieve resources (tools, source code...)
+- SARIF Report Processor
+- Rules:
+  - Pluralscan rules registry
+  - Mapper:
+    - Sonar
+    - Roslyn
+    - ...
+- Ensure aggregates consistency.
+- Ensure scalability.
 
 ## Stack Overview
 
@@ -47,6 +61,7 @@ Navigate to http://localhost:5400
 - **pytest**
 - **pytest-cov**
 - [python-rq](https://python-rq.org/) for queuing jobs and process them in background with workers **(Redis is required)**
+- [pathlib]() for cross-platform file path handling
 
 ### Commandline CLI Application
 
@@ -202,9 +217,12 @@ More info about django-admin runserver: https://docs.djangoproject.com/en/4.0/re
 
 ## Tests
 
-**Unit tests**
+### Usecases
 
-**Integration tests**
+- [Shredule Package Scan](pluralscan-core/src/__tests__/integration_tests_application/usecases/scans/test_schredule_scan.py)
+- [Scan Package](pluralscan-core/src/__tests__/integration_tests_application/usecases/scans/test_scan_package.py)
+
+### Scan Package
 
 ## Coverage
 https://coverage.readthedocs.io/

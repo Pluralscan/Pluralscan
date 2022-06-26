@@ -1,8 +1,10 @@
 from typing import List
+
 from pluralscan.libs.ddd.specification import AbstractSpecification
 
+
 class AnalyzerQueryFilter():
-    analyzers: List[str]
+    ids: List[str]
 
 class AnalyzerSpecification(AbstractSpecification):
     def __init__(self) -> None:

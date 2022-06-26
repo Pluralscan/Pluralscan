@@ -1,20 +1,24 @@
-from dataclasses import dataclass
-from typing import Set
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from dataclasses import dataclass, field
+from datetime import datetime
+
+from pluralscan.domain.executable.executable_id import ExecutableId
 from pluralscan.domain.package.package_id import PackageId
 from pluralscan.domain.scans.scan_id import ScanId
 from pluralscan.domain.scans.scan_state import ScanState
-from pluralscan.domain.diagnosys.diagnosys_id import DiagnosysId
 
 
 @dataclass
 class Scan:
-    """Scan Aggregate."""
+    """Scan Entity."""
 
     scan_id: ScanId = None
-    created_on: str = None
-    modified_on: str = None
-    analyzers: Set[AnalyzerId] = None
-    packages: Set[PackageId] = None
-    diagnosys: Set[DiagnosysId] = None
-    state: ScanState = None
+    executable_id: ExecutableId = None
+    created_on: datetime = field(default_factory=datetime.now)
+    started_on: datetime = None
+    ended_on: datetime = None
+    working_directory: str = None
+    """Executables used to performs analysis."""
+    package_id: PackageId = None
+    """Package under analysis."""
+    state: ScanState = ScanState.SCHREDULED
+    group_id: str = None

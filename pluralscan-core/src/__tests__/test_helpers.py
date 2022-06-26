@@ -1,13 +1,14 @@
-from pathlib import Path
 import random
 import string
 import uuid
+from pathlib import Path
 
-ROOT_DIR = Path(__file__).parent.parent.absolute()
+ROOT_DIR = Path(__file__).parent.parent.parent.parent.absolute()
 RESOURCES_DIR = Path.joinpath(ROOT_DIR, 'resources')
 TOOLS_DIR = Path.joinpath(RESOURCES_DIR, 'tools')
 SOURCES_DIR = Path.joinpath(RESOURCES_DIR, 'sources')
 REPORTS_DIR = Path.joinpath(RESOURCES_DIR, 'reports')
+FIXTURES_DIR = Path.joinpath(Path(__file__).parent.absolute(), 'fixtures')
 
 
 class TestHelpers:

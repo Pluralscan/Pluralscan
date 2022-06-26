@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
+
 from pluralscan.domain.rule.rule_category import RuleCategory
 
 

@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 from pluralscan.domain.issue.issue_location import IssueLocation
 from pluralscan.domain.issue.issue_severity import IssueSeverity
 from pluralscan.domain.rule.rule_id import RuleId

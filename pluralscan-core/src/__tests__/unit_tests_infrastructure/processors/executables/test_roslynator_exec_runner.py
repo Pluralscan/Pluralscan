@@ -1,14 +1,13 @@
 from pathlib import Path
+
 import pytest
-from pluralscan.application.processors.executables.exec_runner import (
-    ExecRunnerOptions,
-)
+from __tests__.test_helpers import REPORTS_DIR, SOURCES_DIR, TOOLS_DIR
+from pluralscan.application.processors.executables.exec_runner import \
+    ExecRunnerOptions
 from pluralscan.domain.executable.executable import Executable
 from pluralscan.domain.executable.executable_platform import ExecutablePlatform
-from pluralscan.infrastructure.processor.executables.roslynator_exec_runner import (
-    RoslynatorExecRunner,
-)
-from __tests__.test_helpers import REPORTS_DIR, SOURCES_DIR, TOOLS_DIR
+from pluralscan.infrastructure.processor.executables.roslynator_exec_runner import \
+    RoslynatorExecRunner
 
 
 @pytest.fixture

@@ -1,8 +1,8 @@
 import typer
 
 from .analyzer import analyzer
-from .project import project
 from .package import package
+from .project import project
 
 app = typer.Typer(invoke_without_command=True)
 app.add_typer(project.app, name='project')

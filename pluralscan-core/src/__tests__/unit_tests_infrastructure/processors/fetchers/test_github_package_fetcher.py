@@ -1,13 +1,12 @@
 import pytest
-from pluralscan.application.processors.fetchers.package_fetcher import PackageFetcherOptions
-
-from pluralscan.infrastructure.processor.fetchers.github_package_fetcher import GithubPackageFetcher
 from __tests__.test_helpers import SOURCES_DIR
+from pluralscan.infrastructure.processor.fetchers.github_package_fetcher import (
+    GithubPackageFetcher, GithubPackageFetcherOptions)
 
 
 @pytest.fixture
 def fetcher():
-    options = PackageFetcherOptions(SOURCES_DIR)
+    options = GithubPackageFetcherOptions(SOURCES_DIR)
     return GithubPackageFetcher(options)
 
 @pytest.mark.parametrize(

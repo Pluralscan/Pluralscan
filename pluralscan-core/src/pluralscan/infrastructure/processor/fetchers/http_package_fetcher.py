@@ -1,13 +1,10 @@
 import dataclasses
 import os
 import traceback
+
 import requests
 from pluralscan.application.processors.fetchers.package_fetcher import (
-    AbstractPackageFetcher,
-    PackageFetcherOptions,
-    DownloadPackageResult,
-    PackageInfoResult,
-)
+    AbstractPackageFetcher, DownloadPackageResult, PackageInfoResult)
 from pluralscan.libs.utils.http import HttpUtils
 from pluralscan.libs.utils.uri import UriUtils
 
@@ -40,12 +37,9 @@ class HttpPackageFetcher(AbstractPackageFetcher):
         if extension not in self.supported_extensions:
             raise ValueError("Unsupported uri extension.")
 
-        if options is None:
-            options = PackageFetcherOptions()
-
         try:
             return self._download_archive(uri)
-        except:
+        except Exception:
             print(traceback.print_exc())
             return DownloadPackageResult(error="")
 

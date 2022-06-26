@@ -1,6 +1,5 @@
-from bson import ObjectId
 import pytest
-
+from bson import ObjectId
 from pluralscan.data.mongodb.packages.package_document import PackageDocument
 
 

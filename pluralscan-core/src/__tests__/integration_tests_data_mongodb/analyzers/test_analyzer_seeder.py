@@ -1,10 +1,12 @@
 from collections import OrderedDict
-from pymongo import MongoClient
-import pytest
 
-from pluralscan.data.mongodb.analyzers.analyzer_repository import MongoAnalyzerRepository
-from pluralscan.data.mongodb.analyzers.analyzer_seeder import AnalyzerRepositorySeeder
+import pytest
+from pluralscan.data.mongodb.analyzers.analyzer_repository import \
+    MongoAnalyzerRepository
+from pluralscan.data.mongodb.analyzers.analyzer_seeder import \
+    AnalyzerRepositorySeeder
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
+from pymongo import MongoClient
 
 
 @pytest.fixture

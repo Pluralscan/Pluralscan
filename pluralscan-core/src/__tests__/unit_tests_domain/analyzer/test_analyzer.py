@@ -9,12 +9,12 @@ def analyzer() -> Analyzer:
     analyzer.add_executable(Executable(version="1.0"))
     return analyzer
 
-def test_get_executable_by_version_returns_executable(analyzer):
+def test_get_executable_by_version_returns_executable(analyzer: Analyzer):
     version = "1.0"
     result = analyzer.get_executable_by_version(version)
     assert result is not None
 
-def test_get_executable_by_version_returns_none(analyzer):
+def test_get_executable_by_version_returns_none(analyzer: Analyzer):
     version = "2.0"
     result = analyzer.get_executable_by_version(version)
     assert result is None

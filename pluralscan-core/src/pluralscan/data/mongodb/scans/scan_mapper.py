@@ -1,4 +1,5 @@
 from typing import List
+
 from pluralscan.data.mongodb.scans.scan_document import ScanDocument
 from pluralscan.domain.scans.scan import Scan
 

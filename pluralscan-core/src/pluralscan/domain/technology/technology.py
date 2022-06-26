@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 from pluralscan.domain.technology.language import Language
 
 

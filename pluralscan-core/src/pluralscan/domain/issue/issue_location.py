@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from typing import NamedTuple
 
-from pluralscan.domain.source.source_location import SourceLocation, TextLocation
+from pluralscan.domain.source.source_location import (SourceLocation,
+                                                      TextLocation)
 
 
 @dataclass(frozen=True)

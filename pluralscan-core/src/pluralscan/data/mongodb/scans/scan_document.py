@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from datetime import datetime
 from typing import List
-from bson import SON, ObjectId
 
+from bson import SON, ObjectId
 from pluralscan.domain.scans.scan_state import ScanState
 
 

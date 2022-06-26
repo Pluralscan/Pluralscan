@@ -1,6 +1,7 @@
-from dataclasses import dataclass
 import re
 import traceback
+from dataclasses import dataclass
+
 import github
 import requests
 from github import Github

@@ -2,6 +2,7 @@ from abc import ABCMeta, abstractmethod
 
 from pluralscan.domain.settings.setting import Setting
 
+
 class AbstractSettingRepository(metaclass=ABCMeta):
     """Abstract Setting repository."""
     def __del__(self):

@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 from bson import SON, ObjectId
 from pluralscan.domain.executable.executable import Executable
 

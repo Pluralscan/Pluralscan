@@ -1,14 +1,12 @@
+import os
+import subprocess
 from dataclasses import dataclass
 from os.path import exists
-import os
 from subprocess import Popen
-import subprocess
 from typing import List
+
 from pluralscan.application.processors.executables.exec_runner import (
-    AbstractExecRunner,
-    ExecRunnerOptions,
-    ProcessRunResult,
-)
+    AbstractExecRunner, ExecRunnerOptions, ProcessRunResult)
 
 
 @dataclass

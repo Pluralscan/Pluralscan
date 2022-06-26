@@ -1,9 +1,8 @@
 import pytest
 from pluralscan.application.usecases.package.get_remote_package_info_use_case import (
-    GetRemotePackageInfoCommand,
-    GetRemotePackageInfoUseCase,
-)
-from pluralscan.infrastructure.processor.fetchers.github_package_fetcher import GithubPackageFetcher
+    GetRemotePackageInfoCommand, GetRemotePackageInfoUseCase)
+from pluralscan.infrastructure.processor.fetchers.github_package_fetcher import \
+    GithubPackageFetcher
 
 
 @pytest.fixture

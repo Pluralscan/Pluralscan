@@ -1,11 +1,11 @@
 from typing import List
+
 from bson import ObjectId
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
 from pluralscan.data.mongodb.scans.scan_document import ScanDocument
 from pluralscan.data.mongodb.scans.scan_mapper import ScanMapper
 from pluralscan.domain.scans.scan import Scan
 from pluralscan.domain.scans.scan_id import ScanId
-
 from pluralscan.domain.scans.scan_repository import AbstractScanRepository
 
 
