@@ -20,14 +20,14 @@ class InMemoryDiagnosisRepository(AbstractDiagnosisRepository):
     def next_id(self) -> DiagnosisId:
         return DiagnosisId(uuid.uuid4())
 
-    def find_by_id(self, diagnosis_id: str) -> Diagnosis:
+    def get_by_id(self, diagnosis_id: str) -> Diagnosis:
         return self._diagnosis.get(diagnosis_id)
 
     def get_all(self) -> List[Diagnosis]:
         return list(self._diagnosis.values())
 
     def update(self, diagnosis: Diagnosis) -> Diagnosis:
-        diagnosis = self.find_by_id(diagnosis.diagnosis_id)
+        diagnosis = self.get_by_id(diagnosis.diagnosis_id)
 
         if diagnosis is None:
             raise Exception
@@ -47,7 +47,7 @@ class InMemoryDiagnosisRepository(AbstractDiagnosisRepository):
         return diagnosis
 
     def remove(self, diagnosis_id: str):
-        diagnosis = self.find_by_id(diagnosis_id)
+        diagnosis = self.get_by_id(diagnosis_id)
 
         if diagnosis is None:
             raise Exception

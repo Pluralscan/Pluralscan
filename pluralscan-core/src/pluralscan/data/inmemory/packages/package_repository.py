@@ -1,9 +1,9 @@
 import uuid
-from typing import Dict, List
+from typing import Dict, List, Optional
 
-from pluralscan.domain.package.package import Package
-from pluralscan.domain.package.package_id import PackageId
-from pluralscan.domain.package.package_repository import \
+from pluralscan.domain.packages.package import Package
+from pluralscan.domain.packages.package_id import PackageId
+from pluralscan.domain.packages.package_repository import \
     AbstractPackageRepository
 
 
@@ -20,8 +20,14 @@ class InMemoryPackageRepository(AbstractPackageRepository):
     def next_id(self) -> PackageId:
         return PackageId(uuid.uuid4())
 
-    def find_by_id(self, package_id: PackageId) -> Package:
+    def find_by_id(self, package_id: PackageId) -> Optional[Package]:
         return self._packages.get(package_id)
+
+    def get_one(self, package_id: PackageId) -> Package:
+        package = self._packages.get(package_id)
+        if package is None:
+            raise RuntimeError
+        return package
 
     def find_by_name(self, name: str) -> Package:
         for package in self._packages.values():
@@ -35,7 +41,7 @@ class InMemoryPackageRepository(AbstractPackageRepository):
                 return package
         return None
 
-    def get_all(self) -> List[Package]:
+    def find_all(self) -> List[Package]:
         return self._packages
 
     def update(self, package: Package) -> Package:

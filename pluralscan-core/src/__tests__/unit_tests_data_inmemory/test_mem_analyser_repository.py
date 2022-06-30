@@ -32,14 +32,14 @@
 #         assert analyzers != None
 #         assert len(analyzers) == 2
 
-#     def test_find_by_id_returns_analyzer(self):
+#     def test_get_by_id_returns_analyzer(self):
 #         # Arrange
 #         analyzer = Analyzer("Test")
 #         self.repository.add(analyzer)
 #         analyzer_id = analyzer.analyzer_id
 
 #         # Act
-#         analyzer = self.repository.find_by_id(analyzer_id)
+#         analyzer = self.repository.get_by_id(analyzer_id)
 
 #         # Assert
 #         assert analyzer != None

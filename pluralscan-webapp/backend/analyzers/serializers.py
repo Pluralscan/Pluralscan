@@ -36,6 +36,7 @@ class ExecutableSerializer(serializers.Serializer):
     location = serializers.CharField()
     version = serializers.CharField()
     semantic_version = serializers.CharField()
+    
 
 class AnalyzerSerializer(serializers.Serializer):
     """AnalyzerSerializer"""

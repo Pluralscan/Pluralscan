@@ -1,15 +1,11 @@
 import re
-import traceback
 from dataclasses import dataclass
 
 import github
 import requests
 from github import Github
 from pluralscan.application.processors.fetchers.package_fetcher import (
-    AbstractPackageFetcher,
-    DownloadPackageResult,
-    PackageInfoResult,
-)
+    AbstractPackageFetcher, DownloadPackageResult, PackageInfoResult)
 from pluralscan.libs.utils.uri import UriUtils
 
 
@@ -17,7 +13,7 @@ from pluralscan.libs.utils.uri import UriUtils
 class GithubPackageFetcherOptions:
     """GithubPackageFetcherOptions"""
 
-    output_dir: str = None
+    output_dir: str
     credentials = None
 
 
@@ -28,7 +24,7 @@ class GithubPackageFetcher(AbstractPackageFetcher):
     """
 
     def __init__(
-        self, options: GithubPackageFetcherOptions = GithubPackageFetcherOptions()
+        self, options: GithubPackageFetcherOptions
     ):
         self._options = options
         self._github_client = Github()
@@ -63,12 +59,11 @@ class GithubPackageFetcher(AbstractPackageFetcher):
             return False
 
     def download(
-        self, uri, options: GithubPackageFetcherOptions = ...
+        self, uri
     ) -> DownloadPackageResult:
         try:
-            return self._clone(uri, options)
+            return self._clone(uri, self._options)
         except EnvironmentError:
-            print(traceback.print_exc())
             return DownloadPackageResult(error="")
 
     def _parse_github_url(self, uri: str) -> str:

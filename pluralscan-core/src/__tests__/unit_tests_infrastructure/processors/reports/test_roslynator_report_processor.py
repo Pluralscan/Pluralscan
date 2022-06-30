@@ -6,7 +6,7 @@ def test_transform_to_diagnosys():
     path = r"C:\\_dev\\CleanSecPy\\resources\\sources\\AnalyzerTests\\RESULTS\\result.txt"
     processor = RoslynatorReportProcessor()
 
-    diagnosis = processor.transform_to_diagnosys([path])
+    diagnosis = processor.transform_to_diagnosis([path])
 
     assert diagnosis is not None
 

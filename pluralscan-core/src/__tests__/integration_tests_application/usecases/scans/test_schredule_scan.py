@@ -2,20 +2,20 @@ import pathlib
 
 import pytest
 from __tests__.test_helpers import FIXTURES_DIR
-from pluralscan.application.usecases.scans.schredule_scan import (
-    SchreduleScanCommand, SchreduleScanUseCase)
+from pluralscan.application.usecases.scans.schedule_scan import (
+    ScheduleScanCommand, ScheduleScanUseCase)
 from pluralscan.data.inmemory.executables.executable_repository import \
     InMemoryExecutableRepository
 from pluralscan.data.inmemory.executables.executable_seeder import \
-    ExecutableRepositorySeeder
+    ExecutableInMemoryRepositorySeeder
 from pluralscan.data.inmemory.packages.package_repository import \
     InMemoryPackageRepository
 from pluralscan.data.inmemory.packages.package_seeder import \
     PackageRepositorySeeder
 from pluralscan.data.inmemory.scans.scan_repository import \
     InMemoryScanRepository
-from pluralscan.domain.executable.executable_id import ExecutableId
-from pluralscan.domain.package.package_origin import PackageOrigin
+from pluralscan.domain.executables.executable_id import ExecutableId
+from pluralscan.domain.packages.package_origin import PackageOrigin
 from pluralscan.infrastructure.processor.fetchers.package_fetcher_factory import \
     PackageFetcherFactory
 from pluralscan.infrastructure.processor.jobs.rq_job_runner import RqJobRunner
@@ -28,7 +28,7 @@ def scan_repository():
 @pytest.fixture
 def executable_repository():
     executable_repository = InMemoryExecutableRepository()
-    ExecutableRepositorySeeder(executable_repository).seed()
+    ExecutableInMemoryRepositorySeeder(executable_repository).seed()
     return executable_repository
 
 @pytest.fixture
@@ -44,13 +44,13 @@ def test_handle_for_unregistred_package(scan_repository, package_repository, exe
     executables = [ExecutableId("RoslynatorFork")]
     working_directory = FIXTURES_DIR
 
-    command = SchreduleScanCommand(
+    command = ScheduleScanCommand(
         uri,
         executables,
         working_directory,
     )
     
-    usecase = SchreduleScanUseCase(
+    usecase = ScheduleScanUseCase(
         scan_repository=scan_repository,
         package_repository=package_repository,
         executable_repository=executable_repository,

@@ -1,7 +1,7 @@
 from typing import List
 
-from pluralscan.domain.project.project import Project
-from pluralscan.domain.project.project_repository import \
+from pluralscan.domain.projects.project import Project
+from pluralscan.domain.projects.project_repository import \
     AbstractProjectRepository
 
 
@@ -11,7 +11,7 @@ class MongoProjectRepository(AbstractProjectRepository):
     def __init__(self):
         pass
 
-    def find_by_id(self, project_id: str) -> Project:
+    def get_by_id(self, project_id: str) -> Project:
         pass
 
     def get_all(self) -> List[Project]:

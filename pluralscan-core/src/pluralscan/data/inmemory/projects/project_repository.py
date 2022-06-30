@@ -1,8 +1,8 @@
 import uuid
 from typing import Dict, List
 
-from pluralscan.domain.project.project import Project
-from pluralscan.domain.project.project_repository import \
+from pluralscan.domain.projects.project import Project
+from pluralscan.domain.projects.project_repository import \
     AbstractProjectRepository
 
 
@@ -11,14 +11,14 @@ class InMemoryProjectRepository(AbstractProjectRepository):
     def __init__(self):
         self.projects: Dict[str, Project] = {}
 
-    def find_by_id(self, project_id: str) -> Project:
+    def get_by_id(self, project_id: str) -> Project:
         return self.projects.get(project_id)
 
     def get_all(self) -> List[Project]:
         return list(self.projects.values())
 
     def update(self, project: Project) -> Project:
-        project = self.find_by_id(project.project_id)
+        project = self.get_by_id(project.project_id)
 
         if project is None:
             raise Exception
@@ -36,7 +36,7 @@ class InMemoryProjectRepository(AbstractProjectRepository):
         return project
 
     def remove(self, project_id: str):
-        project = self.find_by_id(project_id)
+        project = self.get_by_id(project_id)
 
         if project is None:
             raise Exception

@@ -1,26 +1,27 @@
 import pathlib
-from pluralscan.data.inmemory.executables.executable_repository import (
-    InMemoryExecutableRepository,
-)
+
+from pluralscan.data.inmemory.executables.executable_repository import \
+    InMemoryExecutableRepository
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
-from pluralscan.domain.executable.executable import Executable
-from pluralscan.domain.executable.executable_action import ExecutableAction
-from pluralscan.domain.executable.executable_command import ExecutableCommand
-from pluralscan.domain.executable.executable_id import ExecutableId
-from pluralscan.domain.executable.executable_platform import ExecutablePlatform
-from pluralscan.domain.executable.executable_runner import ExecutableRunner
+from pluralscan.domain.executables.executable import Executable
+from pluralscan.domain.executables.executable_action import ExecutableAction
+from pluralscan.domain.executables.executable_command import ExecutableCommand
+from pluralscan.domain.executables.executable_id import ExecutableId
+from pluralscan.domain.executables.executable_platform import \
+    ExecutablePlatform
+from pluralscan.domain.executables.executable_runner import ExecutableRunner
 from pluralscan.infrastructure.config import Config
 
 
-class ExecutableRepositorySeeder:
-    """ExecutableRepositorySeeder"""
+class ExecutableInMemoryRepositorySeeder:
+    """ExecutableInMemoryRepositorySeeder"""
 
     def __init__(
         self,
         executable_repository: InMemoryExecutableRepository,
     ) -> None:
         """
-        Construct a new 'AnalyzerRepositorySeeder' object.
+        Construct a new 'ExecutableInMemoryRepositorySeeder' object.
         """
         self._executable_repository = executable_repository
 
@@ -52,7 +53,7 @@ class ExecutableRepositorySeeder:
                 analyzer_id=AnalyzerId("Roslynator"),
                 platform=ExecutablePlatform.WIN,
                 name="Roslynator Fork",
-                location=str(pathlib.Path.joinpath(Config.TOOLS_DIR, "roslynator-fork-0.3.3.0\\Roslynator.exe")),
+                location= "roslynator-fork-0.3.3.0\\Roslynator.exe",
                 version="0.3.3.0",
                 runner=ExecutableRunner.ROSLYNATOR,
                 commands=[

@@ -4,7 +4,7 @@ from enum import Enum, unique
 @unique
 class ScanState(Enum):
     """Scan State"""
-    SCHREDULED = 'shreduled'
+    SCHEDULED = 'sheduled'
     RUNNING = 'running'
     COMPLETED = 'completed'
     CANCELLED = 'cancelled'

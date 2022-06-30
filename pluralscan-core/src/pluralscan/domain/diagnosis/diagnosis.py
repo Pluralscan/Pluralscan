@@ -4,7 +4,7 @@ from typing import List
 
 from pluralscan.domain.diagnosis.diagnosis_id import DiagnosisId
 from pluralscan.domain.diagnosis.diagnosis_report import DiagnosisReport
-from pluralscan.domain.issue.issue import Issue
+from pluralscan.domain.issues.issue import Issue
 from pluralscan.domain.scans.scan_id import ScanId
 
 

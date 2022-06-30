@@ -1,7 +1,7 @@
 from typing import List
 
 from pluralscan.data.mongodb.packages.package_document import PackageDocument
-from pluralscan.domain.package.package import Package
+from pluralscan.domain.packages.package import Package
 
 
 class PackageMapper:

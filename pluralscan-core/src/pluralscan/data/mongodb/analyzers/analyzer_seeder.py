@@ -4,13 +4,14 @@ from pluralscan.data.mongodb.analyzers.analyzer_document import \
 from pluralscan.data.mongodb.analyzers.analyzer_validation import \
     AnalyzerRepositoryValidation
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
-from pluralscan.domain.executable.executable import Executable
-from pluralscan.domain.executable.executable_platform import ExecutablePlatform
+from pluralscan.domain.executables.executable import Executable
+from pluralscan.domain.executables.executable_platform import \
+    ExecutablePlatform
 
 
 # TODO: Abstract seeder.
-class AnalyzerRepositorySeeder:
-    """AnalyzerRepositorySeeder"""
+class AnalyzerMongoRepositorySeeder:
+    """AnalyzerMongoRepositorySeeder"""
 
     def __init__(self, options: MongoRepositoryOptions):
         self._collection_name = options.collection_name

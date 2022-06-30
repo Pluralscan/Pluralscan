@@ -1,31 +1,31 @@
 from abc import ABCMeta, abstractmethod
-from dataclasses import dataclass
-from typing import List
+from dataclasses import dataclass, field
+from typing import List, Optional
 
-from pluralscan.domain.package.package_origin import PackageOrigin
-from pluralscan.domain.technology.language import Language
+from pluralscan.domain.packages.package_origin import PackageOrigin
+from pluralscan.domain.technologies.language import Language
 
 
-@dataclass
+@dataclass(frozen=True)
 class DownloadPackageResult:
     """DownloadPackageResult"""
 
-    output_dir: str = None
-    error: str = None
+    output_dir: Optional[str] = None
+    error: Optional[str] = None
     success: bool = error is None
 
 
-@dataclass
+@dataclass(frozen=True)
 class PackageInfoResult:
     """Data returned when querying a package details."""
 
-    name: str = None
-    full_name: str = None
-    description: str = None
-    version: str = None
-    url: str = None
-    languages: List[Language] = None
-    error: str = None
+    name: Optional[str] = None
+    full_name: Optional[str] = None
+    description: Optional[str] = None
+    version: Optional[str] = None
+    url: Optional[str] = None
+    languages: List[Language] = field(default_factory=list)
+    error: Optional[str] = None
     success: bool = error is None
 
 
@@ -43,7 +43,7 @@ class AbstractPackageFetcher(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def download(self, uri: str) -> DownloadPackageResult:
+    def download(self, uri: str, output_dir: str) -> DownloadPackageResult:
         """Download and save package to fetcher output directory."""
         raise NotImplementedError
 
@@ -52,6 +52,6 @@ class AbstractPackageFetcherFactory(metaclass=ABCMeta):
     """AbstractPackageFetcherFactory"""
 
     @abstractmethod
-    def create(self, origin: PackageOrigin, working_dir: str) -> AbstractPackageFetcher:
+    def create(self, uri: str) -> AbstractPackageFetcher:
         """create"""
         raise NotImplementedError

@@ -1,16 +1,15 @@
 # Pluralscan
 
 Pluralscan is a quality and security analysis platform aimed to provides a single solution for :
-- 
+- Static Application Security Testing (SAST)
+- Software Composition Analysis (SCA)
+- License Checking
+- Code Quality Analisys
+- Open-souce solution benchmarking
 
 ## Abstract
 
 Pluralscan should be currently considered as a **POC/POW project** that try to demonstrate how to realize a complexe business oriented software in Python by following **clean architecture practices**.
-
-The repository is structured into many layers *(Multi Module N-Tier Architecture)* and follow principles inspired from:
-- Clean Architecture
-- Hexagonal Architecture
-- Domain Driven Design (DDD)
 
 ## Goals
 
@@ -41,14 +40,18 @@ Navigate to http://localhost:5400
 
 - Core: abstract filesystem for store and retrieve resources (tools, source code...)
 - SARIF Report Processor
-- Rules:
-  - Pluralscan rules registry
+- Build a rules registry:
+  - Pluralscan rule aggregator
   - Mapper:
     - Sonar
     - Roslyn
     - ...
 - Ensure aggregates consistency.
 - Ensure scalability.
+- Introduce generic type and abstract redundant declaration (repository, usecase...)
+- **Service Orchestration**(current pattern) vs **Service Choreography**.
+- Implements websocket server.
+- Abstract datacontext used for centralize in memory store => Instantiate repository with abstract data context
 
 ## Stack Overview
 
@@ -59,9 +62,14 @@ Navigate to http://localhost:5400
 - **Django 4.0.5** (Backend Web Framework)
 - **Gunicorn** (Web Server)
 - **pytest**
-- **pytest-cov**
-- [python-rq](https://python-rq.org/) for queuing jobs and process them in background with workers **(Redis is required)**
-- [pathlib]() for cross-platform file path handling
+- [pytest-cov]()
+- [mypy](https://github.com/python/mypy) for static type checking.
+- [python-rq](https://python-rq.org/) for queuing jobs and process them in background with workers **(Redis is required)**.
+
+#### Recommendation
+
+- Use [pathlib]() for handling cross-platform file path.
+
 
 ### Commandline CLI Application
 
@@ -134,7 +142,11 @@ Contains all the entities related to the business.
 #### Application
 
 The Application package references the Domain package.
-This project is using DTO to define commands, queries, and their respective use cases. This package also defines interfaces (abstractions) that are used for things like Data Access or Business Logic Processing inside the use-cases. However, the implementation for the interfaces lives in the Infrastructure package.
+
+This project is using DTO to define commands, queries, and their respective use cases. The use cases are the processes that can be triggered in our Application Core by one or several User Interfaces in our application.
+
+This package also defines abstract interactors that are used for things like **Data Access** or **Business Logic Processing** inside the use-cases. However, the implementation for the interfaces lives in the Infrastructure package.
+
 
 #### Data
 
@@ -219,7 +231,7 @@ More info about django-admin runserver: https://docs.djangoproject.com/en/4.0/re
 
 ### Usecases
 
-- [Shredule Package Scan](pluralscan-core/src/__tests__/integration_tests_application/usecases/scans/test_schredule_scan.py)
+- [Shedule Package Scan](pluralscan-core/src/__tests__/integration_tests_application/usecases/scans/test_schedule_scan.py)
 - [Scan Package](pluralscan-core/src/__tests__/integration_tests_application/usecases/scans/test_scan_package.py)
 
 ### Scan Package
@@ -233,3 +245,9 @@ https://coverage.readthedocs.io/
 py -m coverage html --skip-empty
 cd htmlcov
 ```
+
+## References
+
+### Python
+
+- [PEP 563 – Postponed Evaluation of Annotations](https://peps.python.org/pep-0563/)

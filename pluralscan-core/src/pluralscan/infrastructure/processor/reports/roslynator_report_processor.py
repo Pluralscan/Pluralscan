@@ -1,26 +1,23 @@
 import xml.etree.ElementTree as ET
-from datetime import datetime
 from typing import Set
 
 from pluralscan.application.processors.reports.report_processor import \
     AbstractReportProcessor
 from pluralscan.domain.diagnosis.diagnosis import Diagnosis
 from pluralscan.domain.diagnosis.diagnosis_report import DiagnosisReport
-from pluralscan.domain.issue.issue import Issue
-from pluralscan.domain.scans.scan import Scan
+from pluralscan.domain.issues.issue import Issue
 
 
 class RoslynatorReportProcessor(AbstractReportProcessor):
     """RoslynatorReportProcessor"""
 
-    def transform_to_diagnosis(self, scan: Scan, data) -> Diagnosis:
+    def transform_to_diagnosis(self, data) -> Diagnosis:
         """transform_to_diagnosys"""
         report = self._validate_input(data)
         issues = self.read_report(report)
         diagnosis = Diagnosis(
-            scan_id=scan.scan_id,
             issues=issues,
-            report=DiagnosisReport(filename="", format="XML", path=report),
+            report=DiagnosisReport(filename=report, format="XML", path=report),
         )
         return diagnosis
 

@@ -1,12 +1,12 @@
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass, field
-from typing import List
+from typing import Generic, List, Optional, TypeVar
 
-from pluralscan.domain.executable.executable import Executable
-from pluralscan.domain.executable.executable_action import ExecutableAction
+from pluralscan.domain.executables.executable import Executable
+from pluralscan.domain.executables.executable_action import ExecutableAction
 
 
-@dataclass
+@dataclass(frozen=True)
 class ExecRunnerOptions:
     """ProcessOptions"""
 
@@ -18,25 +18,28 @@ class ExecRunnerOptions:
         if self.executable is None:
             raise ValueError("Executable must be defined.")
 
+TOptions = TypeVar("TOptions", ExecRunnerOptions, None)
 
-@dataclass
+
+@dataclass(frozen=True)
 class ProcessRunResult:
     """ProcessRunResult"""
 
-    output: str = None
-    success: bool = True
+    output: Optional[str] = None
+    error: Optional[str] = None
+    success: bool = error is None
 
 
-class AbstractExecRunner(metaclass=ABCMeta):
+class AbstractExecRunner(Generic[TOptions], metaclass=ABCMeta):
     """Contract that's define methods for execute external tools."""
 
     @abstractmethod
-    def execute(self, options: ExecRunnerOptions) -> None:
+    def execute(self, options: TOptions) -> ProcessRunResult:
         """Execute a process without output result."""
         raise NotImplementedError
 
     @abstractmethod
-    def execute_with_report(self, options: ExecRunnerOptions) -> ProcessRunResult:
+    def execute_with_report(self, options: TOptions) -> ProcessRunResult:
         """Execute a process and return raw report result."""
         raise NotImplementedError
 

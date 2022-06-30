@@ -1,10 +1,10 @@
 # IOC
 from pluralscan.application.processors.fetchers.package_fetcher import \
     AbstractPackageFetcher
-from pluralscan.application.usecases.package.get_remote_package_info_use_case import \
-    GetRemotePackageInfoUseCase
-from pluralscan.application.usecases.package.list_packages_use_case import \
+from pluralscan.application.usecases.packages.get_package_list import \
     ListPackagesUseCase
+from pluralscan.application.usecases.packages.get_remote_package_info import \
+    GetRemotePackageInfoUseCase
 from pluralscan.data.inmemory.packages.package_repository import \
     InMemoryPackageRepository
 from pluralscan.data.mongodb.options import MongoRepositoryOptions

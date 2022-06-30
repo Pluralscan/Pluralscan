@@ -1,8 +1,6 @@
-from pluralscan.application.usecases.scans.scan_package import (
-    ScanPackageCommand,
-    ScanPackageUseCase,
-)
-from pluralscan.domain.executable.executable_action import ExecutableAction
+from pluralscan.application.usecases.scans.run_scan import (ScanPackageCommand,
+                                                            ScanPackageUseCase)
+from pluralscan.domain.executables.executable_action import ExecutableAction
 
 
 class ScanPackageWorker:

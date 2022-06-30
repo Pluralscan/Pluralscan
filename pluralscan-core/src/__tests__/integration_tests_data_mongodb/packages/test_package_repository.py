@@ -4,8 +4,8 @@ from pluralscan.data.mongodb.packages.package_repository import \
     MongoPackageRepository
 from pluralscan.data.mongodb.packages.package_seeder import \
     PackageRepositorySeeder
-from pluralscan.domain.package.package import Package
-from pluralscan.domain.package.package_id import PackageId
+from pluralscan.domain.packages.package import Package
+from pluralscan.domain.packages.package_id import PackageId
 from pymongo import MongoClient
 
 
@@ -62,14 +62,14 @@ def test_get_all_returns_analyzers(
     assert len(packages) > 0
 
 
-def test_find_by_id_returns_analyzer(
+def test_get_by_id_returns_analyzer(
         seeder: PackageRepositorySeeder,
         repository: MongoPackageRepository,
         package: Package):
     # Act
     seeder._drop_collection()
     package = repository.add(package)
-    package = repository.find_by_id(package.package_id)
+    package = repository.get_by_id(package.package_id)
 
     # Assert
     assert package != None

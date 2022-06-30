@@ -6,8 +6,8 @@ from pluralscan.domain.analyzer.analyzer import Analyzer
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
 
 
-class AnalyzerRepositorySeeder:
-    """AnalyzerRepositorySeeder"""
+class AnalyzerInMemoryRepositorySeeder:
+    """AnalyzerInMemoryRepositorySeeder"""
 
     def __init__(
         self,
@@ -15,7 +15,7 @@ class AnalyzerRepositorySeeder:
         executable_repository: InMemoryExecutableRepository,
     ) -> None:
         """
-        Construct a new 'AnalyzerRepositorySeeder' object.
+        Construct a new 'AnalyzerInMemoryRepositorySeeder' object.
         """
         self._analyzer_repository = analyzer_repository
         self._executable_repository = executable_repository
@@ -29,7 +29,7 @@ class AnalyzerRepositorySeeder:
             Analyzer(
                 analyzer_id=AnalyzerId("Roslynator"),
                 name="Roslynator",
-                executables=self._executable_repository.find_by_analyzer("Roslynator"),
+                executables=self._executable_repository.find_by_analyzer(AnalyzerId("Roslynator")),
             )
         )
 
@@ -37,7 +37,7 @@ class AnalyzerRepositorySeeder:
             Analyzer(
                 analyzer_id=AnalyzerId("Sonar"),
                 name="Sonar",
-                executables=self._executable_repository.find_by_analyzer("Sonar"),
+                executables=self._executable_repository.find_by_analyzer(AnalyzerId("Sonar")),
             )
         )
 

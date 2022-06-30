@@ -1,12 +1,15 @@
 from abc import ABCMeta, abstractmethod
-from typing import List
+from typing import List, Optional
 
 from pluralscan.domain.analyzer.analyzer import Analyzer
+from pluralscan.domain.analyzer.analyzer_filter import AnalyzerFilter
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.domain.technologies.language import Language
 
 
 class AbstractAnalyzerRepository(metaclass=ABCMeta):
     """Abstract Analyzer repository."""
+
     def __del__(self):
         print(f"[!]  Garbage AnalyzerRepository -> {self.__class__.__name__}")
 
@@ -16,13 +19,28 @@ class AbstractAnalyzerRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def find_by_id(self, analyzer_id: str) -> Analyzer:
-        """find_by_id"""
+    def get_one_by_id(self, analyzer_id: AnalyzerId) -> Analyzer:
+        """
+        Returns a reference to an 'Analyzer" entity with the given identifier
+        othewise raise exception.
+        """
         raise NotImplementedError()
 
     @abstractmethod
-    def get_all(self) -> List[Analyzer]:
-        """get_all"""
+    def find_by_id(self, analyzer_id: AnalyzerId) -> Optional[Analyzer]:
+        """
+        Returns a reference to an 'Analyzer" entity with the given identifier.
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def find_by_supported_language(self, language: Language) -> List[Analyzer]:
+        """find_by_supported_language"""
+        raise NotImplementedError()
+
+    @abstractmethod
+    def find_all(self, filters: AnalyzerFilter = None) -> List[Analyzer]:
+        """find_all"""
         raise NotImplementedError()
 
     @abstractmethod
@@ -38,11 +56,11 @@ class AbstractAnalyzerRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def remove(self, analyzer_id: str) -> int:
+    def remove(self, analyzer_id: AnalyzerId) -> int:
         """remove"""
         raise NotImplementedError()
 
     @abstractmethod
-    def count(self) -> int:
+    def count(self, filters: AnalyzerFilter = None) -> int:
         """count"""
         raise NotImplementedError()

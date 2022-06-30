@@ -1,6 +1,6 @@
 import os
 import subprocess
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from os.path import exists
 from subprocess import Popen
 from typing import List
@@ -9,13 +9,13 @@ from pluralscan.application.processors.executables.exec_runner import (
     AbstractExecRunner, ExecRunnerOptions, ProcessRunResult)
 
 
-@dataclass
+@dataclass(frozen=True)
 class SonarExecOptions(ExecRunnerOptions):
     """SonarProcessOptions"""
 
-    begin_arguments: List[str] = None
-    build_arguments: List[str] = None
-    end_arguments: List[str] = None
+    begin_arguments: List[str] = field(default_factory=list)
+    build_arguments: List[str] = field(default_factory=list)
+    end_arguments: List[str] = field(default_factory=list)
 
 
 class SonarExecRunner(AbstractExecRunner):

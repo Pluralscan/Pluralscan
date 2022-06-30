@@ -1,7 +1,7 @@
 from json import dumps
 
 import typer
-from pluralscan.application.usecases.package.new_package_use_case import (
+from pluralscan.application.usecases.packages.create_package import (
     NewPackageCommand, NewPackageUseCase)
 from pluralscan.data import AbstractRepositoryFactory
 from pluralscan.infrastructure.processor.fetchers.http_package_fetcher import \

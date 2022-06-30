@@ -4,9 +4,9 @@ from bson import ObjectId
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
 from pluralscan.data.mongodb.packages.package_document import PackageDocument
 from pluralscan.data.mongodb.packages.package_mapper import PackageMapper
-from pluralscan.domain.package.package import Package
-from pluralscan.domain.package.package_id import PackageId
-from pluralscan.domain.package.package_repository import \
+from pluralscan.domain.packages.package import Package
+from pluralscan.domain.packages.package_id import PackageId
+from pluralscan.domain.packages.package_repository import \
     AbstractPackageRepository
 
 
@@ -24,7 +24,13 @@ class MongoPackageRepository(AbstractPackageRepository):
         document = self._collection.find_one({"_id": ObjectId(package_id)})
         return PackageMapper.from_document(document)
 
-    def get_all(self) -> List[Package]:
+    def find_by_location(self, location: str) -> Package:
+        raise NotImplementedError
+
+    def find_by_name(self, name: str) -> Package:
+        raise NotImplementedError
+
+    def find_all(self) -> List[Package]:
         documents: List[PackageDocument] = []
         for document in self._collection.find():
             documents.append(document)
@@ -38,7 +44,7 @@ class MongoPackageRepository(AbstractPackageRepository):
         document["_id"] = self._collection.insert_one(document).inserted_id
         return PackageMapper.from_document(document)
 
-    def remove(self, package_id: str):
+    def remove(self, package_id: PackageId):
         pass
 
     def count(self) -> int:

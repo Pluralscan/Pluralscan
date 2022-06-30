@@ -1,8 +1,8 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 
-from pluralscan.domain.executable.executable_id import ExecutableId
-from pluralscan.domain.package.package_id import PackageId
+from pluralscan.domain.executables.executable_id import ExecutableId
+from pluralscan.domain.packages.package_id import PackageId
 from pluralscan.domain.scans.scan_id import ScanId
 from pluralscan.domain.scans.scan_state import ScanState
 
@@ -20,5 +20,5 @@ class Scan:
     """Executables used to performs analysis."""
     package_id: PackageId = None
     """Package under analysis."""
-    state: ScanState = ScanState.SCHREDULED
+    state: ScanState = ScanState.SCHEDULED
     group_id: str = None

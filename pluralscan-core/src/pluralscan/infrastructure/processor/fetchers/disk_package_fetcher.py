@@ -1,6 +1,5 @@
 import os
 import pathlib
-import traceback
 import zipfile
 
 from pluralscan.application.processors.fetchers.package_fetcher import (
@@ -13,9 +12,6 @@ class DiskPackageFetcher(AbstractPackageFetcher):
 
     supported_extensions = [".zip"]
 
-    def __init__(self, output_dir: str):
-        self._output_dir = output_dir
-
     def get_info(self, uri: str) -> PackageInfoResult:
         return PackageInfoResult()
 
@@ -27,7 +23,7 @@ class DiskPackageFetcher(AbstractPackageFetcher):
 
         return os.path.exists(uri)
 
-    def download(self, uri) -> DownloadPackageResult:
+    def download(self, uri: str, output_dir: str) -> DownloadPackageResult:
         try:
             if not self.can_fetch(uri):
                 return DownloadPackageResult(error="")
@@ -35,9 +31,8 @@ class DiskPackageFetcher(AbstractPackageFetcher):
             return DownloadPackageResult(error="")
 
         try:
-            return self._extract_archive(uri, self._output_dir)
+            return self._extract_archive(uri, output_dir)
         except EnvironmentError:
-            print(traceback.print_exc())
             return DownloadPackageResult(error="")
 
     def _extract_archive(self, source: str, destination: str) -> DownloadPackageResult:

@@ -2,8 +2,10 @@ from pathlib import Path
 
 import pytest
 from __tests__.test_helpers import REPORTS_DIR, SOURCES_DIR, TOOLS_DIR
-from pluralscan.domain.executable.executable import Executable
-from pluralscan.domain.executable.executable_platform import ExecutablePlatform
+from pluralscan.domain.executables.executable import Executable
+from pluralscan.domain.executables.executable_action import ExecutableAction
+from pluralscan.domain.executables.executable_platform import \
+    ExecutablePlatform
 from pluralscan.infrastructure.processor.executables.sonar_exec_runner import (
     SonarExecOptions, SonarExecRunner)
 
@@ -35,6 +37,7 @@ def test_execute_with_output(executable: Executable):
     process_runner = SonarExecRunner(str(output_result_dir))
     process_options = SonarExecOptions(
         executable=executable,
+        action=ExecutableAction.SCAN,
         begin_arguments=[
             "dotnet",
             executable.location,

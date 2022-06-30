@@ -19,8 +19,8 @@ class AbstractScanRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def find_by_id(self, scan_id: ScanId) -> Scan:
-        """Find scan by id."""
+    def get_by_id(self, scan_id: ScanId) -> Scan:
+        """Retrieve a scan by id."""
         raise NotImplementedError()
 
     @abstractmethod

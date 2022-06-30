@@ -3,7 +3,7 @@ import unittest
 from __tests__.test_helpers import TestHelpers
 from pluralscan.data.inmemory.projects.project_repository import \
     InMemoryProjectRepository
-from pluralscan.domain.project.project import Project
+from pluralscan.domain.projects.project import Project
 
 
 class TestInMemoryanalyzerRepository(unittest.TestCase):
@@ -35,14 +35,14 @@ class TestInMemoryanalyzerRepository(unittest.TestCase):
         self.assertIsNotNone(analyzers)
         self.assertEqual(len(analyzers), 2)
 
-    def test_find_by_id_returns_project(self):
+    def test_get_by_id_returns_project(self):
         # Arrange
         project = Project()
         self.repository.add(project)
         project_id = project.project_id
 
         # Act
-        result = self.repository.find_by_id(project_id)
+        result = self.repository.get_by_id(project_id)
 
         # Assert
         self.assertIsNotNone(result)

@@ -9,33 +9,33 @@ from pluralscan.domain.scans.scan_repository import AbstractScanRepository
 
 # Output
 @dataclass(frozen=True)
-class ListScansResult:
-    """ListScansResult"""
+class GetScanByIdResult:
+    """GetScanByIdResult"""
 
     analyzers: List[Scan]
 
 
 # Contract
-class AbstractListScansUseCase(
+class AbstractGetScanByIdUseCase(
     metaclass=ABCMeta
 ):  # pylint: disable=too-few-public-methods
-    """AbstractListScansUseCase"""
+    """AbstractGetScanByIdUseCase"""
 
     @abstractmethod
-    def handle(self, scan_id: ScanId) -> ListScansResult:
+    def handle(self, scan_id: ScanId) -> GetScanByIdResult:
         """handle"""
         raise NotImplementedError
 
 
 # Default Implementation
-class ListScansUseCase(
-    AbstractListScansUseCase
+class GetScanByIdUseCase(
+    AbstractGetScanByIdUseCase
 ):  # pylint: disable=too-few-public-methods
-    """ListScansUseCase"""
+    """GetScanByIdUseCase"""
 
     def __init__(self, scan_repository: AbstractScanRepository):
         self._scan_repository = scan_repository
 
-    def handle(self, scan_id: ScanId) -> ListScansResult:
+    def handle(self, scan_id: ScanId) -> GetScanByIdResult:
         analyzers = self._scan_repository.get_all()
-        return ListScansResult(analyzers)
+        return GetScanByIdResult(analyzers)

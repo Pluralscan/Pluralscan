@@ -1,14 +1,11 @@
 import pathlib
 
 from pluralscan.application.processors.executables.exec_runner import (
-    AbstractExecRunner,
-    AbstractExecRunnerFactory,
-)
-from pluralscan.domain.executable.executable import Executable
-from pluralscan.domain.executable.executable_runner import ExecutableRunner
-from pluralscan.infrastructure.processor.executables.roslynator_exec_runner import (
-    RoslynatorExecRunner,
-)
+    AbstractExecRunner, AbstractExecRunnerFactory)
+from pluralscan.domain.executables.executable import Executable
+from pluralscan.domain.executables.executable_runner import ExecutableRunner
+from pluralscan.infrastructure.processor.executables.roslynator_exec_runner import \
+    RoslynatorExecRunner
 
 
 class ExecRunnerFactory(AbstractExecRunnerFactory):

@@ -3,11 +3,10 @@ import re
 import rest_framework.status as status
 from pluralscan.application.processors.fetchers.package_fetcher import \
     AbstractPackageFetcher
-from pluralscan.application.usecases.package.get_remote_package_info_use_case import \
-    GetRemotePackageInfoCommand
-from pluralscan.application.usecases.package.list_packages_use_case import \
+from pluralscan.application.usecases.packages.get_package_list import \
     ListPackagesCommand
-from pluralscan.domain.package.package_origin import PackageOrigin
+from pluralscan.application.usecases.packages.get_remote_package_info import \
+    GetRemotePackageInfoCommand
 from pluralscan.infrastructure.processor.fetchers.github_package_fetcher import \
     GithubPackageFetcher
 from pluralscan.infrastructure.processor.fetchers.gitlab_package_fetcher import \
@@ -41,7 +40,7 @@ class PackageViewSet(ListModelMixin, GenericViewSet):
         url_path=r"remote/(?P<url>[-_a-zA-Z0-9.:/?]+)",
         url_name="remote",
     )
-    def remote_package_info(self, request, url=None):
+    def remote_package_info(self, _: Request, url=None):
         """remote_package_info"""
         try:
             command = GetRemotePackageInfoCommand(url)

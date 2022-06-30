@@ -8,7 +8,7 @@ from rq import Queue
 class RqJobRunner(AbstractJobRunner):
     """RqJobRunner"""
 
-    def schredule(self, job_id: str) -> bool:
+    def schedule(self, job_id: str) -> bool:
         queue = Queue(connection=Redis())
         result = queue.enqueue(ScanPackageWorker.run, job_id)
         return result.is_queued

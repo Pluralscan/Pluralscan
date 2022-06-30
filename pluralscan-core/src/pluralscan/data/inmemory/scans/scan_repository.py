@@ -14,19 +14,19 @@ class InMemoryScanRepository(AbstractScanRepository):
     """
 
     def __init__(self):
-        self._scans: Dict[str, Scan] = {}
+        self._scans: Dict[ScanId, Scan] = {}
 
     def next_id(self) -> ScanId:
         return ScanId(uuid.uuid4())
 
-    def find_by_id(self, scan_id: str) -> Scan:
+    def get_by_id(self, scan_id: ScanId) -> Scan:
         return self._scans.get(scan_id)
 
     def get_all(self) -> List[Scan]:
         return list(self._scans.values())
 
     def update(self, scan: Scan) -> Scan:
-        scan = self.find_by_id(scan.scan_id)
+        scan = self.get_by_id(scan.scan_id)
 
         if scan is None:
             raise Exception
@@ -37,8 +37,7 @@ class InMemoryScanRepository(AbstractScanRepository):
 
     def add(self, scan: Scan) -> Scan:
         if scan.scan_id is None:
-            str_uuid = str(uuid.uuid4())
-            scan.scan_id = str_uuid
+            scan.scan_id = self.next_id()
 
         self._scans[scan.scan_id] = scan
 
@@ -51,7 +50,7 @@ class InMemoryScanRepository(AbstractScanRepository):
         return _scans
 
     def remove(self, scan_id: str):
-        scan = self.find_by_id(scan_id)
+        scan = self.get_by_id(scan_id)
 
         if scan is None:
             raise Exception

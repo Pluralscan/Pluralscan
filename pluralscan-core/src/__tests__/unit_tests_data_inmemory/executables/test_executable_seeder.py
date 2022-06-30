@@ -2,7 +2,7 @@ import pytest
 from pluralscan.data.inmemory.analyzers.analyzer_repository import \
     InMemoryAnalyzerRepository
 from pluralscan.data.inmemory.analyzers.analyzer_seeder import \
-    AnalyzerRepositorySeeder
+    AnalyzerInMemoryRepositorySeeder
 from pluralscan.data.inmemory.executables.executable_repository import \
     InMemoryExecutableRepository
 
@@ -18,10 +18,10 @@ def executable_repository():
 
 @pytest.fixture
 def seeder(analyzer_repository, executable_repository):
-    return AnalyzerRepositorySeeder(analyzer_repository, executable_repository)
+    return AnalyzerInMemoryRepositorySeeder(analyzer_repository, executable_repository)
 
 
-def test_add_entities(repository: InMemoryAnalyzerRepository, seeder: AnalyzerRepositorySeeder):
+def test_add_entities(repository: InMemoryAnalyzerRepository, seeder: AnalyzerInMemoryRepositorySeeder):
     # Act
     seeder._add_entities()
 
@@ -29,7 +29,7 @@ def test_add_entities(repository: InMemoryAnalyzerRepository, seeder: AnalyzerRe
     assert repository.count() == 3
 
 
-def test_seed(repository: InMemoryAnalyzerRepository, seeder: AnalyzerRepositorySeeder):
+def test_seed(repository: InMemoryAnalyzerRepository, seeder: AnalyzerInMemoryRepositorySeeder):
     # Act
     seeder.seed()
 
@@ -37,7 +37,7 @@ def test_seed(repository: InMemoryAnalyzerRepository, seeder: AnalyzerRepository
     assert repository.count() == 2, "two analyzers was expected"
 
 
-def test_seed_raises_exception(seeder: AnalyzerRepositorySeeder):
+def test_seed_raises_exception(seeder: AnalyzerInMemoryRepositorySeeder):
     # Act
     seeder._add_entities()
 

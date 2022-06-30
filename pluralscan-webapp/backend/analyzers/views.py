@@ -1,10 +1,10 @@
-from pluralscan.application.usecases.analyzer.list_analysers_use_case import \
-    ListAnalyzersCommand
+from pluralscan.application.usecases.analyzers.get_analyzer_list import \
+    GetAnalyzerListCommand
 from rest_framework.mixins import ListModelMixin
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import GenericViewSet
 
-from .factories import list_analyzers_use_case
+from .factories import get_analyzer_list_use_case
 from .serializers import AnalyzerSerializer
 
 
@@ -16,6 +16,6 @@ class AnalyzerViewSet(ListModelMixin, GenericViewSet):
 
     def get_queryset(self):
         """get_queryset"""
-        command = ListAnalyzersCommand()
-        result = list_analyzers_use_case().handle(command)
+        command = GetAnalyzerListCommand()
+        result = get_analyzer_list_use_case().handle(command)
         return result.analyzers

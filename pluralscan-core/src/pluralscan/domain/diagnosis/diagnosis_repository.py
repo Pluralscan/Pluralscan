@@ -16,8 +16,8 @@ class AbstractDiagnosisRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def find_by_id(self, diagnosis_id: str) -> Diagnosis:
-        """find_by_id"""
+    def get_by_id(self, diagnosis_id: str) -> Diagnosis:
+        """get_by_id"""
         raise NotImplementedError()
 
     @abstractmethod

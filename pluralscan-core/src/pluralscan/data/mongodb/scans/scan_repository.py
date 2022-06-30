@@ -19,7 +19,7 @@ class MongoScanRepository(AbstractScanRepository):
     def next_id(self) -> ScanId:
         return ScanId(ObjectId())
 
-    def find_by_id(self, scan_id: str) -> Scan:
+    def get_by_id(self, scan_id: str) -> Scan:
         document = self._collection.find_one({"_id": ObjectId(scan_id)})
         return ScanMapper.from_document(document)
 
@@ -30,7 +30,7 @@ class MongoScanRepository(AbstractScanRepository):
         return ScanMapper.from_documents(documents)
 
     def update(self, scan: Scan) -> Scan:
-        pass
+        raise NotImplementedError
 
     def add(self, scan: Scan) -> Scan:
         document = ScanMapper.to_document(scan)
@@ -38,4 +38,10 @@ class MongoScanRepository(AbstractScanRepository):
         return ScanMapper.from_document(document)
 
     def remove(self, scan_id: str):
-        pass
+        raise NotImplementedError
+    
+    def count(self) -> int:
+        raise NotImplementedError
+
+    def add_bulk(self, scans: List[Scan]) -> List[Scan]:
+        raise NotImplementedError

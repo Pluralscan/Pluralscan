@@ -1,8 +1,8 @@
 import pytest
 from pluralscan.data.mongodb.packages.package_document import PackageDocument
 from pluralscan.data.mongodb.packages.package_mapper import PackageMapper
-from pluralscan.domain.package.package import Package
-from pluralscan.domain.package.package_id import PackageId
+from pluralscan.domain.packages.package import Package
+from pluralscan.domain.packages.package_id import PackageId
 
 
 @pytest.fixture

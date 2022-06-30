@@ -19,9 +19,13 @@
     },
     //"python.linting.pylintPath": "${workspaceFolder}\\.venv\\Scripts\\pylint.exe",
     "python.linting.pylintEnabled": true,
+    "python.linting.mypyEnabled": true,
     "python.linting.enabled": true,
     "python.formatting.provider": "black",
     "python.formatting.autopep8Args": [
         "--max-line-length=240"
-    ]
+    ],
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    }
 }
