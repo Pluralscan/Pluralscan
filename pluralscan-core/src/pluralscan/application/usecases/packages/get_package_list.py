@@ -9,7 +9,7 @@ from pluralscan.libs.utils.validable import Validable
 
 
 @dataclass(frozen=True)
-class GetPackageListCommand(Validable):
+class GetPackageListQuery(Validable):
     """List Packages Command"""
 
     limit: int = 100
@@ -30,7 +30,7 @@ class AbstractGetPackageListUseCase(
     """AbstractListPackagesUseCase"""
 
     @abstractmethod
-    def handle(self, command: GetPackageListCommand) -> GetPackageListResult:
+    def handle(self, query: GetPackageListQuery) -> GetPackageListResult:
         """handle"""
         raise NotImplementedError
 
@@ -44,6 +44,6 @@ class GetPackageListUseCase(
     def __init__(self, package_repository: AbstractPackageRepository):
         self._package_repository = package_repository
 
-    def handle(self, command: GetPackageListCommand) -> GetPackageListResult:
-        packages = self._package_repository.get_all()
+    def handle(self, query: GetPackageListQuery) -> GetPackageListResult:
+        packages = self._package_repository.find_all()
         return GetPackageListResult(packages)

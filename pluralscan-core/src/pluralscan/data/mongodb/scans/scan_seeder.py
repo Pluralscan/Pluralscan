@@ -12,7 +12,7 @@ class ScanRepositorySeeder:
     def __init__(self, options: MongoRepositoryOptions):
         self._collection_name = options.collection_name
         self._database = options.client[options.database_name]
-        self._validator = ScanRepositoryValidation(options)
+        self._validator = ScanRepositoryValidation(options.client)
 
     def seed(self):
         """seed"""

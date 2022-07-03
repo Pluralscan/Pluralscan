@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from pluralscan.domain.packages.package import Package
 from pluralscan.domain.packages.package_id import PackageId
+from pluralscan.domain.projects.project_id import ProjectId
 
 
 class AbstractPackageRepository(metaclass=ABCMeta):
@@ -23,20 +24,15 @@ class AbstractPackageRepository(metaclass=ABCMeta):
     def find_by_id(self, package_id: PackageId) -> Optional[Package]:
         """Find package by id or return None."""
         raise NotImplementedError()
+    
+    @abstractmethod
+    def find_by_project(self, project_id: ProjectId) -> List[Package]:
+        """Get packages by project identifier."""
+        raise NotImplementedError()
 
     @abstractmethod
     def get_one(self, package_id: PackageId) -> Package:
         """Get a package by id."""
-        raise NotImplementedError()
-
-    @abstractmethod
-    def find_by_name(self, name: str) -> Package:
-        """Find package by name."""
-        raise NotImplementedError()
-
-    @abstractmethod
-    def find_by_location(self, location: str) -> Package:
-        """Find package by location."""
         raise NotImplementedError()
 
     @abstractmethod
@@ -45,7 +41,7 @@ class AbstractPackageRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def add(self, package: Package) -> Package:
+    def add(self, package: Package):
         """Add a new package."""
         raise NotImplementedError()
 
@@ -55,7 +51,7 @@ class AbstractPackageRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def remove(self, package_id: str):
+    def remove(self, package_id: PackageId):
         """Remove a package."""
         raise NotImplementedError()
 

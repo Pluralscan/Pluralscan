@@ -2,8 +2,8 @@ from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass, field
 from typing import List, Optional
 
-from pluralscan.domain.packages.package_origin import PackageOrigin
-from pluralscan.domain.technologies.language import Language
+from pluralscan.domain.packages.package_registry import PackageRegistry
+from pluralscan.domain.technologies.technology import Technology
 
 
 @dataclass(frozen=True)
@@ -19,12 +19,13 @@ class DownloadPackageResult:
 class PackageInfoResult:
     """Data returned when querying a package details."""
 
-    name: Optional[str] = None
+    registry: PackageRegistry
+    name: str = field(default_factory=str)
     full_name: Optional[str] = None
     description: Optional[str] = None
     version: Optional[str] = None
-    url: Optional[str] = None
-    languages: List[Language] = field(default_factory=list)
+    url: str = field(default_factory=str)
+    technologies: List[Technology] = field(default_factory=list)
     error: Optional[str] = None
     success: bool = error is None
 

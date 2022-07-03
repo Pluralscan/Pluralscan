@@ -1,48 +1,61 @@
-from abc import ABCMeta, abstractmethod
-from dataclasses import dataclass
+# from abc import ABCMeta, abstractmethod
+# from dataclasses import dataclass, field
+# from typing import List, Optional
 
-from pluralscan.application.processors.fetchers.package_fetcher import \
-    AbstractPackageFetcher
-from pluralscan.domain.packages.package import Package
-
-
-@dataclass(frozen=True)
-class GetRemotePackageInfoCommand:
-    """GetRemotePackageInfoCommand"""
-
-    url: str
+# from pluralscan.application.processors.fetchers.package_fetcher import \
+#     AbstractPackageFetcher
+# from pluralscan.domain.packages.package_origin import PackageOrigin
+# from pluralscan.domain.packages.package_registry import PackageRegistry
+# from pluralscan.domain.technologies.technology import Technology
 
 
-class AbstractGetRemotePackageInfoUseCase(metaclass=ABCMeta):
-    """
-    Provide an abstract contract for retrieve package details from
-    an external source.
-    """
+# @dataclass(frozen=True)
+# class GetRemotePackageInfoQuery:
+#     """GetRemotePackageInfoCommand"""
 
-    @abstractmethod
-    def handle(self, command: GetRemotePackageInfoCommand) -> Package:
-        """Prepare requirements defined by the command and execute the use case."""
-        raise NotImplementedError
+#     url: str
+
+# @dataclass(frozen=True)
+# class GetRemotePackageInfoResult:
+#     """GetRemotePackageInfoResult"""
+
+#     name: str = field(default_factory=str)
+#     full_name: Optional[str] = None
+#     description: Optional[str] = None
+#     version: Optional[str] = None
+#     url: str = field(default_factory=str)
+#     technologies: List[Technology] = field(default_factory=list)
+#     origin: PackageOrigin = PackageOrigin.UNKNOWN
 
 
-class GetRemotePackageInfoUseCase(AbstractGetRemotePackageInfoUseCase):
-    """GetRemotePackageInfoUseCase"""
+# class AbstractGetRemotePackageInfoUseCase(metaclass=ABCMeta):
+#     """
+#     Provide an abstract contract for retrieve package details from
+#     an external source.
+#     """
 
-    def __init__(self, package_fetcher: AbstractPackageFetcher):
-        self._package_fetcher = package_fetcher
+#     @abstractmethod
+#     def handle(self, command: GetRemotePackageInfoQuery) -> GetRemotePackageInfoResult:
+#         """Prepare requirements defined by the command and execute the use case."""
+#         raise NotImplementedError
 
-    def handle(self, command: GetRemotePackageInfoCommand) -> Package:
-        # Check if package is fetchable
-        if self._package_fetcher.can_fetch(command.url) is False:
-            raise RuntimeError()
 
-        # Fetch package info
-        package_info = self._package_fetcher.get_info(command.url)
-        if package_info.success is False:
-            raise RuntimeError(package_info.error)
+# class GetRemotePackageInfoUseCase(AbstractGetRemotePackageInfoUseCase):
+#     """GetRemotePackageInfoUseCase"""
 
-        return Package(
-            name=package_info.name,
-            version=package_info.version,
-            location=command.url,
-        )
+#     def __init__(self, package_fetcher: AbstractPackageFetcher):
+#         self._package_fetcher = package_fetcher
+
+#     def handle(self, command: GetRemotePackageInfoQuery) -> GetRemotePackageInfoResult:
+#         # Check if package is fetchable
+#         if self._package_fetcher.can_fetch(command.url) is False:
+#             raise RuntimeError()
+
+#         # Fetch package info
+#         package_info = self._package_fetcher.get_info(command.url)
+#         if package_info.success is False:
+#             raise RuntimeError(package_info.error)
+
+#         return GetRemotePackageInfoResult(
+#             url=package_info.url
+#         )

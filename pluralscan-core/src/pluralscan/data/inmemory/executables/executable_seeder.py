@@ -13,15 +13,15 @@ from pluralscan.domain.executables.executable_runner import ExecutableRunner
 from pluralscan.infrastructure.config import Config
 
 
-class ExecutableInMemoryRepositorySeeder:
-    """ExecutableInMemoryRepositorySeeder"""
+class InMemoryExecutableRepositorySeeder:
+    """InMemoryExecutableRepositorySeeder"""
 
     def __init__(
         self,
         executable_repository: InMemoryExecutableRepository,
     ) -> None:
         """
-        Construct a new 'ExecutableInMemoryRepositorySeeder' object.
+        Construct a new 'InMemoryExecutableRepositorySeeder' object.
         """
         self._executable_repository = executable_repository
 
@@ -53,7 +53,7 @@ class ExecutableInMemoryRepositorySeeder:
                 analyzer_id=AnalyzerId("Roslynator"),
                 platform=ExecutablePlatform.WIN,
                 name="Roslynator Fork",
-                location= "roslynator-fork-0.3.3.0\\Roslynator.exe",
+                storage= "roslynator-fork-0.3.3.0\\Roslynator.exe",
                 version="0.3.3.0",
                 runner=ExecutableRunner.ROSLYNATOR,
                 commands=[

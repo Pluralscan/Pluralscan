@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from pluralscan.domain.technologies.language import Language
+from pluralscan.domain.technologies.technology import Technology
 
 
 @dataclass(frozen=True)
@@ -8,4 +8,4 @@ class Source:
     """Source"""
     filename: str
     path: str
-    language: Language
+    language: Technology

@@ -16,7 +16,7 @@ class PackageMapper:
     def from_document(document: PackageDocument) -> Package:
         """from_document"""
         if document is None:
-            return None
+            raise ValueError
         return Package()
 
     @staticmethod

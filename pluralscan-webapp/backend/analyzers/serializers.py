@@ -33,7 +33,7 @@ class ExecutableSerializer(serializers.Serializer):
 
     platform = EnumValueField(labels={'WIN':'Windows'})
     name = serializers.CharField()
-    location = serializers.CharField()
+    storage = serializers.CharField()
     version = serializers.CharField()
     semantic_version = serializers.CharField()
     

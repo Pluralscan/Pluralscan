@@ -20,18 +20,13 @@ from pluralscan.domain.scans.scan import Scan
 from pluralscan.domain.scans.scan_id import ScanId
 from pluralscan.domain.scans.scan_repository import AbstractScanRepository
 from pluralscan.domain.scans.scan_state import ScanState
-from pluralscan.libs.utils.validable import Validable
 
 
 @dataclass(frozen=True)
-class ScanPackageCommand(Validable):
+class ScanPackageCommand:
     """Run Analyzer Command"""
 
     scan_id: ScanId
-
-    def __post_init__(self):
-        if not self.scan_id:
-            raise ValueError("A scan id must be defined.")
 
 
 @dataclass
@@ -72,7 +67,7 @@ class ScanPackageUseCase(
         self._scan_repository = scan_repository
         self._package_repository = package_repository
         self._executable_repository = executable_repository
-        self._diagnosys_repository = diagnosis_repository
+        self._diagnosis_repository = diagnosis_repository
         self._exec_runner_factory = exec_runner_factory
         self._report_processor = report_processor
 
@@ -93,7 +88,7 @@ class ScanPackageUseCase(
             raise ValueError
 
         # 4. Execute analyzer process and wait for list of report files.
-        arguments = [package.location]
+        arguments = [package.storage]
         options = ExecRunnerOptions(executable, ExecutableAction.SCAN, arguments)
         process_result = self._exec_runner_factory.create(
             executable=executable, working_directory=scan.working_directory
@@ -107,13 +102,15 @@ class ScanPackageUseCase(
             report_files.append(str(filepath))
 
         # 6. Transform reports into diagnosis.
+        diagnosis_id = self._diagnosis_repository.next_id()
         diagnosis = self._report_processor.transform_to_diagnosis(
             data=report_files
         )
+        diagnosis.diagnosis_id = diagnosis_id
         diagnosis.scan_id = scan.scan_id
 
         # 7. Persist diagnosis.
-        diagnosis = self._diagnosys_repository.add(diagnosis)
+        diagnosis = self._diagnosis_repository.add(diagnosis)
 
         # 8. Update scan
         scan.state = ScanState.COMPLETED

@@ -13,19 +13,19 @@ from pluralscan.domain.executables.executable_runner import ExecutableRunner
 @dataclass
 class Executable:
     """Executable Entity."""
-    executable_id: ExecutableId = None
+    executable_id: ExecutableId
     """Unique identifier."""
-    analyzer_id: AnalyzerId = None
+    analyzer_id: AnalyzerId
     """Analyzer identifier."""
-    platform: ExecutablePlatform = None
+    platform: ExecutablePlatform
     """Indicates the supported runtime environment."""
-    name: str = None
+    name: str = field(default_factory=str)
     """Analyzer name."""
-    location: str = None
+    storage: str = field(default_factory=str)
     """Absolute path of the executable to run."""
-    version: str = None
+    version: str = field(default_factory=str)
     """Unique version for the executable of an analyzer."""
-    semantic_version: str = None
+    semantic_version: str = field(default_factory=str)
     """Semantic version (can be null)."""
     commands: List[ExecutableCommand] = field(default_factory=list)
     """Command that's can be performed by executable."""
@@ -41,14 +41,14 @@ class Executable:
         for command in self.commands:
             if command.action == action:
                 return command
-        return None
+        raise ValueError
 
     def as_dict(self):
         """Convert executable properties to dictionary."""
         return {
             'platform': self.platform.value,
             'name': self.name,
-            'location': self.location,
+            'storage': self.storage,
             'version': self.version,
             'semantic_version': self.semantic_version,
         }

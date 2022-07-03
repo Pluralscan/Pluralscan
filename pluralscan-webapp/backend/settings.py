@@ -124,7 +124,13 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, "backend", "staticfiles")
 STATIC_URL = 'static/'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "backend", "static"),)
+STATICFILES_DIRS = [
+    BASE_DIR / 'backend' / STATIC_URL,
+]
+
+RESOURCES_DIR = Path.joinpath(Path(BASE_DIR / 'backend' / STATIC_URL), 'resources')
+SOURCES_DIR = Path.joinpath(RESOURCES_DIR, 'sources')
+REPORTS_DIR = Path.joinpath(RESOURCES_DIR, 'reports')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

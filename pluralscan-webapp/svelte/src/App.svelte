@@ -6,8 +6,10 @@
 	const routes = {
 		"/": Home,
 		"/analyzers": Analyzers,
+		"/projects": Projects,
 	};
 	import "carbon-components-svelte/css/all.css";
+	import Projects from "./projects/Projects.svelte";
 </script>
 
 <main>

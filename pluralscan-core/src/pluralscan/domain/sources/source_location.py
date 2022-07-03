@@ -2,8 +2,8 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
-class SourceLocation:
-    """Stores line and column information of a source code location."""
+class Sourcestorage:
+    """Stores line and column information of a source code storage."""
     start: int
     end: int
 
@@ -12,7 +12,7 @@ class SourceLocation:
 
 
 @dataclass(frozen=True)
-class TextLocation:
+class Textstorage:
     """Stores character start and end positions of a text file."""
     start: int
     end: int

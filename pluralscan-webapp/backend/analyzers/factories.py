@@ -5,11 +5,11 @@ from pluralscan.application.usecases.analyzers.new_analyzer_use_case import \
 from pluralscan.data.inmemory.analyzers.analyzer_repository import \
     InMemoryAnalyzerRepository
 from pluralscan.data.inmemory.analyzers.analyzer_seeder import \
-    AnalyzerInMemoryRepositorySeeder
+    InMemoryAnalyzerRepositorySeeder
 from pluralscan.data.inmemory.executables.executable_repository import \
     InMemoryExecutableRepository
 from pluralscan.data.inmemory.executables.executable_seeder import \
-    ExecutableInMemoryRepositorySeeder
+    InMemoryExecutableRepositorySeeder
 from pluralscan.data.mongodb.analyzers.analyzer_repository import \
     MongoAnalyzerRepository
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
@@ -32,14 +32,14 @@ def mongo_analyzer_repository():
 def memory_executable_repository():
     """memory_executable_repository"""
     executable_repository = InMemoryExecutableRepository()
-    ExecutableInMemoryRepositorySeeder(executable_repository).seed()
+    InMemoryExecutableRepositorySeeder(executable_repository).seed()
     return executable_repository
 
 
 def memory_analyzer_repository():
     """memory_analyzer_repository"""
     analyzer_repository = InMemoryAnalyzerRepository()
-    AnalyzerInMemoryRepositorySeeder(
+    InMemoryAnalyzerRepositorySeeder(
         analyzer_repository, memory_executable_repository()
     ).seed()
     return analyzer_repository

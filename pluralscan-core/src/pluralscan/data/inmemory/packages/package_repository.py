@@ -5,6 +5,7 @@ from pluralscan.domain.packages.package import Package
 from pluralscan.domain.packages.package_id import PackageId
 from pluralscan.domain.packages.package_repository import \
     AbstractPackageRepository
+from pluralscan.domain.projects.project_id import ProjectId
 
 
 class InMemoryPackageRepository(AbstractPackageRepository):
@@ -15,7 +16,7 @@ class InMemoryPackageRepository(AbstractPackageRepository):
     """
 
     def __init__(self):
-        self._packages: Dict[str, Package] = {}
+        self._packages: Dict[PackageId, Package] = {}
 
     def next_id(self) -> PackageId:
         return PackageId(uuid.uuid4())
@@ -23,33 +24,21 @@ class InMemoryPackageRepository(AbstractPackageRepository):
     def find_by_id(self, package_id: PackageId) -> Optional[Package]:
         return self._packages.get(package_id)
 
+    def find_by_project(self, project_id: ProjectId) -> List[Package]:
+        return [x for x in self.find_all() if str(x.project_id) == project_id]
+
     def get_one(self, package_id: PackageId) -> Package:
         package = self._packages.get(package_id)
         if package is None:
-            raise RuntimeError
+            raise ValueError
         return package
 
-    def find_by_name(self, name: str) -> Package:
-        for package in self._packages.values():
-            if package.name == name:
-                return package
-        return None
-
-    def find_by_location(self, location: str) -> Package:
-        for package in self._packages.values():
-            if package.location == location:
-                return package
-        return None
-
     def find_all(self) -> List[Package]:
-        return self._packages
+        packages = self._packages.values()
+        return list(packages)
 
     def update(self, package: Package) -> Package:
-        package = self.find_by_id(package.package_id)
-
-        if package is None:
-            raise Exception
-
+        package = self.get_one(package.package_id)
         self._packages[package.package_id] = package
 
         return package
@@ -63,13 +52,9 @@ class InMemoryPackageRepository(AbstractPackageRepository):
 
         return package
 
-    def remove(self, package_id: str):
-        package = self.find_by_id(package_id)
-
-        if package is None:
-            raise Exception
-
-        self._packages.pop(package_id)
+    def remove(self, package_id: PackageId):
+        package = self.get_one(package_id)
+        self._packages.pop(package.package_id)
 
     def count(self) -> int:
         return len(self._packages.items())

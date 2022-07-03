@@ -6,8 +6,8 @@ from pluralscan.domain.analyzer.analyzer import Analyzer
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
 
 
-class AnalyzerInMemoryRepositorySeeder:
-    """AnalyzerInMemoryRepositorySeeder"""
+class InMemoryAnalyzerRepositorySeeder:
+    """InMemoryAnalyzerRepositorySeeder"""
 
     def __init__(
         self,
@@ -15,7 +15,7 @@ class AnalyzerInMemoryRepositorySeeder:
         executable_repository: InMemoryExecutableRepository,
     ) -> None:
         """
-        Construct a new 'AnalyzerInMemoryRepositorySeeder' object.
+        Construct a new 'InMemoryAnalyzerRepositorySeeder' object.
         """
         self._analyzer_repository = analyzer_repository
         self._executable_repository = executable_repository

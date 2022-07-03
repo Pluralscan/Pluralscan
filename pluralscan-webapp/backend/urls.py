@@ -22,6 +22,10 @@ from backend.analyzers.views import \
 from backend.authentication import views  # pylint: disable=import-error
 from backend.packages.views import \
     PackageViewSet  # pylint: disable=import-error
+from backend.projects.views import \
+    ProjectViewSet  # pylint: disable=import-error
+# from backend.scans.views import \
+#     ScanViewSet  # pylint: disable=import-error
 from backend.spa.views import SpaView  # pylint: disable=import-error
 
 router = routers.DefaultRouter()
@@ -30,6 +34,8 @@ router.register(r"users", views.UserViewSet)
 router.register(r"groups", views.GroupViewSet)
 router.register(r"analyzers", AnalyzerViewSet, basename="analyzer")
 router.register(r"packages", PackageViewSet, basename="package")
+router.register(r"projects", ProjectViewSet, basename="project")
+#router.register(r"scans", ScanViewSet, basename="scan")
 
 # Order matters
 urlpatterns = [

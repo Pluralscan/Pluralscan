@@ -4,7 +4,7 @@ from typing import List, Optional
 from pluralscan.domain.analyzer.analyzer import Analyzer
 from pluralscan.domain.analyzer.analyzer_filter import AnalyzerFilter
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
-from pluralscan.domain.technologies.language import Language
+from pluralscan.domain.technologies.technology import Technology
 
 
 class AbstractAnalyzerRepository(metaclass=ABCMeta):
@@ -34,7 +34,7 @@ class AbstractAnalyzerRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def find_by_supported_language(self, language: Language) -> List[Analyzer]:
+    def find_by_supported_language(self, language: Technology) -> List[Analyzer]:
         """find_by_supported_language"""
         raise NotImplementedError()
 

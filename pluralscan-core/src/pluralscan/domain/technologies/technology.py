@@ -1,13 +1,15 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List
 
-from pluralscan.domain.technologies.language import Language
+from pluralscan.domain.technologies.compiler import Compiler
 
 
-@dataclass
+@dataclass(frozen=True)
 class Technology:
     """Technology"""
-    name: str = None
-    version: str = None
-    language: Language = None
-    extensions: List[str] = field(default_factory=list)
+
+    code: str
+    display_name: str
+    source_extensions: List[str]
+    compilers: List[Compiler]
+    

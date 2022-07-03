@@ -2,7 +2,7 @@
 from abc import ABCMeta, abstractmethod
 
 from pluralscan.domain.issues.issue import Issue
-from pluralscan.domain.issues.issue_location import IssueLocation
+from pluralscan.domain.issues.issue_storage import Issuestorage
 
 
 class AbstractIssueBuilder(metaclass=ABCMeta):
@@ -15,8 +15,8 @@ class AbstractIssueBuilder(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def with_location(self, location: IssueLocation) -> None:
-        """With breach location."""
+    def with_storage(self, storage: Issuestorage) -> None:
+        """With breach storage."""
         raise NotImplementedError
 
 
@@ -38,6 +38,6 @@ class IssueBuilder(AbstractIssueBuilder):
         self.reset()
         return breach
 
-    def with_location(self, location: IssueLocation):
-        self.breach.location = location
+    def with_storage(self, storage: Issuestorage):
+        self.breach.storage = storage
         return self

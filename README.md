@@ -17,6 +17,10 @@ Pluralscan should be currently considered as a **POC/POW project** that try to d
 - Perform code analysis on a package with **various analyzer's** *(Roslyn, Sonar, Security Code Scan...)*.
 - Centralize and persist analysis reports into a **generic business model representation**.
 
+## Main Convention
+
+- Hint Typing
+
 ## Try with Docker
 
 ### Build fresh image

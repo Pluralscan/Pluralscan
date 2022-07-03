@@ -25,7 +25,7 @@
     "python.formatting.autopep8Args": [
         "--max-line-length=240"
     ],
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": true
-    }
+    // "editor.codeActionsOnSave": {
+    //     "source.organizeImports": true
+    // }
 }

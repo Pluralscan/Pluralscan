@@ -12,7 +12,7 @@ class PackageRepositorySeeder:
     def __init__(self, options: MongoRepositoryOptions):
         self._collection_name = options.collection_name
         self._database = options.client[options.database_name]
-        self._validator = PackageRepositoryValidation(options)
+        self._validator = PackageRepositoryValidation(options.client)
 
     def seed(self):
         if self._collection_exists():

@@ -10,7 +10,7 @@ from pluralscan.domain.analyzer.analyzer_filter import AnalyzerFilter
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
 from pluralscan.domain.analyzer.analyzer_repository import \
     AbstractAnalyzerRepository
-from pluralscan.domain.technologies.language import Language
+from pluralscan.domain.technologies.technology import Technology
 from pymongo import ReturnDocument
 
 
@@ -35,7 +35,7 @@ class MongoAnalyzerRepository(AbstractAnalyzerRepository):
             documents.append(document)
         return AnalyzerMapper.from_documents(documents)
 
-    def find_by_supported_language(self, language: Language) -> List[Analyzer]:
+    def find_by_supported_language(self, language: Technology) -> List[Analyzer]:
         raise NotImplementedError
 
     def update(self, analyzer: Analyzer) -> Analyzer:

@@ -2,11 +2,11 @@ import pytest
 from pluralscan.data.inmemory.analyzers.analyzer_repository import \
     InMemoryAnalyzerRepository
 from pluralscan.data.inmemory.analyzers.analyzer_seeder import \
-    AnalyzerInMemoryRepositorySeeder
+    InMemoryAnalyzerRepositorySeeder
 from pluralscan.data.inmemory.executables.executable_repository import \
     InMemoryExecutableRepository
 from pluralscan.data.inmemory.executables.executable_seeder import \
-    ExecutableInMemoryRepositorySeeder
+    InMemoryExecutableRepositorySeeder
 
 
 @pytest.fixture
@@ -17,12 +17,12 @@ def repository():
 @pytest.fixture
 def seeder(repository):
     executable_repository = InMemoryExecutableRepository()
-    ExecutableInMemoryRepositorySeeder(executable_repository).seed()
-    return AnalyzerInMemoryRepositorySeeder(repository, executable_repository)
+    InMemoryExecutableRepositorySeeder(executable_repository).seed()
+    return InMemoryAnalyzerRepositorySeeder(repository, executable_repository)
 
 
 def test_add_entities(
-    repository: InMemoryAnalyzerRepository, seeder: AnalyzerInMemoryRepositorySeeder
+    repository: InMemoryAnalyzerRepository, seeder: InMemoryAnalyzerRepositorySeeder
 ):
     # Act
     seeder._add_entities()
@@ -33,7 +33,7 @@ def test_add_entities(
 
 def test_seed(
     repository: InMemoryAnalyzerRepository,
-    seeder: AnalyzerInMemoryRepositorySeeder
+    seeder: InMemoryAnalyzerRepositorySeeder
 ):
     # Act
     seeder.seed()

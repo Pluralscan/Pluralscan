@@ -56,7 +56,7 @@ def test_get_all_returns_analyzers(
         repository: MongoPackageRepository):
     # Act
     seeder.reset_and_seed()
-    packages = repository.get_all()
+    packages = repository.find_all()
 
     # Assert
     assert len(packages) > 0
@@ -69,7 +69,7 @@ def test_get_by_id_returns_analyzer(
     # Act
     seeder._drop_collection()
     package = repository.add(package)
-    package = repository.get_by_id(package.package_id)
+    package = repository.find_by_id(package.package_id)
 
     # Assert
     assert package != None
@@ -108,4 +108,4 @@ def test_given_invalid_input_remove_raises(seeder: PackageRepositorySeeder,
 
     # Assert
     with pytest.raises(Exception):
-        repository.remove("test")
+        repository.remove(PackageId("test"))

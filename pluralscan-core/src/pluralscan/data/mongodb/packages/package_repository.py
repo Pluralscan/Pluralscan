@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from bson import ObjectId
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
@@ -20,11 +20,13 @@ class MongoPackageRepository(AbstractPackageRepository):
     def next_id(self) -> PackageId:
         return PackageId(ObjectId())
 
-    def find_by_id(self, package_id: str) -> Package:
-        document = self._collection.find_one({"_id": ObjectId(package_id)})
+    def find_by_id(self, package_id: PackageId) -> Optional[Package]:
+        document = self._collection.find_one({"_id": ObjectId(str(package_id))})
+        if document is None:
+            return None
         return PackageMapper.from_document(document)
 
-    def find_by_location(self, location: str) -> Package:
+    def find_by_storage(self, storage: str) -> Package:
         raise NotImplementedError
 
     def find_by_name(self, name: str) -> Package:

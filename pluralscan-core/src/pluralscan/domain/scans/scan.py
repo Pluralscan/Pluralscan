@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import datetime
+from typing import Optional
 
 from pluralscan.domain.executables.executable_id import ExecutableId
 from pluralscan.domain.packages.package_id import PackageId
@@ -11,14 +12,15 @@ from pluralscan.domain.scans.scan_state import ScanState
 class Scan:
     """Scan Entity."""
 
-    scan_id: ScanId = None
-    executable_id: ExecutableId = None
-    created_on: datetime = field(default_factory=datetime.now)
-    started_on: datetime = None
-    ended_on: datetime = None
-    working_directory: str = None
-    """Executables used to performs analysis."""
-    package_id: PackageId = None
+    scan_id: ScanId
+    package_id: PackageId
     """Package under analysis."""
+    executable_id: ExecutableId
+    """Executable used to performs analysis."""
+    created_at: datetime = field(default_factory=datetime.now)
+    started_at: Optional[datetime] = None
+    ended_at: Optional[datetime] = None
+    working_directory: Optional[str] = None
     state: ScanState = ScanState.SCHEDULED
-    group_id: str = None
+    batch: Optional[str] = None
+    """If the scan is bulk scheduled, a batch identifier may exists."""

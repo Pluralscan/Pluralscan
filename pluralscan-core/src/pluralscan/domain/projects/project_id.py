@@ -1,10 +1,15 @@
 from dataclasses import dataclass
-from uuid import uuid4
+from typing import Any
 
 
-@dataclass(frozen=True, init=False)
+@dataclass(frozen=True, repr=False)
 class ProjectId:
-    """A value object representing a project unique identifier."""
+    """A project ID."""
 
-    def __init__(self, identity = uuid4()):
-        self.identity = str(identity)
+    identity: Any
+
+    def __str__(self) -> str:
+        return str(self.identity)
+
+    def __repr__(self) -> str:
+        return str(self.identity)

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 
 @dataclass(frozen=True)
@@ -10,7 +10,7 @@ class Compiler:
     version: str
     extensions: List[str]
 
-
+UNKNOWN_COMPILER = "unknown"
 MSBUILD_COMPILER = "msbuild"
 
 COMPILERS: Dict[str, Compiler] = {
@@ -20,11 +20,3 @@ COMPILERS: Dict[str, Compiler] = {
         extensions=[".csproj", ".vbproj", ".sln"],
     )
 }
-
-class CompilerProvider:
-    """CompilerProvider"""
-
-    @staticmethod
-    def get_by_code(code: str) -> Optional[Compiler]:
-        """get_by_code"""
-        return COMPILERS.get(code)

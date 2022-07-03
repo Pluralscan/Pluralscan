@@ -2,7 +2,7 @@ import pytest
 from pluralscan.data.inmemory.analyzers.analyzer_repository import \
     InMemoryAnalyzerRepository
 from pluralscan.data.inmemory.analyzers.analyzer_seeder import \
-    AnalyzerInMemoryRepositorySeeder
+    InMemoryAnalyzerRepositorySeeder
 from pluralscan.domain.analyzer.analyzer import Analyzer
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
 
@@ -17,7 +17,7 @@ def analyzer():
     return Analyzer(AnalyzerId("Test"), "TestAnalyzer", "1.0")
 
 # def test_add_returns_analyzer(
-#         seeder: AnalyzerInMemoryRepositorySeeder,
+#         seeder: InMemoryAnalyzerRepositorySeeder,
 #         repository: InMemoryAnalyzerRepository,
 #         analyzer_mock: Analyzer):
 #     # Act
@@ -30,7 +30,7 @@ def analyzer():
 
 
 # def test_get_all_returns_analyzers(
-#         seeder: AnalyzerInMemoryRepositorySeeder,
+#         seeder: InMemoryAnalyzerRepositorySeeder,
 #         repository: InMemoryAnalyzerRepository):
 #     # Act
 #     seeder.reset_and_seed()
@@ -41,7 +41,7 @@ def analyzer():
 
 
 # def test_get_by_id_returns_analyzer(
-#         seeder: AnalyzerInMemoryRepositorySeeder,
+#         seeder: InMemoryAnalyzerRepositorySeeder,
 #         repository: InMemoryAnalyzerRepository,
 #         analyzer_mock: Analyzer):
 #     # Act
@@ -53,7 +53,7 @@ def analyzer():
 #     assert analyzer != None
 
 
-# def test_update_returns_analyzer(seeder: AnalyzerInMemoryRepositorySeeder,
+# def test_update_returns_analyzer(seeder: InMemoryAnalyzerRepositorySeeder,
 #                                  repository: InMemoryAnalyzerRepository,
 #                                  analyzer_mock: Analyzer):
 #     # Act
@@ -66,7 +66,7 @@ def analyzer():
 #     assert analyzer.name == "Custom Name"
 
 
-# def test_given_valid_input_remove_returns(seeder: AnalyzerInMemoryRepositorySeeder,
+# def test_given_valid_input_remove_returns(seeder: InMemoryAnalyzerRepositorySeeder,
 #                                           repository: InMemoryAnalyzerRepository,
 #                                           analyzer_mock: Analyzer):
 #     # Act

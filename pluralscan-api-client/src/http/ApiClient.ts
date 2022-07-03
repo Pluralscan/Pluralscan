@@ -21,10 +21,13 @@ export class ApiClient implements IApiClient {
     async sendRequest<T = IApiResponse<any>>(apiRequest: IApiRequest): Promise<T | void | any> {
         const response = new ApiResponse<any>();
         response.request = apiRequest;
-
         try {
             const result = await fetch(apiRequest.getUrl(this.basePath), {
-                method: apiRequest.method
+                method: apiRequest.method,
+                body: JSON.stringify(apiRequest.body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
             
             if (!result.ok){
