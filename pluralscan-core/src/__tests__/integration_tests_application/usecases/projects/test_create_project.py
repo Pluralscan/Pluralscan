@@ -4,6 +4,8 @@ from pluralscan.application.usecases.projects.create_project import (
     CreateProjectCommand,
     CreateProjectUseCase,
 )
+from pluralscan.data.inmemory.packages.package_repository import InMemoryPackageRepository
+from pluralscan.data.inmemory.projects.project_repository import InMemoryProjectRepository
 from pluralscan.data.inmemory.projects.project_uow import (
     InMemoryCreateProjectUnitOfWork,
 )
@@ -24,7 +26,7 @@ def project_fetcher_factory():
 
 @pytest.fixture
 def create_project_uow():
-    return InMemoryCreateProjectUnitOfWork()
+    return InMemoryCreateProjectUnitOfWork(InMemoryProjectRepository(), InMemoryPackageRepository())
 
 
 @pytest.mark.parametrize(

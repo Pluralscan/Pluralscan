@@ -26,8 +26,8 @@ class AbstractProjectRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_all(self) -> List[Project]:
-        """get_all"""
+    def find_all(self) -> List[Project]:
+        """find_all"""
         raise NotImplementedError()
 
     @abstractmethod

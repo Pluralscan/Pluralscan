@@ -9,6 +9,7 @@
     } from "carbon-components-svelte";
     import { onMount } from "svelte";
     import { RestClient } from "../../libs/dist/RestClient";
+import { extractProjectSource } from "../../libs/dist/utils/uri";
     import OverlayLoading from "../common/components/loader/OverlayLoading.svelte";
     import Wave from "../common/components/loader/Wave.svelte";
     import DefaultLayout from "../common/layouts/DefaultLayout.svelte";
@@ -31,9 +32,12 @@
         isLoading = true;
 
         try {
-            let response = await restClient.project.findProjectByUri(
-                searchData.uri
+            const projectNameAndSource = extractProjectSource(searchData.uri)
+            let response = await restClient.project.findProject(
+                projectNameAndSource.name,
+                projectNameAndSource.source
             );
+            
             if (!response) {
                 loadingMessage = "No project found, try to create a new one...";
                 await delay(1000)

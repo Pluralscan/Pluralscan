@@ -1,7 +1,7 @@
 export enum ProjectSource {
-    LOCAL,
-    GIT,
-    GITHUB,
-    GITLAB,
-    BITBUCKET,
+    LOCAL = "local",
+    GIT = "git",
+    GITHUB = "github",
+    GITLAB = "gitlab",
+    BITBUCKET = "bitbucket",
 }

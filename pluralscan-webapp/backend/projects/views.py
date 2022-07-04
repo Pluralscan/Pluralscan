@@ -1,8 +1,7 @@
 
-import io
 from pluralscan.application.usecases.projects.create_project import CreateProjectCommand
-from pluralscan.application.usecases.projects.find_project_by_uri import (
-    FindProjectByUriQuery,
+from pluralscan.application.usecases.projects.find_project import (
+    FindProjectQuery,
 )
 from pluralscan.application.usecases.projects.get_project_list import (
     GetProjectListQuery,
@@ -17,7 +16,7 @@ import rest_framework.status as status
 
 from ..settings import SOURCES_DIR
 
-from .factories import find_project_by_uri, get_project_list, create_project
+from .factories import find_project, get_project_list, create_project
 from .serializers import ProjectSerializer, PackageSerializer
 
 
@@ -41,7 +40,7 @@ class ProjectViewSet(ListModelMixin, CreateModelMixin, GenericViewSet):
             result = create_project().handle(command)
             project_serializer: ProjectSerializer = self.get_serializer(result.project)
 
-            package_serializer = PackageSerializer(data=result.package.__dict__)
+            package_serializer = PackageSerializer(data=result.package)
             package_serializer.is_valid()
 
             return Response(
@@ -53,17 +52,17 @@ class ProjectViewSet(ListModelMixin, CreateModelMixin, GenericViewSet):
     @action(
         detail=False,
         methods=["get"],
-        url_path=r"uri/(?P<url>[-_a-zA-Z0-9.:/?]+)",
-        url_name="uri",
+        url_path=r"(?P<source>[-_a-zA-Z0-9]+)(/)(?P<name>[-_a-zA-Z0-9.:/%?]+)",
+        url_name="find"
     )
-    def find_by_uri(self, _: Request, url=None):
-        """find_by_uri"""
+    def find(self, _: Request, source=None, name=None):
+        """find"""
         try:
-            query = FindProjectByUriQuery(url)
-            result = find_project_by_uri().handle(query)
+            query = FindProjectQuery(name, source)
+            result = find_project().handle(query)
             if result.project is None:
                 return Response(status=status.HTTP_204_NO_CONTENT)
-            serializer: ProjectSerializer = self.get_serializer(result)
+            serializer: ProjectSerializer = self.get_serializer(result.project)
             return Response(serializer.data)
         except:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -33,14 +33,14 @@ export interface IApiRequest {
 
 export class ApiRequest implements IApiRequest {
 
-    constructor(method: string, path: string, parameters?: any, body?: any){
+    constructor(method: string, path: string, parameters?: URLSearchParams, body?: any){
         this.method = method;
         this.path = path;
         this.parameters = parameters;
         this.body = body
     }
 
-    parameters?: any;
+    parameters?: URLSearchParams;
     
     url?: string;
     
@@ -52,6 +52,8 @@ export class ApiRequest implements IApiRequest {
 
     getUrl(basePath: string): string {
         this.url = basePath;
-        return `${this.url}${this.path}`
+        let path = `${this.url}${this.path}`
+        if (this.parameters) path += this.parameters.toString()
+        return path
     }
 }

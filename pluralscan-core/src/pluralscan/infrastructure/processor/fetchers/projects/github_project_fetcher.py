@@ -1,10 +1,14 @@
 import re
+
 from dataclasses import dataclass
 
 from git import Repo
 from github import Github, Repository
 from pluralscan.application.processors.fetchers.project_fetcher import (
-    AbstractProjectFetcher, DownloadProjectResult, ProjectInfoResult)
+    AbstractProjectFetcher,
+    DownloadProjectResult,
+    ProjectInfoResult,
+)
 from pluralscan.domain.projects.project_source import ProjectSource
 
 
@@ -38,7 +42,7 @@ class GithubProjectFetcher(AbstractProjectFetcher):
             description=repo.description,
             uri=uri,
             source=ProjectSource.GITHUB,
-            last_update=repo.updated_at
+            last_update=repo.updated_at,
         )
 
     def download(self, uri, output_dir: str) -> DownloadProjectResult:
@@ -62,9 +66,13 @@ class GithubProjectFetcher(AbstractProjectFetcher):
             return "/".join([owner, repo])
         raise RuntimeError()
 
-    def _clone(self, git_url: str, output_dir: str) -> DownloadProjectResult:
+    #TODO: fetching an archive is preferable => package should be unzip only for scan purpose => remove unzip after scan
+    def _clone(
+        self, git_url: str, output_dir: str
+    ) -> DownloadProjectResult:
         if not git_url:
             raise ValueError("A valid uri must be provide.")
+
         repository = self._get_repo(uri=git_url)
         Repo.clone_from(repository.clone_url, output_dir)
-        return DownloadProjectResult(output_dir=str(output_dir))
+        return DownloadProjectResult(output_dir=output_dir)

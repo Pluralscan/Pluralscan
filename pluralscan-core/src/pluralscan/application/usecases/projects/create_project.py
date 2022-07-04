@@ -84,7 +84,7 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
         if project_info is None:
             raise RuntimeError
 
-        # TODO: detect redirection according to provided uri
+        #TODO: detect redirection according to provided uri
 
         # Check if project is already referenced
         project = self._project_repository.find_one(
@@ -109,6 +109,7 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
             pathlib.Path(command.working_directory),
             f"{project.source.name}/{project.name.replace('.', '-')}/SNAPSHOT-{int(project.last_snapshot.timestamp()*1000)}",
         )
+
         download_result: DownloadProjectResult = project_fetcher.download(
             command.uri, str(output_dir)
         )

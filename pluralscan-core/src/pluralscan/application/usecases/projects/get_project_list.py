@@ -45,5 +45,5 @@ class GetProjectListUseCase(
         self._project_repository = project_repository
 
     def handle(self, _: GetProjectListQuery) -> GetProjectListResult:
-        projects = self._project_repository.get_all()
+        projects = self._project_repository.find_all()
         return GetProjectListResult(projects)

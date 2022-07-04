@@ -1,11 +1,16 @@
 import os
+import pathlib
 import re
 from dataclasses import dataclass
+import shutil
 
 import gitlab
 from gitlab.v4.objects.projects import Project
 from pluralscan.application.processors.fetchers.project_fetcher import (
-    AbstractProjectFetcher, DownloadProjectResult, ProjectInfoResult)
+    AbstractProjectFetcher,
+    DownloadProjectResult,
+    ProjectInfoResult,
+)
 from pluralscan.domain.projects.project_source import ProjectSource
 
 
@@ -40,11 +45,17 @@ class GitlabProjectFetcher(AbstractProjectFetcher):
             name=project_name,
             display_name=project.attributes.get("name"),
             description=project.attributes.get("description"),
+            last_update="",
         )
 
     def download(self, uri: str, output_dir: str) -> DownloadProjectResult:
         if not uri:
             raise ValueError("A valid uri must be provide.")
+
+        #TODO: Remove when release app
+        output_dir_path = pathlib.Path(output_dir)
+        if output_dir_path.exists() and output_dir_path.is_dir():
+            shutil.rmtree(output_dir_path)
 
         project = self._get_project(uri=uri)
 

@@ -9,8 +9,6 @@ export interface IApiClient {
     sendRequest(apiRequest: IApiRequest): Promise<void>;
 }
 
-type Analyzers = Analyzer[];
-
 export class ApiClient implements IApiClient {
 
     constructor(basePath: string) {
@@ -21,10 +19,12 @@ export class ApiClient implements IApiClient {
     async sendRequest<T = IApiResponse<any>>(apiRequest: IApiRequest): Promise<T | void | any> {
         const response = new ApiResponse<any>();
         response.request = apiRequest;
+        
         try {
+            console.log(apiRequest.getUrl(this.basePath))
             const result = await fetch(apiRequest.getUrl(this.basePath), {
                 method: apiRequest.method,
-                body: JSON.stringify(apiRequest.body),
+                body: apiRequest.body ? JSON.stringify(apiRequest.body) : null,
                 headers: {
                     'Content-Type': 'application/json'
                 }

@@ -26,7 +26,7 @@ class InMemoryProjectRepository(AbstractProjectRepository):
     def get_by_id(self, project_id: ProjectId) -> Project:
         return self.projects[project_id]
 
-    def get_all(self) -> List[Project]:
+    def find_all(self) -> List[Project]:
         return list(self.projects.values())
 
     def update(self, project: Project) -> Project:

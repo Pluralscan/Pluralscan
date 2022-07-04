@@ -1,12 +1,16 @@
 import pathlib
 
-from pluralscan.data.inmemory.packages.package_repository import \
-    InMemoryPackageRepository
+from pluralscan.data.inmemory.packages.package_repository import (
+    InMemoryPackageRepository,
+)
 from pluralscan.domain.packages.package import Package
 from pluralscan.domain.packages.package_id import PackageId
 from pluralscan.domain.packages.package_registry import PackageRegistry
 from pluralscan.domain.technologies.technology_provider import (
-    CSHARP_TECHNOLOGY, JAVASCRIPT_TECHNOLOGY, TechnologyProvider)
+    CSHARP_TECHNOLOGY,
+    JAVASCRIPT_TECHNOLOGY,
+    TechnologyProvider,
+)
 from pluralscan.infrastructure.config import Config
 
 
@@ -34,7 +38,8 @@ class InMemoryPackageRepositorySeeder:
                 version="1.0.0",
                 registry=PackageRegistry.NUGET,
                 technologies=[TechnologyProvider.get_by_code(CSHARP_TECHNOLOGY)],
-                storage=""
+                storage="",
+                published_at="",
             )
         )
 
@@ -45,7 +50,8 @@ class InMemoryPackageRepositorySeeder:
                 version="1.4",
                 registry=PackageRegistry.NPM,
                 technologies=[TechnologyProvider.get_by_code(JAVASCRIPT_TECHNOLOGY)],
-                storage=""
+                storage="",
+                published_at="",
             )
         )
 
@@ -61,5 +67,6 @@ class InMemoryPackageRepositorySeeder:
                         Config.SOURCES_DIR, "AnalyzerTests/AnalyzerTests.sln"
                     )
                 ),
+                published_at="",
             )
         )
