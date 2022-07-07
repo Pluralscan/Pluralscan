@@ -2,14 +2,16 @@
 	import Router from "svelte-spa-router";
 	import Home from "./home/Home.svelte";
 	import Analyzers from "./analyzers/Analyzers.svelte";
+	import Projects from "./projects/Projects.svelte";
+	import Packages from "./packages/Packages.svelte";
+	import "carbon-components-svelte/css/all.css";
 
 	const routes = {
 		"/": Home,
 		"/analyzers": Analyzers,
+		"/packages": Packages,
 		"/projects": Projects,
 	};
-	import "carbon-components-svelte/css/all.css";
-	import Projects from "./projects/Projects.svelte";
 </script>
 
 <main>

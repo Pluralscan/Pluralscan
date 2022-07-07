@@ -25,6 +25,9 @@ class MongoAnalyzerRepository(AbstractAnalyzerRepository):
     def next_id(self) -> AnalyzerId:
         return AnalyzerId(ObjectId())
 
+    def get_one_by_id(self, analyzer_id: AnalyzerId) -> Analyzer:
+        raise NotImplementedError
+
     def find_by_id(self, analyzer_id: AnalyzerId) -> Analyzer:
         document = self._collection.find_one({"_id": ObjectId(str(analyzer_id))})
         return AnalyzerMapper.from_document(document)
@@ -35,7 +38,7 @@ class MongoAnalyzerRepository(AbstractAnalyzerRepository):
             documents.append(document)
         return AnalyzerMapper.from_documents(documents)
 
-    def find_by_supported_language(self, language: Technology) -> List[Analyzer]:
+    def find_by_technology(self, technology: Technology) -> List[Analyzer]:
         raise NotImplementedError
 
     def update(self, analyzer: Analyzer) -> Analyzer:

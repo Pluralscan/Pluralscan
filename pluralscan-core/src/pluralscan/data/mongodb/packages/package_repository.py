@@ -26,7 +26,7 @@ class MongoPackageRepository(AbstractPackageRepository):
             return None
         return PackageMapper.from_document(document)
 
-    def find_by_storage(self, storage: str) -> Package:
+    def find_by_path(self, path: str) -> Package:
         raise NotImplementedError
 
     def find_by_name(self, name: str) -> Package:

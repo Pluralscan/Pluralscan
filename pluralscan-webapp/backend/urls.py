@@ -32,13 +32,14 @@ router = routers.DefaultRouter()
 router.trailing_slash = ''
 router.register(r"users", views.UserViewSet)
 router.register(r"groups", views.GroupViewSet)
-router.register(r"analyzers", AnalyzerViewSet, basename="analyzer")
+#router.register(r"analyzers", AnalyzerViewSet, basename="analyzer")
 router.register(r"packages", PackageViewSet, basename="package")
 router.register(r"projects", ProjectViewSet, basename="project")
 #router.register(r"scans", ScanViewSet, basename="scan")
 
 # Order matters
 urlpatterns = [
+    path('api/analyzers', AnalyzerViewSet.as_view(), name='analyzer'),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),

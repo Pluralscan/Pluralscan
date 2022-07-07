@@ -24,7 +24,7 @@ class AbstractPackageRepository(metaclass=ABCMeta):
     def find_by_id(self, package_id: PackageId) -> Optional[Package]:
         """Find package by id or return None."""
         raise NotImplementedError()
-    
+
     @abstractmethod
     def find_by_project(self, project_id: ProjectId) -> List[Package]:
         """Get packages by project identifier."""

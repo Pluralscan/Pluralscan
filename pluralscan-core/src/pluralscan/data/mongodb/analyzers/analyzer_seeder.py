@@ -46,7 +46,7 @@ class AnalyzerMongoRepositorySeeder:
             Executable(
                 platform=ExecutablePlatform.WIN,
                 name="Roslynator Fork",
-                storage="/resources/tools/resolynator-fork-0.3.3.0/Roslynator.exe",
+                path="/resources/tools/resolynator-fork-0.3.3.0/Roslynator.exe",
                 version="0.3.3.0",
                 arguments=[]
             ),

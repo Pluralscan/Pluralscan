@@ -21,7 +21,7 @@ class Executable:
     """Indicates the supported runtime environment."""
     name: str = field(default_factory=str)
     """Analyzer name."""
-    storage: str = field(default_factory=str)
+    path: str = field(default_factory=str)
     """Absolute path of the executable to run."""
     version: str = field(default_factory=str)
     """Unique version for the executable of an analyzer."""
@@ -29,7 +29,7 @@ class Executable:
     """Semantic version (can be null)."""
     commands: List[ExecutableCommand] = field(default_factory=list)
     """Command that's can be performed by executable."""
-    runner: ExecutableRunner = ExecutableRunner.GENERIC
+    runner: ExecutableRunner = ExecutableRunner.PROCESS
     """Runner implementation type to use for run executable."""
 
     def add_command(self, command: ExecutableCommand):
@@ -46,9 +46,12 @@ class Executable:
     def as_dict(self):
         """Convert executable properties to dictionary."""
         return {
+            'id': str(self.analyzer_id.identity),
             'platform': self.platform.value,
             'name': self.name,
-            'storage': self.storage,
+            'path': self.path,
             'version': self.version,
             'semantic_version': self.semantic_version,
+            'commands': self.commands,
+            'runner': self.runner.name
         }

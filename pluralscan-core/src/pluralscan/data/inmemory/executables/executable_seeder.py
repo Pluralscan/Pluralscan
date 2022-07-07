@@ -1,4 +1,5 @@
 import pathlib
+from pluralscan.data.inmemory.analyzers.analyzer_repository import InMemoryAnalyzerRepository
 
 from pluralscan.data.inmemory.executables.executable_repository import \
     InMemoryExecutableRepository
@@ -19,11 +20,13 @@ class InMemoryExecutableRepositorySeeder:
     def __init__(
         self,
         executable_repository: InMemoryExecutableRepository,
+        analyzer_repository: InMemoryAnalyzerRepository,
     ) -> None:
         """
         Construct a new 'InMemoryExecutableRepositorySeeder' object.
         """
         self._executable_repository = executable_repository
+        self._analyzer_repository = analyzer_repository
 
     def seed(self):
         """Seed."""
@@ -46,6 +49,8 @@ class InMemoryExecutableRepositorySeeder:
                 ],
             )
         )
+        analyzer = self._analyzer_repository.find_by_id(AnalyzerId("Roslynator"))
+        analyzer.add_executable(self._executable_repository.find_by_id(ExecutableId("RoslynatorDotnet")))
 
         self._executable_repository.add(
             Executable(
@@ -53,7 +58,7 @@ class InMemoryExecutableRepositorySeeder:
                 analyzer_id=AnalyzerId("Roslynator"),
                 platform=ExecutablePlatform.WIN,
                 name="Roslynator Fork",
-                storage= "roslynator-fork-0.3.3.0\\Roslynator.exe",
+                path= "roslynator-fork-0.3.3.0\\Roslynator.exe",
                 version="0.3.3.0",
                 runner=ExecutableRunner.ROSLYNATOR,
                 commands=[
@@ -64,6 +69,8 @@ class InMemoryExecutableRepositorySeeder:
                 ],
             )
         )
+        analyzer = self._analyzer_repository.find_by_id(AnalyzerId("Roslynator"))
+        analyzer.add_executable(self._executable_repository.find_by_id(ExecutableId("RoslynatorFork")))
 
         self._executable_repository.add(
             Executable(
@@ -76,6 +83,8 @@ class InMemoryExecutableRepositorySeeder:
                 commands=[],
             )
         )
+        analyzer = self._analyzer_repository.find_by_id(AnalyzerId("DependencyCheck"))
+        analyzer.add_executable(self._executable_repository.find_by_id(ExecutableId("DependencyCheck")))
 
         self._executable_repository.add(
             Executable(
@@ -100,3 +109,5 @@ class InMemoryExecutableRepositorySeeder:
                 ],
             )
         )
+        analyzer = self._analyzer_repository.find_by_id(AnalyzerId("Sonar"))
+        analyzer.add_executable(self._executable_repository.find_by_id(ExecutableId("SonarDotnet")))

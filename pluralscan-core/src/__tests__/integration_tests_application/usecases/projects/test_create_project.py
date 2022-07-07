@@ -1,4 +1,3 @@
-import pathlib
 from __tests__.test_helpers import SOURCES_DIR
 from pluralscan.application.usecases.projects.create_project import (
     CreateProjectCommand,
@@ -13,11 +12,6 @@ from pluralscan.infrastructure.processor.fetchers.projects.project_fetcher_facto
     ProjectFetcherFactory,
 )
 import pytest
-from pluralscan.application.usecases.projects.get_remote_project_info import (
-    GetRemoteProjectInfoQuery,
-    GetRemoteProjectInfoUseCase,
-)
-
 
 @pytest.fixture
 def project_fetcher_factory():

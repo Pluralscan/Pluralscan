@@ -4,7 +4,7 @@ from enum import Enum
 class ExecutableRunner(Enum):
     """ExecutableRunner"""
 
-    GENERIC = "Generic"
+    PROCESS = "Process"
     SONAR = "Sonar"
     ROSLYNATOR = "Roslynator"
     ROSLYN = "Roslyn"

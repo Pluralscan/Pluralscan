@@ -2,15 +2,13 @@
 from pluralscan.application.usecases.packages.get_package_list import (
     GetPackageListUseCase,
 )
-from pluralscan.data.inmemory.packages.package_repository import (
-    InMemoryPackageRepository,
-)
+from ..settings import MEMORY_CONTEXT
 
 
 # Repositories
 def memory_package_repository():
     """memory_package_repository"""
-    return InMemoryPackageRepository()
+    return MEMORY_CONTEXT.package_repository
 
 
 # Package Use Cases

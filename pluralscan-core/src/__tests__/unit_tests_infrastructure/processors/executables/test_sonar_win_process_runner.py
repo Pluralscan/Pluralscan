@@ -40,7 +40,7 @@ def test_execute_with_output(executable: Executable):
         action=ExecutableAction.SCAN,
         begin_arguments=[
             "dotnet",
-            executable.storage,
+            executable.path,
             "begin",
             f"/k:{sonar_project_name}",
             f"/d:sonar.host.url={sonar_server_url}",
@@ -50,7 +50,7 @@ def test_execute_with_output(executable: Executable):
         build_arguments=["dotnet", "build", str(project_to_analyze)],
         end_arguments=[
             "dotnet",
-            executable.storage,
+            executable.path,
             "end",
             f"/d:sonar.login={sonar_token}",
         ],

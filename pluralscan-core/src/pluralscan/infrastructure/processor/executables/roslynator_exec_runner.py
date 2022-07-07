@@ -19,13 +19,13 @@ class RoslynatorExecRunner(AbstractExecRunner):
         self._report_file_path = report_file_path
 
     def execute(self, options: ExecRunnerOptions) -> ProcessRunResult:
-        storage = options.executable.storage
+        path = options.executable.path
         process_args = (
             options.executable.get_command_by_action(options.action).arguments
             + options.arguments
         )
 
-        with Popen([storage, *process_args]) as process:
+        with Popen([path, *process_args]) as process:
             exit_code = process.wait()
             if exit_code == 0:
                 return ProcessRunResult(None, True)
@@ -43,8 +43,8 @@ class RoslynatorExecRunner(AbstractExecRunner):
                 "A report file path must be specified when requesting a process report."
             )
 
-        storage = str(
-            pathlib.Path.joinpath(Config.TOOLS_DIR, options.executable.storage)
+        path = str(
+            pathlib.Path.joinpath(Config.TOOLS_DIR, options.executable.path)
         )
         # Combine executable default arguments with options extra arguments.
         process_args = (
@@ -61,7 +61,7 @@ class RoslynatorExecRunner(AbstractExecRunner):
             file.close()
 
         with Popen(
-            [storage, *process_args],
+            [path, *process_args],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             universal_newlines=True,

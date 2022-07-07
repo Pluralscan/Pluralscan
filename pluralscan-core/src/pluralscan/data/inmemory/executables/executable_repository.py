@@ -37,7 +37,7 @@ class InMemoryExecutableRepository(AbstractExecutableRepository):
     def find_by_analyzer(self, analyzer_id: AnalyzerId) -> List[Executable]:
         executables = []
         for executable in self._executables.values():
-            if repr(executable.analyzer_id) == analyzer_id:
+            if executable.analyzer_id == analyzer_id:
                 executables.append(executable)
         return executables
 

@@ -5,6 +5,8 @@ from pluralscan.domain.analyzer.analyzer import Analyzer
 from pluralscan.domain.analyzer.analyzer_filter import AnalyzerFilter
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
 from pluralscan.domain.technologies.technology import Technology
+from pluralscan.libs.ddd.repositories.page import Page
+from pluralscan.libs.ddd.repositories.pagination import Pageable
 
 
 class AbstractAnalyzerRepository(metaclass=ABCMeta):
@@ -34,12 +36,12 @@ class AbstractAnalyzerRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def find_by_supported_language(self, language: Technology) -> List[Analyzer]:
-        """find_by_supported_language"""
+    def find_by_technology(self, technology: Technology) -> List[Analyzer]:
+        """find_by_technology"""
         raise NotImplementedError()
 
     @abstractmethod
-    def find_all(self, filters: AnalyzerFilter = None) -> List[Analyzer]:
+    def find_all(self, pageable: Pageable = Pageable()) -> Page[Analyzer]:
         """find_all"""
         raise NotImplementedError()
 

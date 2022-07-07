@@ -6,11 +6,7 @@ from pluralscan.data.inmemory.packages.package_repository import (
 from pluralscan.domain.packages.package import Package
 from pluralscan.domain.packages.package_id import PackageId
 from pluralscan.domain.packages.package_registry import PackageRegistry
-from pluralscan.domain.technologies.technology_provider import (
-    CSHARP_TECHNOLOGY,
-    JAVASCRIPT_TECHNOLOGY,
-    TechnologyProvider,
-)
+from pluralscan.domain.technologies.technology import Technology
 from pluralscan.infrastructure.config import Config
 
 
@@ -36,10 +32,10 @@ class InMemoryPackageRepositorySeeder:
                 package_id=PackageId("Cast.RestClient"),
                 name="Cast.RestClient",
                 version="1.0.0",
-                registry=PackageRegistry.NUGET,
-                technologies=[TechnologyProvider.get_by_code(CSHARP_TECHNOLOGY)],
+                registry=PackageRegistry.LOCAL,
                 storage="",
                 published_at="",
+                technology=Technology.csharp()
             )
         )
 
@@ -49,9 +45,9 @@ class InMemoryPackageRepositorySeeder:
                 name="NodeGoat",
                 version="1.4",
                 registry=PackageRegistry.NPM,
-                technologies=[TechnologyProvider.get_by_code(JAVASCRIPT_TECHNOLOGY)],
                 storage="",
                 published_at="",
+                technology=Technology.javascript()
             )
         )
 
@@ -61,12 +57,12 @@ class InMemoryPackageRepositorySeeder:
                 name="AnalyzerTests",
                 version="1.0",
                 registry=PackageRegistry.LOCAL,
-                technologies=[TechnologyProvider.get_by_code(CSHARP_TECHNOLOGY)],
                 storage=str(
                     pathlib.Path.joinpath(
                         Config.SOURCES_DIR, "AnalyzerTests/AnalyzerTests.sln"
                     )
                 ),
                 published_at="",
+                technology=Technology.csharp(),
             )
         )

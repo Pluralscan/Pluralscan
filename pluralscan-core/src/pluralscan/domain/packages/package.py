@@ -18,8 +18,8 @@ class Package:
     registry: PackageRegistry
     storage: str
     published_at: datetime
+    technologies: List[Technology] = field(default_factory=list)
     uri: Optional[str] = None
     project_id: Optional[ProjectId] = None
     description: Optional[str] = None
-    technologies: List[Technology] = field(default_factory=list)
     created_at: datetime = field(default_factory=datetime.now)

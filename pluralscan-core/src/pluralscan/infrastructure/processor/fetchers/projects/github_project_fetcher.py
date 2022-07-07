@@ -9,6 +9,8 @@ from pluralscan.application.processors.fetchers.project_fetcher import (
     DownloadProjectResult,
     ProjectInfoResult,
 )
+from pluralscan.domain.common.language import Language
+from pluralscan.domain.common.metrics import ProjectLanguageMetric
 from pluralscan.domain.projects.project_source import ProjectSource
 
 
@@ -35,6 +37,16 @@ class GithubProjectFetcher(AbstractProjectFetcher):
         uri = self._parse_github_url(uri)
         # https://docs.github.com/en/rest/repos/repos#get-a-repository
         repo = self._github_client.get_repo(uri)
+        repo_languages = repo.get_languages()
+
+        language_metrics = []
+        for lang in repo_languages.keys():
+            if Language.from_code(lang).code == Language.unknown().code:
+                continue
+
+            language_metrics.append(
+                ProjectLanguageMetric(Language.from_code(lang), repo_languages[lang])
+            )
 
         return ProjectInfoResult(
             name=repo.full_name,
@@ -43,6 +55,7 @@ class GithubProjectFetcher(AbstractProjectFetcher):
             uri=uri,
             source=ProjectSource.GITHUB,
             last_update=repo.updated_at,
+            language_metrics=language_metrics,
         )
 
     def download(self, uri, output_dir: str) -> DownloadProjectResult:
@@ -66,10 +79,8 @@ class GithubProjectFetcher(AbstractProjectFetcher):
             return "/".join([owner, repo])
         raise RuntimeError()
 
-    #TODO: fetching an archive is preferable => package should be unzip only for scan purpose => remove unzip after scan
-    def _clone(
-        self, git_url: str, output_dir: str
-    ) -> DownloadProjectResult:
+    # TODO: fetching an archive is preferable => package should be unzip only for scan purpose => remove unzip after scan
+    def _clone(self, git_url: str, output_dir: str) -> DownloadProjectResult:
         if not git_url:
             raise ValueError("A valid uri must be provide.")
 

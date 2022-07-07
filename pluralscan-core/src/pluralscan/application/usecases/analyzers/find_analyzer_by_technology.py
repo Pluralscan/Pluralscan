@@ -10,41 +10,41 @@ from pluralscan.domain.technologies.technology import Technology
 
 # Input
 @dataclass(frozen=True)
-class GetAnalyzersByTechnologyCommand:
+class FiendAnalyzersByTechnologyCommand:
     """List Analyzer Command"""
 
-    language: Technology
+    technology: Technology
 
 
 # Output
 @dataclass(frozen=True)
-class GetAnalyzersByTechnologyResult:
+class FindAnalyzersByTechnologyResult:
     """ListAnalyzerResult"""
 
     analyzers: List[Analyzer]
 
 
 # Contract
-class AbstractGetAnalyzersByTechnologyUseCase(
+class AbstractFindAnalyzersByTechnologyUseCase(
     metaclass=ABCMeta
 ):  # pylint: disable=too-few-public-methods
-    """AbstractGetAnalyzerListUseCase"""
+    """AbstractFindAnalyzersByTechnologyUseCase"""
 
     @abstractmethod
-    def handle(self, command: GetAnalyzersByTechnologyCommand) -> GetAnalyzersByTechnologyResult:
+    def handle(self, command: FiendAnalyzersByTechnologyCommand) -> FindAnalyzersByTechnologyResult:
         """handle"""
         raise NotImplementedError
 
 
 # Default Implementation
-class GetAnalyzersByTechnologyUseCase(
-    AbstractGetAnalyzersByTechnologyUseCase
+class FindAnalyzersByTechnologyUseCase(
+    AbstractFindAnalyzersByTechnologyUseCase
 ):  # pylint: disable=too-few-public-methods
-    """GetAnalyzerListUseCase"""
+    """FindAnalyzersByTechnologyUseCase"""
 
     def __init__(self, analyzer_repository: AbstractAnalyzerRepository):
         self._analyzer_repository = analyzer_repository
 
-    def handle(self, command: GetAnalyzersByTechnologyCommand) -> GetAnalyzersByTechnologyResult:
-        analyzers = self._analyzer_repository.find_by_supported_language(command.language)
-        return GetAnalyzersByTechnologyResult(analyzers)
+    def handle(self, command: FiendAnalyzersByTechnologyCommand) -> FindAnalyzersByTechnologyResult:
+        analyzers = self._analyzer_repository.find_by_technology(command.technology)
+        return FindAnalyzersByTechnologyResult(analyzers)

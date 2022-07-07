@@ -2,19 +2,11 @@ from pluralscan.application.usecases.analyzers.get_analyzer_list import \
     GetAnalyzerListUseCase
 from pluralscan.application.usecases.analyzers.new_analyzer_use_case import \
     NewAnalyzerUseCase
-from pluralscan.data.inmemory.analyzers.analyzer_repository import \
-    InMemoryAnalyzerRepository
-from pluralscan.data.inmemory.analyzers.analyzer_seeder import \
-    InMemoryAnalyzerRepositorySeeder
-from pluralscan.data.inmemory.executables.executable_repository import \
-    InMemoryExecutableRepository
-from pluralscan.data.inmemory.executables.executable_seeder import \
-    InMemoryExecutableRepositorySeeder
 from pluralscan.data.mongodb.analyzers.analyzer_repository import \
     MongoAnalyzerRepository
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
 from pymongo import MongoClient
-
+from ..settings import MEMORY_CONTEXT
 
 # Database Clients
 def mongo_client():
@@ -31,18 +23,12 @@ def mongo_analyzer_repository():
 
 def memory_executable_repository():
     """memory_executable_repository"""
-    executable_repository = InMemoryExecutableRepository()
-    InMemoryExecutableRepositorySeeder(executable_repository).seed()
-    return executable_repository
+    return MEMORY_CONTEXT.executable_repository
 
 
 def memory_analyzer_repository():
     """memory_analyzer_repository"""
-    analyzer_repository = InMemoryAnalyzerRepository()
-    InMemoryAnalyzerRepositorySeeder(
-        analyzer_repository, memory_executable_repository()
-    ).seed()
-    return analyzer_repository
+    return MEMORY_CONTEXT.analyzer_repository
 
 
 # Analyzer Use Cases
@@ -53,4 +39,4 @@ def new_analyzer_use_case():
 
 def get_analyzer_list_use_case():
     """list_analyzers_use_case"""
-    return GetAnalyzerListUseCase(memory_analyzer_repository())
+    return GetAnalyzerListUseCase(memory_analyzer_repository(), memory_executable_repository())

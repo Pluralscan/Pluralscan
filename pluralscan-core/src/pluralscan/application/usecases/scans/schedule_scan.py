@@ -60,12 +60,12 @@ class ScheduleScanUseCase(
         self._job_runner = job_runner
 
     def handle(self, command: ScheduleScanCommand) -> ScheduleScanResult:
-        # 2. Find package inside internal registry
+        # 1. Find package inside internal registry
         package = self._package_repository.get_one(command.package_id)
         if package is None:
             raise ValueError
 
-        # 1. Retrieve executables used to perform analysis.
+        # 2. Retrieve executables used to perform analysis.
         executables = self._executable_repository.find_many(command.executables)
         if executables is None:
             raise RuntimeError("No executable found.")
@@ -74,12 +74,14 @@ class ScheduleScanUseCase(
         group_id = datetime.now().timestamp()
         scans = []
         for executable in executables:
+            scan_id = self._scan_repository.next_id()
             scan = Scan(
+                scan_id=scan_id,
                 executable_id=executable.executable_id,
                 package_id=package.package_id,
                 working_directory=command.working_directory,
                 state=ScanState.SCHEDULED,
-                group_id=str(group_id),
+                batch=str(group_id),
             )
             scans.append(scan)
 

@@ -11,7 +11,7 @@ import pytest
 )
 def test_detect_source(url, expected):
     # Act
-    result = ProjectSource.detect_source(url)
+    result = ProjectSource.from_uri(url)
 
     # Assert
     assert result is expected

@@ -4,6 +4,7 @@ from typing import List, Optional
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
 from pluralscan.domain.executables.executable import Executable
 from pluralscan.domain.executables.executable_id import ExecutableId
+from pluralscan.libs.ddd.repositories.pagination import Pageable
 
 
 class AbstractExecutableRepository(metaclass=ABCMeta):
@@ -18,7 +19,7 @@ class AbstractExecutableRepository(metaclass=ABCMeta):
 
 
     @abstractmethod
-    def find_by_analyzer(self, analyzer_id: AnalyzerId) -> List[Executable]:
+    def find_by_analyzer(self, analyzer_id: AnalyzerId, pageable: Pageable = Pageable()) -> List[Executable]:
         """get_by_id"""
         raise NotImplementedError()
 

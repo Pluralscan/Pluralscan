@@ -1,3 +1,4 @@
+from math import ceil
 import uuid
 from typing import Dict, List, Optional
 
@@ -7,6 +8,8 @@ from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
 from pluralscan.domain.analyzer.analyzer_repository import \
     AbstractAnalyzerRepository
 from pluralscan.domain.technologies.technology import Technology
+from pluralscan.libs.ddd.repositories.page import Page
+from pluralscan.libs.ddd.repositories.pagination import Pageable
 
 
 class InMemoryAnalyzerRepository(AbstractAnalyzerRepository):
@@ -28,11 +31,20 @@ class InMemoryAnalyzerRepository(AbstractAnalyzerRepository):
     def find_by_id(self, analyzer_id: AnalyzerId) -> Optional[Analyzer]:
         return self._analyzers.get(analyzer_id)
 
-    def find_all(self, _: AnalyzerFilter = None) -> List[Analyzer]:
-        return list(self._analyzers.values())
+    def find_all(self, pageable: Pageable = ...) -> Page[Analyzer]:
+        analyzers = list(self._analyzers.values())
+        if pageable is None:
+            return Page(items=analyzers, total_items=len(analyzers), page_number=1, total_pages=1)
 
-    def find_by_supported_language(self, language: Technology) -> List[Analyzer]:
-        return [x for x in self._analyzers.values() if language in x.supported_language]
+        return Page(
+            items=analyzers[pageable.offset():pageable.offset()+pageable.page_size],
+            total_items=len(analyzers),
+            page_number=pageable.current_page(),
+            total_pages=ceil(len(analyzers)/pageable.page_size)
+        )
+
+    def find_by_technology(self, technology: Technology) -> List[Analyzer]:
+        return [x for x in self._analyzers.values() if technology in x.technologies]
 
     def update(self, analyzer: Analyzer) -> Analyzer:
         analyzer = self.get_one_by_id(analyzer.analyzer_id)

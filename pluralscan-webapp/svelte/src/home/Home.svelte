@@ -9,7 +9,7 @@
     } from "carbon-components-svelte";
     import { onMount } from "svelte";
     import { RestClient } from "../../libs/dist/RestClient";
-import { extractProjectSource } from "../../libs/dist/utils/uri";
+    import { extractProjectSource } from "../../libs/dist/utils/uri";
     import OverlayLoading from "../common/components/loader/OverlayLoading.svelte";
     import Wave from "../common/components/loader/Wave.svelte";
     import DefaultLayout from "../common/layouts/DefaultLayout.svelte";
@@ -20,10 +20,19 @@ import { extractProjectSource } from "../../libs/dist/utils/uri";
     };
     let loadingMessage =
         "Verify if project is already registred in Pluralscan repository...";
+    let title = "Pluralscan"
     let isLoading = false;
-    let project = null;
-    let packages = []
-    let analyzers = []
+    let project = {};
+    let packages = [];
+    let analyzers = [];
+
+    function refreshTitle(value: string){
+        if (!value){
+            title = "Pluralscan"
+            return
+        }
+        title = value
+    }
 
     async function search_project() {
         const restClient = new RestClient({ apiUrl: "http://localhost:8000/" });
@@ -32,27 +41,27 @@ import { extractProjectSource } from "../../libs/dist/utils/uri";
         isLoading = true;
 
         try {
-            const projectNameAndSource = extractProjectSource(searchData.uri)
+            const projectNameAndSource = extractProjectSource(searchData.uri);
             let response = await restClient.project.findProject(
                 projectNameAndSource.name,
                 projectNameAndSource.source
             );
-            
+
             if (!response) {
                 loadingMessage = "No project found, try to create a new one...";
-                await delay(1000)
+                await delay(1000);
                 response = await restClient.project.createProject(
                     searchData.uri
                 );
-                console.log(response)
-                loadingMessage = "Project synchronized with new snapshot package..."
-                project = response.project
-                packages.push(response.package)
-                await delay(1000)
+                console.log(response);
+                loadingMessage =
+                    "Project synchronized with new snapshot package...";
+                project = response.project;
+                packages.push(response.package);
+                await delay(1000);
 
-                loadingMessage = "Retrieve analyzers..."
-                await delay(1000)
-
+                loadingMessage = "Retrieve analyzers...";
+                await delay(1000);
 
                 isLoading = false;
                 return;
@@ -79,44 +88,55 @@ import { extractProjectSource } from "../../libs/dist/utils/uri";
                 <h1>Pluralscan</h1>
             </Row>
 
-            {#if !project}
-            <Row>
-                <Column noGutter padding>
-                    <Tile class="repo-input-tile">
-                        <h5>Search a project from a source control provider</h5>
-                        <Row>
-                            <Column>
-                                <TextInput
-                                    light
-                                    labelText="Project URL"
-                                    helperText="Exemple: https://github.com/gromatluidgi/Cast.RestClient"
-                                    placeholder="Enter project url...."
-                                    bind:value={searchData.uri}
-                                />
-                            </Column>
-                        </Row>
-                        <Button
-                            on:click={search_project}
-                            class="load-repo-button">Search</Button
-                        >
-                    </Tile>
-                </Column>
-            </Row>
-            {/if}
-
             {#if project}
                 <Row>
                     <Column noGutter padding>
                         <Tile class="repo-input-tile">
-                            <h5>{project.name}</h5>
+                            <h5>
+                                Search a project from a source control provider
+                            </h5>
                             <Row>
-                                <Column />
+                                <Column>
+                                    <TextInput
+                                        light
+                                        labelText="Project URL"
+                                        helperText="Exemple: https://github.com/gromatluidgi/Cast.RestClient"
+                                        placeholder="Enter project url...."
+                                        bind:value={searchData.uri}
+                                    />
+                                </Column>
                             </Row>
                             <Button
                                 on:click={search_project}
-                                class="load-repo-button">Scan</Button
+                                class="load-repo-button">Search</Button
                             >
                         </Tile>
+                    </Column>
+                </Row>
+            {/if}
+
+            {#if !project}
+                <Row>
+                    <Column noGutter padding>
+                        <h5>Location: {project.uri}</h5>
+                        <Row>
+                            <Column>
+                                <Tile><h6>Project Informations</h6></Tile>
+                                <Tile><h6>Package Informations</h6></Tile>
+                            </Column>
+
+                            <Column>
+                                <Tile>
+                                    <h6>Scan Package</h6>
+                                    {#each analyzers as analyzer}
+                                    {/each}
+                                </Tile>
+                                <Button
+                                    on:click={search_project}
+                                    class="load-repo-button">Scan</Button
+                                >
+                            </Column>
+                        </Row>
                     </Column>
                 </Row>
             {/if}

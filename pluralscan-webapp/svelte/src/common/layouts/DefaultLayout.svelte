@@ -13,8 +13,9 @@
         <SkipToContent />
     </svelte:fragment>
     <HeaderNav>
-        <HeaderNavItem href="/" text="Home"/>
+        <HeaderNavItem href="#/" text="Home"/>
         <HeaderNavItem href="#/projects" text="Projects"/>
+        <HeaderNavItem href="#/packages" text="Packages"/>
         <HeaderNavItem href="#/analyzers" text="Analyzers"/>
     </HeaderNav>
 </Header>

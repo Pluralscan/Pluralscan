@@ -21,6 +21,7 @@ class AbstractProjectRepository(metaclass=ABCMeta):
         """get_by_id"""
         raise NotImplementedError()
 
+    @abstractmethod
     def find_one(self, name: str, source: ProjectSource) -> Optional[Project]:
         """find_one"""
         raise NotImplementedError()

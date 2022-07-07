@@ -12,6 +12,7 @@ from pluralscan.domain.packages.package_registry import PackageRegistry
 from pluralscan.domain.packages.package_repository import AbstractPackageRepository
 from pluralscan.domain.projects.project import Project
 from pluralscan.domain.projects.project_repository import AbstractProjectRepository
+from pluralscan.domain.technologies.technology import Technology
 
 
 @dataclass
@@ -101,6 +102,7 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
             source=project_info.source,
             last_snapshot=project_info.last_update,
             uri=command.uri,
+            language_metrics=project_info.language_metrics
         )
         self._project_repository.add(project)
 
@@ -116,6 +118,13 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
         if download_result.success is not True:
             raise RuntimeError(download_result.error)
 
+        # Naive technology detection [TODO: use technology detector]
+        technologies = []
+        for metric in project_info.language_metrics:
+            technology = Technology.from_code(metric.language.code)
+            if technology is not None:
+                technologies.append(technology)
+
         # Create a snapshot package
         package_id = self._package_repository.next_id()
         package = Package(
@@ -126,6 +135,7 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
             published_at=project.last_snapshot,
             registry=PackageRegistry.LOCAL,
             storage=download_result.output_dir,
+            technologies=technologies
         )
         self._package_repository.add(package)
 

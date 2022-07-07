@@ -27,36 +27,3 @@ class PackageViewSet(ListModelMixin, GenericViewSet):
         command = GetPackageListQuery()
         result = list_packages_use_case().handle(command)
         return result.packages
-
-    # @action(
-    #     detail=False,
-    #     methods=["get"],
-    #     url_path=r"remote/(?P<url>[-_a-zA-Z0-9.:/?]+)",
-    #     url_name="remote",
-    # )
-    # def remote_package_info(self, _: Request, url=None):
-    #     """remote_package_info"""
-    #     try:
-    #         command = GetRemotePackageInfoCommand(url)
-    #         package_fetcher = self._get_package_fetcher(url)
-    #         result = get_remote_package_info_use_case(package_fetcher).handle(command)
-    #         serializer: PackageSerializer = self.get_serializer(result)
-    #         return Response(serializer.data)
-    #     except RuntimeError:
-    #         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-    # def _get_package_fetcher(self, uri: str) -> AbstractPackageFetcher:
-    #     github_re = re.compile(
-    #         r"(http(s)?)(:(//)?)(github.com/)([a-zA-Z0-9.]*)(/)([a-zA-Z0-9.]*)(/)?"
-    #     )
-    #     gitlab_re = re.compile(
-    #         r"(http(s)?)(:(//)?)(gitlab.com/)([a-zA-Z0-9.]*)(/)([a-zA-Z0-9.]*)(/)?"
-    #     )
-
-    #     if github_re.match(uri):
-    #         return GithubPackageFetcher()
-
-    #     if gitlab_re.match(uri):
-    #         return GitlabPackageFetcher()
-
-    #     raise RuntimeError()

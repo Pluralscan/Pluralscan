@@ -1,0 +1,1 @@
+This is a temporary web application project. Svelte 3 is currently used for POC/POW until migration to Svelte Kit.

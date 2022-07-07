@@ -1,46 +1,43 @@
-from typing import Dict
-
 from rest_framework import serializers
 
+class LanguageSerializer(serializers.Serializer):
+    code = serializers.CharField()
+    display_name = serializers.CharField()
+    source_extensions = serializers.ListField()
 
-class EnumValueField(serializers.Field):
-    labels = {}
-    inverted_labels = {}
+class CompilerSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    version = serializers.CharField()
+    extensions = serializers.ListField()
 
-    def __init__(self, labels: Dict, *args, **kwargs):
-        self.labels = labels
-        # Check to make sure the labels dict is reversible, otherwise
-        # deserialization may produce unpredictable results
-        inverted = {}
-        for k, v in labels.items():
-            if v in inverted:
-                raise ValueError(
-                    'The field is not deserializable with the given labels.'
-                    ' Please ensure that labels map 1:1 with values'
-                )
-            inverted[v] = k
-        self.inverted_labels = inverted
-        super(EnumValueField, self).__init__(*args, **kwargs)
+class TechnologySerializer(serializers.Serializer):
+    code = serializers.CharField()
+    display_name = serializers.CharField()
+    languages = LanguageSerializer(many=True)
+    compilers = CompilerSerializer(many=True)
 
-    def to_representation(self, obj):
-        return self.labels.get(obj.name, None)
+class ExecutableCommandSerializer(serializers.Serializer):
+    action = serializers.ReadOnlyField(source='action.name')
+    arguments = serializers.ListField()
 
-    def to_internal_value(self, data):
-        return self.inverted_labels.get(data.name, None)
 
 class ExecutableSerializer(serializers.Serializer):
     """ExecutableSerializer"""
 
-    platform = EnumValueField(labels={'WIN':'Windows'})
+    platform = serializers.ReadOnlyField(source='platform.name')
     name = serializers.CharField()
-    storage = serializers.CharField()
+    path = serializers.CharField()
     version = serializers.CharField()
     semantic_version = serializers.CharField()
-    
+    commands = ExecutableCommandSerializer(many=True)
+    runner = serializers.ReadOnlyField(source='runner.name')
+
 
 class AnalyzerSerializer(serializers.Serializer):
     """AnalyzerSerializer"""
 
     id = serializers.CharField(source="analyzer_id")
     name = serializers.CharField()
+    technologies = TechnologySerializer(many=True)
+    description = serializers.CharField()
     executables = ExecutableSerializer(many=True)

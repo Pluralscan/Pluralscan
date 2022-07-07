@@ -2,6 +2,7 @@ from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List, Optional
+from pluralscan.domain.common.metrics import ProjectLanguageMetric
 
 from pluralscan.domain.projects.project_source import ProjectSource
 from pluralscan.domain.technologies.technology import Technology
@@ -26,7 +27,7 @@ class ProjectInfoResult:
     last_update: datetime
     display_name: Optional[str] = None
     description: Optional[str] = None
-    technologies: List[Technology] = field(default_factory=list)
+    language_metrics: List[ProjectLanguageMetric] = field(default_factory=list)
 
 
 class AbstractProjectFetcher(metaclass=ABCMeta):

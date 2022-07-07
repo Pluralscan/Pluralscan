@@ -1,9 +1,9 @@
-from pluralscan.data.inmemory.analyzers.analyzer_repository import \
-    InMemoryAnalyzerRepository
-from pluralscan.data.inmemory.executables.executable_repository import \
-    InMemoryExecutableRepository
+from pluralscan.data.inmemory.analyzers.analyzer_repository import (
+    InMemoryAnalyzerRepository,
+)
 from pluralscan.domain.analyzer.analyzer import Analyzer
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.domain.technologies.technology import Technology
 
 
 class InMemoryAnalyzerRepositorySeeder:
@@ -12,13 +12,11 @@ class InMemoryAnalyzerRepositorySeeder:
     def __init__(
         self,
         analyzer_repository: InMemoryAnalyzerRepository,
-        executable_repository: InMemoryExecutableRepository,
     ) -> None:
         """
         Construct a new 'InMemoryAnalyzerRepositorySeeder' object.
         """
         self._analyzer_repository = analyzer_repository
-        self._executable_repository = executable_repository
 
     def seed(self):
         """Seed."""
@@ -29,7 +27,9 @@ class InMemoryAnalyzerRepositorySeeder:
             Analyzer(
                 analyzer_id=AnalyzerId("Roslynator"),
                 name="Roslynator",
-                executables=self._executable_repository.find_by_analyzer(AnalyzerId("Roslynator")),
+                technologies=[
+                    Technology.dotnet(),
+                ],
             )
         )
 
@@ -37,7 +37,9 @@ class InMemoryAnalyzerRepositorySeeder:
             Analyzer(
                 analyzer_id=AnalyzerId("Sonar"),
                 name="Sonar",
-                executables=self._executable_repository.find_by_analyzer(AnalyzerId("Sonar")),
+                technologies=[
+                    Technology.dotnet(),
+                ],
             )
         )
 
@@ -45,6 +47,8 @@ class InMemoryAnalyzerRepositorySeeder:
             Analyzer(
                 analyzer_id=AnalyzerId("DependencyCheck"),
                 name="Dependency Check",
-                executables=self._executable_repository.find_by_analyzer("DependencyCheck"),
+                technologies=[
+                    Technology.dotnet(),
+                ],
             )
         )

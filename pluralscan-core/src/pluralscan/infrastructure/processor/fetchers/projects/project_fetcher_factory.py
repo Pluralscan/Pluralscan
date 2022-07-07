@@ -19,7 +19,7 @@ class ProjectFetcherFactory(AbstractProjectFetcherFactory):
 
     def create(self, uri: str) -> AbstractProjectFetcher:
         """create"""
-        source = ProjectSource.detect_source(uri)
+        source = ProjectSource.from_uri(uri)
 
         if source is ProjectSource.GITLAB:
             return GitlabProjectFetcher()

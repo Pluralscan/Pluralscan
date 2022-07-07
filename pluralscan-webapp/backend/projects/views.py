@@ -55,7 +55,7 @@ class ProjectViewSet(ListModelMixin, CreateModelMixin, GenericViewSet):
         url_path=r"(?P<source>[-_a-zA-Z0-9]+)(/)(?P<name>[-_a-zA-Z0-9.:/%?]+)",
         url_name="find"
     )
-    def find(self, _: Request, source=None, name=None):
+    def find_one(self, _: Request, source=None, name=None):
         """find"""
         try:
             query = FindProjectQuery(name, source)

@@ -23,8 +23,8 @@ class ProjectSource(Enum):
     BITBUCKET = "bitbucket"
 
     @staticmethod
-    def detect_source(uri) -> "ProjectSource":
-        """detect_source"""
+    def from_uri(uri) -> "ProjectSource":
+        """from_uri"""
         if re.search(GITHUB_SOURCE_PATTERN, uri):
             return ProjectSource.GITHUB
 

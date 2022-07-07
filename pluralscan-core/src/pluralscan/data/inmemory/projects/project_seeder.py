@@ -27,10 +27,22 @@ class InMemoryProjectRepositorySeeder:
     def _add_entities(self):
         self._project_repository.add(
             Project(
-                project_id=ProjectId("DemoProject"),
-                name="DemoProject",
-                source=ProjectSource.LOCAL,
-                uri="https://demoproject.com",
-                last_snapshot=datetime.now()
-            )
+                project_id=ProjectId("gromatluidgi/gromatluidgi"),
+                name="gromatluidgi",
+                namespace="gromatluidgi/gromatluidgi",
+                source=ProjectSource.GITHUB,
+                uri="https://github.com/gromatluidgi/gromatluidgi",
+                last_snapshot=datetime.now(),
+            ),
+        )
+
+        self._project_repository.add(
+            Project(
+                project_id=ProjectId("gromatluidgi/Cast.RestClient"),
+                name="Cast.RestClient",
+                namespace="gromatluidgi/Cast.RestClient",
+                source=ProjectSource.GITHUB,
+                uri="https://github.com/gromatluidgi/Cast.RestClient",
+                last_snapshot=datetime.now(),
+            ),
         )
