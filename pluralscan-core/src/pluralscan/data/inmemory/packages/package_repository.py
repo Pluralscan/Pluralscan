@@ -1,11 +1,13 @@
+from math import ceil
 import uuid
 from typing import Dict, List, Optional
 
 from pluralscan.domain.packages.package import Package
 from pluralscan.domain.packages.package_id import PackageId
-from pluralscan.domain.packages.package_repository import \
-    AbstractPackageRepository
+from pluralscan.domain.packages.package_repository import AbstractPackageRepository
 from pluralscan.domain.projects.project_id import ProjectId
+from pluralscan.libs.ddd.repositories.page import Page
+from pluralscan.libs.ddd.repositories.pagination import Pageable
 
 
 class InMemoryPackageRepository(AbstractPackageRepository):
@@ -25,7 +27,7 @@ class InMemoryPackageRepository(AbstractPackageRepository):
         return self._packages.get(package_id)
 
     def find_by_project(self, project_id: ProjectId) -> List[Package]:
-        return [x for x in self.find_all() if str(x.project_id) == project_id]
+        return [x for x in self._packages.values() if str(x.project_id) == project_id]
 
     def get_one(self, package_id: PackageId) -> Package:
         package = self._packages.get(package_id)
@@ -33,9 +35,24 @@ class InMemoryPackageRepository(AbstractPackageRepository):
             raise ValueError
         return package
 
-    def find_all(self) -> List[Package]:
-        packages = self._packages.values()
-        return list(packages)
+    def find_all(self, pageable: Pageable = ...) -> Page[Package]:
+        packages = list(self._packages.values())
+        if pageable is None:
+            return Page(
+                items=packages,
+                total_items=len(packages),
+                page_number=1,
+                page_size=15,
+                total_pages=ceil(len(packages) / 15),
+            )
+
+        return Page(
+            items=packages[pageable.offset() : pageable.offset() + pageable.page_size],
+            total_items=len(packages),
+            page_number=pageable.current_page(),
+            page_size=pageable.page_size,
+            total_pages=ceil(len(packages) / pageable.page_size),
+        )
 
     def update(self, package: Package) -> Package:
         package = self.get_one(package.package_id)
@@ -44,12 +61,7 @@ class InMemoryPackageRepository(AbstractPackageRepository):
         return package
 
     def add(self, package: Package) -> Package:
-        if package.package_id is None:
-            str_uuid = str(uuid.uuid4())
-            package.package_id = str_uuid
-
         self._packages[package.package_id] = package
-
         return package
 
     def remove(self, package_id: PackageId):

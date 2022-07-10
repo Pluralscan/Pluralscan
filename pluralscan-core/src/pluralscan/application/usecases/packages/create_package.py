@@ -58,6 +58,7 @@
 #         if package_info is None or not package_info.success:
 #             raise RuntimeError
 
+# Check if a project exists for this package
 #         # 3.
 #         download_result: DownloadPackageResult = package_fetcher.download(
 #             command.uri, command.working_directory
@@ -71,7 +72,7 @@
 #             package_id=package_id,
 #             name=package_info.name,
 #             description=package_info.description,
-#             storage=download_result.output_dir,
+#             storage_path=download_result.output_dir,
 #             technologies=package_info.technologies,
 #             registry=package_info.type,
 #         )

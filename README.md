@@ -17,6 +17,31 @@ Pluralscan should be currently considered as a **POC/POW project** that try to d
 - Perform code analysis on a package with **various analyzer's** *(Roslyn, Sonar, Security Code Scan...)*.
 - Centralize and persist analysis reports into a **generic business model representation**.
 
+## Roadmap
+
+### Pre-Release
+
+- Ensure validation logic exists for each layer of pluralscan-core.
+- At least 60% code coverage for pluralscan-core.
+- Logging.
+- Clean exception handling.
+- Documentation for pluralscan-core.
+- Documentation for API.
+
+### Release V1
+
+- Move from Svelte 3 to **Svelte Kit**
+  - Justification: Even if svelte kit is still in beta, must have features likes routing are natively implemented. However, the opinated way to realize scallable and maintenable front-end application, is the foremost reason of this choice.
+- Implements abstract filesystem for store resources (packages, source code, tools...)
+- Build a rules registry:
+  - Mapper:
+    - Dependency Check
+    - Roslyn
+    - ...
+- Ensure aggregates consistency.
+- Ensure scalability.
+
+
 ## Main Convention
 
 - Hint Typing
@@ -25,6 +50,7 @@ Pluralscan should be currently considered as a **POC/POW project** that try to d
 
 ### Build fresh image
 
+##### Dotnet
 ```bash
 mkdir pluralscan
 cd pluralscan
@@ -40,32 +66,16 @@ docker run -dp 5400:5400 --env DJANGO_DEBUG=ON pluralscan/pluralscan
 
 Navigate to http://localhost:5400
 
-## TODO
-
-- Core: abstract filesystem for store and retrieve resources (tools, source code...)
-- SARIF Report Processor
-- Build a rules registry:
-  - Pluralscan rule aggregator
-  - Mapper:
-    - Sonar
-    - Roslyn
-    - ...
-- Ensure aggregates consistency.
-- Ensure scalability.
-- Introduce generic type and abstract redundant declaration (repository, usecase...)
-- **Service Orchestration**(current pattern) vs **Service Choreography**.
-- Implements websocket server.
-- Abstract datacontext used for centralize in memory store => Instantiate repository with abstract data context
 
 ## Stack Overview
 
 ### Core Business Packages
 
-- **Python 3.10*** (Runtime)
-- **Poetry** (Package Management)
-- **Django 4.0.5** (Backend Web Framework)
-- **Gunicorn** (Web Server)
-- **pytest**
+- **Python 3.10** as language and runtime environment
+- [poetry]()
+- [django]()
+- [gunicorn]()
+- [pytest]()
 - [pytest-cov]()
 - [mypy](https://github.com/python/mypy) for static type checking.
 - [python-rq](https://python-rq.org/) for queuing jobs and process them in background with workers **(Redis is required)**.
@@ -114,6 +124,7 @@ Navigate to http://localhost:5400
 ### Static Code Analyzis Tools
 
 - Security Code Scan
+- Dependency Check
 - Roslyn
 - Roslynator
 - SonarQube
@@ -136,8 +147,12 @@ Navigate to http://localhost:5400
 ### Core
 
 **Location:** pluralscan-core
+
 **Language:** Python 3.10
-**Architecture:** Clean Architecture/Onion Architecture/Ports & Adapters (Hexagonal)... all these are pretty much names for the same thing, and they all boil down to the dependency inversion principle: **high-level modules** (the domain) **MUST NOT** depend on **low-level** ones (the infrastructure)
+
+**Architecture:** 
+
+Clean Architecture/Onion Architecture/Ports & Adapters (Hexagonal)... all these are pretty much names for the same thing, and they all boil down to the dependency inversion principle: **high-level modules** (the domain) **MUST NOT** depend on **low-level** ones (the infrastructure)
 
 #### Domain
 
@@ -236,7 +251,7 @@ More info about django-admin runserver: https://docs.djangoproject.com/en/4.0/re
 ### Usecases
 
 - [Shedule Package Scan](pluralscan-core/src/__tests__/integration_tests_application/usecases/scans/test_schedule_scan.py)
-- [Scan Package](pluralscan-core/src/__tests__/integration_tests_application/usecases/scans/test_scan_package.py)
+- [Scan Package](pluralscan-core/src/__tests__/integration_tests_application/usecases/scans/test_run_scan.py)
 
 ### Scan Package
 

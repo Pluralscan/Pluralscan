@@ -25,5 +25,4 @@ A best practice among Python developers is to avoid installing packages into a g
 ```powershell
 py -3 -m venv .venv
 .venv\scripts\activate
-pip install -r requirements
 ```

@@ -29,12 +29,12 @@ def analyzer():
 #     assert result.analyzer_id != None
 
 
-# def test_get_all_returns_analyzers(
+# def test_find_all_returns_analyzers(
 #         seeder: InMemoryAnalyzerRepositorySeeder,
 #         repository: InMemoryAnalyzerRepository):
 #     # Act
 #     seeder.reset_and_seed()
-#     analyzers = repository.get_all()
+#     analyzers = repository.find_all()
 
 #     # Assert
 #     assert len(analyzers) > 0

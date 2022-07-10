@@ -15,8 +15,16 @@ from pluralscan.libs.ddd.repositories.pagination import Pageable
 class GetAnalyzerListQuery:
     """List Analyzer Query"""
 
-    offset: int = 0
-    limit: int = 100
+    page: int = 1
+    """
+    Page number (default: 1).
+    """
+
+    limit: int = 15
+    """
+    The number of analyzers to return per page,
+    up to a maximum of 100 (default: 15).
+    """
 
 
 # Output
@@ -58,7 +66,7 @@ class GetAnalyzerListUseCase(
         self._executable_repository = executable_repository
 
     def handle(self, query: GetAnalyzerListQuery) -> GetAnalyzerListResult:
-        page = self._analyzer_repository.find_all(Pageable(query.offset, query.limit))
+        page = self._analyzer_repository.find_all(Pageable(query.page, query.limit))
 
         for analyzer in page.items:
             analyzer.executables = self._executable_repository.find_by_analyzer(
@@ -70,5 +78,5 @@ class GetAnalyzerListUseCase(
             total_items=page.total_items,
             page_number=page.page_number,
             total_page=page.total_pages,
-            page_size=query.limit,
+            page_size=page.page_size,
         )

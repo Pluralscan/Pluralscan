@@ -15,6 +15,7 @@ PyGithub = "^1.55"
 GitPython = "^3.1.27"
 python-gitlab = "^3.5.0"
 rq = "^1.10.1"
+sarif-tools = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.14.1"

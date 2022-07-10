@@ -21,8 +21,8 @@ class AbstractDiagnosisRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_all(self) -> List[Diagnosis]:
-        """get_all"""
+    def find_all(self) -> List[Diagnosis]:
+        """find_all"""
         raise NotImplementedError()
 
     @abstractmethod

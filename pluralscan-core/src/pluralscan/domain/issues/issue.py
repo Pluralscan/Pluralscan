@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional
+from pluralscan.domain.issues.issue_location import IssueLocation
 
 from pluralscan.domain.issues.issue_severity import IssueSeverity
 from pluralscan.domain.rules.rule_id import RuleId
@@ -11,6 +11,5 @@ class Issue:
 
     rule_id: RuleId
     message: str
-    severity: Optional[IssueSeverity] = None
-    is_suppresed: bool = False
-    """Indicates that the rule is explicitly ignored inside the source."""
+    severity: IssueSeverity = IssueSeverity.UNKNOWN
+    location: IssueLocation = IssueLocation()

@@ -1,6 +1,8 @@
+from pathlib import Path
 import re
 
 from dataclasses import dataclass
+import tempfile
 
 from git import Repo
 from github import Github, Repository
@@ -85,5 +87,16 @@ class GithubProjectFetcher(AbstractProjectFetcher):
             raise ValueError("A valid uri must be provide.")
 
         repository = self._get_repo(uri=git_url)
-        Repo.clone_from(repository.clone_url, output_dir)
+
+        temp_dir = tempfile.mkdtemp()
+        repo = Repo.clone_from(repository.clone_url, Path(temp_dir))
+
+        if not Path.exists(Path(output_dir)):
+            Path.mkdir(Path(output_dir), parents=True)
+
+        archive_path = Path.joinpath(Path(output_dir), "package.zip")
+
+        with open(archive_path, "wb") as stream:
+            repo.archive(stream, format="zip")
+
         return DownloadProjectResult(output_dir=output_dir)

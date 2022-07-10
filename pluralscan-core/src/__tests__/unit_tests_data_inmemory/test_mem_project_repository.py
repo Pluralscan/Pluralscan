@@ -22,14 +22,14 @@ class TestInMemoryanalyzerRepository(unittest.TestCase):
         self.assertIsNotNone(result.project_id)
         self.assertTrue(TestHelpers.is_valid_uuid(result.project_id))
 
-    def test_get_all_returns_projects(self):
+    def test_find_all_returns_projects(self):
         # Arrange
         project = Project()
         self.repository.add(project)
         self.repository.add(project)
 
         # Act
-        analyzers = self.repository.get_all()
+        analyzers = self.repository.find_all()
 
         # Assert
         self.assertIsNotNone(analyzers)

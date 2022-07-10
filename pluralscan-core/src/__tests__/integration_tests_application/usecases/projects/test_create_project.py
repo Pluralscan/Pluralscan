@@ -1,4 +1,4 @@
-from __tests__.test_helpers import SOURCES_DIR
+from __tests__.test_helpers import PACKAGES_DIR, SOURCES_DIR
 from pluralscan.application.usecases.projects.create_project import (
     CreateProjectCommand,
     CreateProjectUseCase,
@@ -26,8 +26,8 @@ def create_project_uow():
 @pytest.mark.parametrize(
     "url,output_dir",
     [
-        ("https://github.com/pluralscan/pluralscan", SOURCES_DIR),
-        # ("https://gitlab.com/commento/commento"),
+        ("https://github.com/pluralscan/pluralscan", PACKAGES_DIR),
+        ("https://gitlab.com/Ipfaze/gat", PACKAGES_DIR),
     ],
 )
 def test_handle_returns(url, output_dir, project_fetcher_factory, create_project_uow):

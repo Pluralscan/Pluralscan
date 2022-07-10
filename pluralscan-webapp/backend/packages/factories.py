@@ -12,6 +12,6 @@ def memory_package_repository():
 
 
 # Package Use Cases
-def list_packages_use_case():
+def get_package_list_use_case():
     """list_packages_use_case"""
     return GetPackageListUseCase(memory_package_repository())

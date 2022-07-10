@@ -19,14 +19,14 @@
 #         assert result is not None
 #         assert TestHelpers.is_valid_uuid(result.analyzer_id) is True
 
-#     def test_get_all_returns_analyzers(self):
+#     def test_find_all_returns_analyzers(self):
 #         # Arrange
 #         analyzer = Analyzer("Test")
 #         self.repository.add(analyzer)
 #         self.repository.add(analyzer)
 
 #         # Act
-#         analyzers = self.repository.get_all()
+#         analyzers = self.repository.find_all()
 
 #         # Assert
 #         assert analyzers != None

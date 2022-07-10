@@ -1,17 +1,23 @@
 import pathlib
 
 from pluralscan.application.processors.executables.exec_runner import (
-    AbstractExecRunner, AbstractExecRunnerFactory)
+    AbstractExecRunner,
+    AbstractExecRunnerFactory,
+)
 from pluralscan.domain.executables.executable import Executable
 from pluralscan.domain.executables.executable_runner import ExecutableRunner
-from pluralscan.infrastructure.processor.executables.roslynator_exec_runner import \
-    RoslynatorExecRunner
+from pluralscan.infrastructure.processor.executables.dependency_check_runner import DependencyCheckExecRunner
+from pluralscan.infrastructure.processor.executables.roslynator_exec_runner import (
+    RoslynatorExecRunner,
+)
 
 
 class ExecRunnerFactory(AbstractExecRunnerFactory):
     """Factory of abstract process runner"""
 
-    def create(self, executable: Executable, working_directory: str) -> AbstractExecRunner:
+    def create(
+        self, executable: Executable, working_directory: str
+    ) -> AbstractExecRunner:
         """Create a process runner according to executable type."""
         exec_type = executable.runner
 
@@ -19,10 +25,17 @@ class ExecRunnerFactory(AbstractExecRunnerFactory):
             output_directory = pathlib.Path(working_directory)
             report_file_path = pathlib.Path.joinpath(
                 output_directory,
-                f"Roslynator_Report.txt",
+                "Roslynator_Report.txt",
             )
             return RoslynatorExecRunner(str(output_directory), str(report_file_path))
         if exec_type is ExecutableRunner.SONAR:
             pass
         if exec_type is ExecutableRunner.ROSLYN:
             pass
+        if exec_type is ExecutableRunner.DEPENDENCY_CHECK:
+            output_directory = pathlib.Path(working_directory)
+            report_file_path = pathlib.Path.joinpath(
+                output_directory,
+                "DependencyCheck_Report.sarif",
+            )
+            return DependencyCheckExecRunner(str(output_directory), str(report_file_path))

@@ -27,6 +27,7 @@
             "program": "${workspaceFolder}\\pluralscan-webapp\\manage.py",
             "args": [
                 "runserver",
+                "5400"
             ],
             "env": {
                 "DJANGO_DEBUG": "ON"

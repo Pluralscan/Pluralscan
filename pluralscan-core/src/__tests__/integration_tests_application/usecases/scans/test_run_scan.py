@@ -3,6 +3,7 @@ from pluralscan.application.usecases.scans.run_scan import (ScanPackageCommand,
                                                             ScanPackageUseCase)
 from pluralscan.data.inmemory.analyzers.analyzer_repository import \
     InMemoryAnalyzerRepository
+from pluralscan.data.inmemory.analyzers.analyzer_seeder import InMemoryAnalyzerRepositorySeeder
 from pluralscan.data.inmemory.diagnosis.diagnosis_repository import \
     InMemoryDiagnosisRepository
 from pluralscan.data.inmemory.executables.executable_repository import \
@@ -23,6 +24,7 @@ from pluralscan.infrastructure.processor.executables.exec_runner_factory import 
     ExecRunnerFactory
 from pluralscan.infrastructure.processor.reports.roslynator_report_processor import \
     RoslynatorReportProcessor
+from pluralscan.infrastructure.processor.reports.sarif_report_processor import SarifReportProcessor
 
 
 @pytest.fixture
@@ -31,17 +33,17 @@ def package_repository():
     InMemoryPackageRepositorySeeder(repository).seed()
     return repository
 
-
-@pytest.fixture
-def executable_repository():
-    repository = InMemoryExecutableRepository()
-    InMemoryExecutableRepositorySeeder(repository).seed()
-    return repository
-
-
 @pytest.fixture
 def analyzer_repository():
-    return InMemoryAnalyzerRepository()
+    repository = InMemoryAnalyzerRepository()
+    InMemoryAnalyzerRepositorySeeder(repository).seed()
+    return repository
+
+@pytest.fixture
+def executable_repository(analyzer_repository):
+    repository = InMemoryExecutableRepository()
+    InMemoryExecutableRepositorySeeder(repository, analyzer_repository).seed()
+    return repository
 
 
 @pytest.fixture
@@ -76,6 +78,28 @@ def test_handle_with_roslynator(context):
         diagnosis_repository=context["diagnosis"],
         exec_runner_factory=ExecRunnerFactory(),
         report_processor=RoslynatorReportProcessor(),
+    )
+
+    # Act
+    result = usecase.handle(command)
+
+    # Assert
+    assert result is not None
+    assert result.scan.state is ScanState.COMPLETED
+
+def test_handle_go_with_dependency_check(context):
+    # Arrange
+    command = ScanPackageCommand(
+        scan_id=ScanId("gat")
+    )
+
+    usecase = ScanPackageUseCase(
+        scan_repository=context["scans"],
+        package_repository=context["packages"],
+        executable_repository=context["executables"],
+        diagnosis_repository=context["diagnosis"],
+        exec_runner_factory=ExecRunnerFactory(),
+        report_processor=SarifReportProcessor(),
     )
 
     # Act

@@ -1,29 +1,34 @@
-import re
-from pluralscan.application.usecases.packages.get_package_list import GetPackageListQuery
+from pluralscan.application.usecases.packages.get_package_list import (
+    GetPackageListQuery,
+)
 
-import rest_framework.status as status
-from pluralscan.application.processors.fetchers.package_fetcher import \
-    AbstractPackageFetcher
-
-from rest_framework.decorators import action
-from rest_framework.mixins import ListModelMixin
+from rest_framework.generics import ListCreateAPIView
+from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
-from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
 
-from .factories import list_packages_use_case
+from .factories import get_package_list_use_case
 from .serializers import PackageSerializer
 
 
-class PackageViewSet(ListModelMixin, GenericViewSet):
+class PackageViewSet(ListCreateAPIView):
     """AnalyzersView"""
 
     permission_classes = [AllowAny]
-    serializer_class = PackageSerializer
 
-    def get_queryset(self):
-        """get_queryset"""
-        command = GetPackageListQuery()
-        result = list_packages_use_case().handle(command)
-        return result.packages
+    def get(self, request: Request, *args, **kwargs):
+        command = GetPackageListQuery(
+            int(request.query_params.get("page", 1)),
+            int(request.query_params.get("limit", 15)),
+        )
+        result = get_package_list_use_case().handle(command)
+        package_serializer = PackageSerializer(data=result.packages, many=True)
+        package_serializer.is_valid()
+        return Response(
+            {
+                "packages": package_serializer.data,
+                "totalItems": result.total_items,
+                "pageNumber": result.page_number,
+                "pageSize": result.page_size,
+            }
+        )

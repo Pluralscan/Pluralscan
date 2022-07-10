@@ -10,13 +10,15 @@ from pluralscan.domain.scans.scan_state import ScanState
 
 @dataclass
 class Scan:
-    """Scan Entity."""
+    """
+    A scan represent an analysis task to execute for a specific package.
+    """
 
     scan_id: ScanId
     package_id: PackageId
     """Package under analysis."""
     executable_id: ExecutableId
-    """Executable used to performs analysis."""
+    """Executable used for performs analysis."""
     created_at: datetime = field(default_factory=datetime.now)
     started_at: Optional[datetime] = None
     ended_at: Optional[datetime] = None

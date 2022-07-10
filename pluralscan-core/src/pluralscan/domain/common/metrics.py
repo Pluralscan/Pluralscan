@@ -5,4 +5,4 @@ from pluralscan.domain.common.language import Language
 class ProjectLanguageMetric:
     """ProjectLanguageMetric"""
     language: Language
-    percent: int
+    count: int

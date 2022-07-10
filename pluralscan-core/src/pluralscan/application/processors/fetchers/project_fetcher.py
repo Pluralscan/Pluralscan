@@ -45,7 +45,7 @@ class AbstractProjectFetcher(metaclass=ABCMeta):
 
     @abstractmethod
     def download(self, uri: str, output_dir: str) -> DownloadProjectResult:
-        """Download and save package to fetcher output directory."""
+        """Download and save project to output directory."""
         raise NotImplementedError
 
 

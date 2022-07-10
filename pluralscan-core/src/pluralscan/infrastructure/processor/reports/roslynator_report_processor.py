@@ -1,28 +1,32 @@
 import xml.etree.ElementTree as ET
-from typing import Set
+from typing import List
 
 from pluralscan.application.processors.reports.report_processor import \
     AbstractReportProcessor
+from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
 from pluralscan.domain.diagnosis.diagnosis import Diagnosis
+from pluralscan.domain.diagnosis.diagnosis_id import DiagnosisId
 from pluralscan.domain.diagnosis.diagnosis_report import DiagnosisReport
 from pluralscan.domain.issues.issue import Issue
+from pluralscan.domain.rules.rule_id import RuleId
 
 
 class RoslynatorReportProcessor(AbstractReportProcessor):
     """RoslynatorReportProcessor"""
 
-    def transform_to_diagnosis(self, data) -> Diagnosis:
+    def transform_to_diagnosis(self, analyzer_id: AnalyzerId, diagnosis_id: DiagnosisId, data) -> Diagnosis:
         """transform_to_diagnosys"""
         report = self._validate_input(data)
         issues = self.read_report(report)
         diagnosis = Diagnosis(
+            diagnosis_id=diagnosis_id,
             issues=issues,
             report=DiagnosisReport(filename=report, format="XML", path=report),
         )
         return diagnosis
 
     @classmethod
-    def read_report(cls, path) -> Set[Issue]:
+    def read_report(cls, path) -> List[Issue]:
         """read_report"""
         tree = ET.parse(path)
         root = tree.getroot()
@@ -31,7 +35,7 @@ class RoslynatorReportProcessor(AbstractReportProcessor):
         for item in root.findall("./CodeAnalysis/Summary/Diagnostic"):
             rule_id = item.attrib["Id"]
             message = item.attrib["Title"]
-            issues.append(Issue(rule_id=rule_id, message=message))
+            issues.append(Issue(rule_id=RuleId(rule_id), message=message, location=""))
 
         return issues
 

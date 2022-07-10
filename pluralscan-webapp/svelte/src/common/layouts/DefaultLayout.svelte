@@ -17,6 +17,8 @@
         <HeaderNavItem href="#/projects" text="Projects"/>
         <HeaderNavItem href="#/packages" text="Packages"/>
         <HeaderNavItem href="#/analyzers" text="Analyzers"/>
+        <HeaderNavItem href="#/scans" text="Scans"/>
+        <HeaderNavItem href="#/diagnosis" text="Diagnosis"/>
     </HeaderNav>
 </Header>
 

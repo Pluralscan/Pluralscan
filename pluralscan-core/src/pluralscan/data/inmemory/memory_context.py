@@ -11,6 +11,7 @@ from pluralscan.data.inmemory.executables.executable_seeder import InMemoryExecu
 from pluralscan.data.inmemory.packages.package_repository import (
     InMemoryPackageRepository,
 )
+from pluralscan.data.inmemory.packages.package_seeder import InMemoryPackageRepositorySeeder
 from pluralscan.data.inmemory.projects.project_repository import (
     InMemoryProjectRepository,
 )
@@ -27,7 +28,9 @@ class MemoryContext:
         self.project_repository: InMemoryProjectRepository = InMemoryProjectRepository()
         InMemoryProjectRepositorySeeder(self.project_repository).seed()
 
+        # Initialize and seed Packages store
         self.package_repository: InMemoryPackageRepository = InMemoryPackageRepository()
+        InMemoryPackageRepositorySeeder(self.package_repository).seed()
 
         # Initialize and seed Analyzers store
         self.analyzer_repository: InMemoryAnalyzerRepository = (

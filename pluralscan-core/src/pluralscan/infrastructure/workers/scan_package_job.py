@@ -24,7 +24,7 @@ class ScanPackageWorker:
         )
 
         command = ScanPackageCommand(
-            scan_id=scan_id, executable_action=ExecutableAction.SCAN
+            scan_id=scan_id
         )
 
         scan_package_use_case.handle(command)

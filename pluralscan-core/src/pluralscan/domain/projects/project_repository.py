@@ -4,6 +4,8 @@ from typing import List, Optional
 from pluralscan.domain.projects.project import Project
 from pluralscan.domain.projects.project_id import ProjectId
 from pluralscan.domain.projects.project_source import ProjectSource
+from pluralscan.libs.ddd.repositories.page import Page
+from pluralscan.libs.ddd.repositories.pagination import Pageable
 
 
 class AbstractProjectRepository(metaclass=ABCMeta):
@@ -27,7 +29,7 @@ class AbstractProjectRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def find_all(self) -> List[Project]:
+    def find_all(self, pageable: Pageable = Pageable()) -> Page[Project]:
         """find_all"""
         raise NotImplementedError()
 

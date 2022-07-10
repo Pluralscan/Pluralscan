@@ -14,7 +14,7 @@ class RuleRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_all(self) -> List[Rule]:
+    def find_all(self) -> List[Rule]:
         raise NotImplementedError()
 
     @abstractmethod

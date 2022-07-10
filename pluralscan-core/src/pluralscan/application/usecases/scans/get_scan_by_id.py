@@ -1,6 +1,5 @@
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
-from typing import List
 
 from pluralscan.domain.scans.scan import Scan
 from pluralscan.domain.scans.scan_id import ScanId
@@ -12,7 +11,7 @@ from pluralscan.domain.scans.scan_repository import AbstractScanRepository
 class GetScanByIdResult:
     """GetScanByIdResult"""
 
-    analyzers: List[Scan]
+    scan: Scan
 
 
 # Contract
@@ -37,5 +36,5 @@ class GetScanByIdUseCase(
         self._scan_repository = scan_repository
 
     def handle(self, scan_id: ScanId) -> GetScanByIdResult:
-        analyzers = self._scan_repository.get_all()
-        return GetScanByIdResult(analyzers)
+        scan = self._scan_repository.get_by_id(scan_id)
+        return GetScanByIdResult(scan)

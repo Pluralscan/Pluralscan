@@ -28,7 +28,7 @@ class PackageSerializer(serializers.Serializer):
     name = serializers.CharField()
     version = serializers.CharField()
     registry = serializers.ReadOnlyField(source='registry.name')
-    storage = serializers.CharField(required=False)
+    storage_path = serializers.CharField(required=False)
     published_at = serializers.DateTimeField(required=False)
     uri = serializers.CharField(required=False)
     project_id = serializers.CharField(required=False)

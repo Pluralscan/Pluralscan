@@ -5,12 +5,16 @@
 	import Projects from "./projects/Projects.svelte";
 	import Packages from "./packages/Packages.svelte";
 	import "carbon-components-svelte/css/all.css";
+	import Scans from "./scans/Scans.svelte";
+	import Diagnosis from "./diagnosis/Diagnosis.svelte";
 
 	const routes = {
 		"/": Home,
 		"/analyzers": Analyzers,
 		"/packages": Packages,
 		"/projects": Projects,
+		"/scans": Scans,
+		"/diagnosis": Diagnosis,
 	};
 </script>
 

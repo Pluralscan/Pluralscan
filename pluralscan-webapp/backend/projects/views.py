@@ -7,11 +7,10 @@ from pluralscan.application.usecases.projects.get_project_list import (
     GetProjectListQuery,
 )
 from rest_framework.decorators import action
-from rest_framework.mixins import ListModelMixin, CreateModelMixin
+from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
 import rest_framework.status as status
 
 from ..settings import SOURCES_DIR
@@ -20,19 +19,29 @@ from .factories import find_project, get_project_list, create_project
 from .serializers import ProjectSerializer, PackageSerializer
 
 
-class ProjectViewSet(ListModelMixin, CreateModelMixin, GenericViewSet):
+class ProjectViewSet(ListCreateAPIView):
     """ProjectViewSet"""
 
     permission_classes = [AllowAny]
-    serializer_class = ProjectSerializer
 
-    def get_queryset(self):
-        """get_queryset"""
-        query = GetProjectListQuery()
-        result = get_project_list().handle(query)
-        return result.projects
+    def get(self, request: Request, *args, **kwargs):
+        command = GetProjectListQuery(
+            int(request.query_params.get("page", 1)),
+            int(request.query_params.get("limit", 15)),
+        )
+        result = get_project_list().handle(command)
+        project_serializer = ProjectSerializer(data=result.projects, many=True)
+        project_serializer.is_valid()
+        return Response(
+            {
+                "projects": project_serializer.data,
+                "totalItems": result.total_items,
+                "pageNumber": result.page_number,
+                "pageSize": result.page_size,
+            }
+        )
 
-    def create(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         try:
             command = CreateProjectCommand(
                 uri=request.data["uri"], working_directory=SOURCES_DIR

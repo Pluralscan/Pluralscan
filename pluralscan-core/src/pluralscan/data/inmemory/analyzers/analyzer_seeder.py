@@ -35,20 +35,13 @@ class InMemoryAnalyzerRepositorySeeder:
 
         self._analyzer_repository.add(
             Analyzer(
-                analyzer_id=AnalyzerId("Sonar"),
-                name="Sonar",
-                technologies=[
-                    Technology.dotnet(),
-                ],
-            )
-        )
-
-        self._analyzer_repository.add(
-            Analyzer(
                 analyzer_id=AnalyzerId("DependencyCheck"),
                 name="Dependency Check",
                 technologies=[
                     Technology.dotnet(),
+                    Technology.golang(),
+                    Technology.java(),
+                    Technology.nodejs()
                 ],
             )
         )

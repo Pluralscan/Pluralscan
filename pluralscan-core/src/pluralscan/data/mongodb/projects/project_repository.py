@@ -14,7 +14,7 @@
 #     def get_by_id(self, project_id: str) -> Project:
 #         pass
 
-#     def get_all(self) -> List[Project]:
+#     def find_all(self) -> List[Project]:
 #         pass
 
 #     def update(self, project: Project) -> Project:

@@ -4,6 +4,8 @@ from typing import List, Optional
 from pluralscan.domain.packages.package import Package
 from pluralscan.domain.packages.package_id import PackageId
 from pluralscan.domain.projects.project_id import ProjectId
+from pluralscan.libs.ddd.repositories.page import Page
+from pluralscan.libs.ddd.repositories.pagination import Pageable
 
 
 class AbstractPackageRepository(metaclass=ABCMeta):
@@ -36,7 +38,7 @@ class AbstractPackageRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def find_all(self) -> List[Package]:
+    def find_all(self, pageable: Pageable = Pageable()) -> Page[Package]:
         """Get all packages."""
         raise NotImplementedError()
 

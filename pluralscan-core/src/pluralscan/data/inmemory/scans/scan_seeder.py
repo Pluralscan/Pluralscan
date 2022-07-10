@@ -1,12 +1,13 @@
 import pathlib
 from datetime import datetime
 
-from pluralscan.data.inmemory.executables.executable_repository import \
-    InMemoryExecutableRepository
-from pluralscan.data.inmemory.packages.package_repository import \
-    InMemoryPackageRepository
-from pluralscan.data.inmemory.scans.scan_repository import \
-    InMemoryScanRepository
+from pluralscan.data.inmemory.executables.executable_repository import (
+    InMemoryExecutableRepository,
+)
+from pluralscan.data.inmemory.packages.package_repository import (
+    InMemoryPackageRepository,
+)
+from pluralscan.data.inmemory.scans.scan_repository import InMemoryScanRepository
 from pluralscan.domain.executables.executable_id import ExecutableId
 from pluralscan.domain.packages.package_id import PackageId
 from pluralscan.domain.scans.scan import Scan
@@ -43,7 +44,7 @@ class ScanRepositorySeeder:
                 working_directory=str(
                     pathlib.Path.joinpath(
                         Config.REPORTS_DIR,
-                        "TestScheduled_RoslynatorFork_{0}".format(
+                        f"TestScheduled_RoslynatorFork_{0}".format(
                             str(datetime.timestamp(datetime.now()))
                         ),
                     )
@@ -60,12 +61,29 @@ class ScanRepositorySeeder:
                 working_directory=str(
                     pathlib.Path.joinpath(
                         Config.REPORTS_DIR,
-                        "TestRunning_RoslynatorFork_{0}".format(
+                        f"TestRunning_RoslynatorFork_{0}".format(
                             str(datetime.timestamp(datetime.now()))
                         ),
                     )
                 ),
                 package_id=PackageId("AnalyzerTests"),
                 state=ScanState.RUNNING,
+            )
+        )
+
+        self._scan_repository.add(
+            Scan(
+                scan_id=ScanId("gat"),
+                executable_id=ExecutableId("DependencyCheck"),
+                working_directory=str(
+                    pathlib.Path.joinpath(
+                        Config.REPORTS_DIR,
+                        f"TestRunning_DependencyCheck_{0}".format(
+                            str(datetime.timestamp(datetime.now()))
+                        ),
+                    )
+                ),
+                package_id=PackageId("gat"),
+                state=ScanState.SCHEDULED,
             )
         )

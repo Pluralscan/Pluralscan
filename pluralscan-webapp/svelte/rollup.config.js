@@ -6,6 +6,7 @@ import { terser } from 'rollup-plugin-terser';
 import autoPreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
+import replace from '@rollup/plugin-replace';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -39,6 +40,14 @@ export default {
 		file: '../backend/static/frontend/bundle.js'
 	},
 	plugins: [
+		replace({
+			include: ["src/**/*.ts", "src/**/*.svelte"],
+			preventAssignment: true,
+			values: {
+				"process.env.API_URI": "'http://localhost:5400/'"
+			}
+		}),
+
 		svelte({
 			preprocess: autoPreprocess(),
 			compilerOptions: {
@@ -46,7 +55,7 @@ export default {
 				dev: !production
 			}
 		}),
-		
+
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
 		css({ output: 'bundle.css' }),

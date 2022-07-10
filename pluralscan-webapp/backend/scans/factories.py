@@ -1,5 +1,5 @@
 # Repositories
-from pluralscan.application.usecases.scans.get_scans import GetScansUseCase
+from pluralscan.application.usecases.scans.get_scan_list import GetScanListUseCase
 from pluralscan.application.usecases.scans.schedule_scan import \
     ScheduleScanUseCase
 from pluralscan.data.inmemory.analyzers.analyzer_repository import \
@@ -42,7 +42,7 @@ def memory_diagnosis_repository():
 # Scans Use Cases
 def get_scans_use_case():
     """get_scans_use_case"""
-    return GetScansUseCase(memory_scan_repository())
+    return GetScanListUseCase(memory_scan_repository())
 
 def shedule_scan_use_case():
     """shedule_scan_use_case"""

@@ -1,52 +1,60 @@
-# syntax=docker/dockerfile:1
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS base
-
-# Install dotnet dependencies
-RUN dotnet tool install -g roslynator.dotnet.cli
+FROM amd64/ubuntu:jammy as base
 
 # Setup environment variables
 ENV PIP_NO_CACHE_DIR=off \
-    POETRY_VIRTUALENVS_IN_PROJECT=true \
-    VENV_PATH=/opt/venv
+    POETRY_VIRTUALENVS_IN_PROJECT=false \
+    VIRTUAL_ENV=/opt/venv \
+    POETRY_VERSION=1.1.13 \
+    DOTNET_VERSION=6.0
+
+# Install Dotnet
+RUN apt update
+RUN apt install -y wget
+RUN wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb 
+RUN dpkg -i packages-microsoft-prod.deb
+RUN apt update
+RUN apt install apt-transport-https 
+RUN apt install -y dotnet-sdk-${DOTNET_VERSION} dotnet-runtime-${DOTNET_VERSION}
+
+# Install Golang
+RUN apt install -y golang-go
 
 # Install python and pip
-RUN apt-get update -y && apt-get upgrade -y &&  apt-get install python3 python3-pip python-is-python3 python3-venv -y
+RUN apt install -y python3-pip python3-venv python-is-python3
+
+# Install poetry
+RUN pip install "poetry==$POETRY_VERSION"
+RUN pip install --upgrade setuptools wheel
+
+# Install git
+RUN apt install -y git
 
 FROM base AS builder
-
-# Define working directory
-WORKDIR /home
-
 # Copy application and resources
+WORKDIR /home
 COPY . .
 
-# Install python dependencies
-#RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
-RUN pip install -r requirements.txt
-RUN python -m venv $VENV_PATH
-RUN . $VENV_PATH/bin/activate
+# Activate virtual environment
+RUN python -m venv $VIRTUAL_ENV
+RUN . $VIRTUAL_ENV/bin/activate
 
-# Build pluralscan core
+# Build & install Pluralscan core
+WORKDIR /home/pluralscan-core
 RUN poetry build -vvv
+RUN $VIRTUAL_ENV/bin/pip install --no-cache-dir ./dist/*.whl
 
-# Install pluralscan core
-RUN $VENV_PATH/bin/pip install ./dist/*.whl
-
-# Build webapp
-WORKDIR /home/webapp
-
-RUN poetry install
-RUN poetry run python manage.py makemigrations
-RUN poetry run python manage.py migrate
-RUN poetry run python manage.py createsuperuser --email admin@example.com --username admin
+# Install Django API
+WORKDIR /home/pluralscan-webapp
+RUN poetry install --no-dev
+RUN poetry add tzdata
 
 FROM base AS production
-COPY --from=builder /home/webapp /app
-COPY --from=builder $VENV_PATH /app/.venv
+COPY --from=builder /home/pluralscan-webapp /app
+COPY --from=builder $VIRTUAL_ENV $VIRTUAL_ENV
 WORKDIR /app
 
 #Expose the required port
 EXPOSE 5400
+
 # Run web application
-RUN pip install poetry
-CMD ["poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:5400"]
+CMD ["poetry", "run", "gunicorn", "--bind", ":5400", "--workers", "3", "backend.wsgi:application"]

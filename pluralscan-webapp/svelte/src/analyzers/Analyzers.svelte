@@ -10,16 +10,19 @@
     let loading = false;
     let state = {
         analyzers: [],
-        pageNumber: 0,
-        pageSize: 0,
+        pageNumber: 1,
+        pageSize: 15,
         totalItems: 0,
     };
 
     onMount(async () => {
         loading = true;
-        const restClient = new RestClient({ apiUrl: "http://localhost:8000/" });
+        const restClient = new RestClient({ apiUrl: process.env.API_URI });
         try {
-            const result = await restClient.analyzer.findAll();
+            const result = await restClient.analyzer.list(
+                state.pageNumber,
+                state.pageSize
+            );
             state = {
                 ...result,
             };

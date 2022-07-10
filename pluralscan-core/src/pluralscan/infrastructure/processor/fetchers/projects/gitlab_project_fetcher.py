@@ -1,8 +1,6 @@
-import os
-import pathlib
 import re
 from dataclasses import dataclass
-import shutil
+from pathlib import Path
 
 import gitlab
 from gitlab.v4.objects.projects import Project
@@ -45,23 +43,24 @@ class GitlabProjectFetcher(AbstractProjectFetcher):
             name=project_name,
             display_name=project.attributes.get("name"),
             description=project.attributes.get("description"),
-            last_update="",
+            last_update=project.attributes.get("last_activity_at"),
         )
 
     def download(self, uri: str, output_dir: str) -> DownloadProjectResult:
         if not uri:
             raise ValueError("A valid uri must be provide.")
 
-        #TODO: Remove when release app
-        output_dir_path = pathlib.Path(output_dir)
-        if output_dir_path.exists() and output_dir_path.is_dir():
-            shutil.rmtree(output_dir_path)
-
         project = self._get_project(uri=uri)
 
-        archive_path = os.path.join(output_dir, "")
+        if not Path.exists(Path(output_dir)):
+            Path.mkdir(Path(output_dir), parents=True)
+
+        archive_path = Path.joinpath(
+            Path(output_dir), "package.zip"
+        )
+
         with open(archive_path, "wb") as stream:
-            project.repository_archive(streamed=True, action=stream.write)
+            project.repository_archive(format="zip", streamed=True, action=stream.write)
 
         return DownloadProjectResult(output_dir=output_dir)
 

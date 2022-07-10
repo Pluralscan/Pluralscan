@@ -131,7 +131,8 @@ STATICFILES_DIRS = [
     BASE_DIR / 'backend' / STATIC_URL,
 ]
 
-RESOURCES_DIR = Path.joinpath(Path(BASE_DIR / 'backend' / STATIC_URL), 'resources')
+RESOURCES_DIR = Path.joinpath(Path(BASE_DIR.parent / 'backend' / STATIC_URL), 'resources')
+PACKAGES_DIR = Path.joinpath(RESOURCES_DIR, 'packages')
 SOURCES_DIR = Path.joinpath(RESOURCES_DIR, 'sources')
 REPORTS_DIR = Path.joinpath(RESOURCES_DIR, 'reports')
 
@@ -151,4 +152,6 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "http://localhost:5400",
+    "http://127.0.0.1:5400",
 ]

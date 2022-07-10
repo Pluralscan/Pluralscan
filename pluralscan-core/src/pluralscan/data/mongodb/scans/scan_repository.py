@@ -23,7 +23,7 @@ class MongoScanRepository(AbstractScanRepository):
         document = self._collection.find_one({"_id": ObjectId(scan_id)})
         return ScanMapper.from_document(document)
 
-    def get_all(self) -> List[Scan]:
+    def find_all(self) -> List[Scan]:
         documents: List[ScanDocument] = []
         for document in self._collection.find():
             documents.append(document)

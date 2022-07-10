@@ -8,6 +8,7 @@ class AnalyzerId:
     identity: Any
 
     def __str__(self) -> str:
+        """Convert a AnalyzerId to a string."""
         return str(self.identity)
 
     def __repr__(self) -> str:

@@ -23,7 +23,7 @@ class InMemoryDiagnosisRepository(AbstractDiagnosisRepository):
     def get_by_id(self, diagnosis_id: str) -> Diagnosis:
         return self._diagnosis.get(diagnosis_id)
 
-    def get_all(self) -> List[Diagnosis]:
+    def find_all(self) -> List[Diagnosis]:
         return list(self._diagnosis.values())
 
     def update(self, diagnosis: Diagnosis) -> Diagnosis:

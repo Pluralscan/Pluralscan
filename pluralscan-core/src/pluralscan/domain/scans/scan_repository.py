@@ -1,5 +1,8 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
+from pluralscan.libs.ddd.repositories.page import Page
+
+from pluralscan.libs.ddd.repositories.pagination import Pageable
 
 from .scan import Scan
 from .scan_id import ScanId
@@ -24,7 +27,7 @@ class AbstractScanRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_all(self) -> List[Scan]:
+    def find_all(self, pageable: Pageable = Pageable()) -> Page[Scan]:
         """Get all scans."""
         raise NotImplementedError()
 

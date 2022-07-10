@@ -31,7 +31,7 @@ class InMemoryProjectRepositorySeeder:
                 name="gromatluidgi",
                 namespace="gromatluidgi/gromatluidgi",
                 source=ProjectSource.GITHUB,
-                uri="https://github.com/gromatluidgi/gromatluidgi",
+                homepage="https://github.com/gromatluidgi/gromatluidgi",
                 last_snapshot=datetime.now(),
             ),
         )
@@ -42,7 +42,7 @@ class InMemoryProjectRepositorySeeder:
                 name="Cast.RestClient",
                 namespace="gromatluidgi/Cast.RestClient",
                 source=ProjectSource.GITHUB,
-                uri="https://github.com/gromatluidgi/Cast.RestClient",
+                homepage="https://github.com/gromatluidgi/Cast.RestClient",
                 last_snapshot=datetime.now(),
             ),
         )

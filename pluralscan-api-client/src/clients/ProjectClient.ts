@@ -15,7 +15,7 @@ export class ProjectClient {
         
     } 
     
-    public async findAll(): Promise<Project[]> {
+    public async list(page: number, limit: number): Promise<Project[]> {
         const request = new ApiRequest("GET", FIND_ALL_ROUTE);
         const response: ApiResponse<Project[]> = await this.client.sendRequest(request);
         if (response.success)

@@ -3,24 +3,37 @@ from dataclasses import dataclass
 from typing import List
 
 from pluralscan.domain.projects.project import Project
-from pluralscan.domain.projects.project_repository import \
-    AbstractProjectRepository
+from pluralscan.domain.projects.project_repository import AbstractProjectRepository
+from pluralscan.libs.ddd.repositories.pagination import Pageable
 
 
 # Input
 @dataclass(frozen=True)
 class GetProjectListQuery:
-    """List Analyzer Command"""
+    """Query parameters used for fetch list of projects."""
 
-    limit: int = 100
+    page: int = 1
+    """
+    Page number (default: 1).
+    """
+
+    limit: int = 15
+    """
+    The number of analyzers to return per page,
+    up to a maximum of 100 (default: 15).
+    """
 
 
 # Output
 @dataclass(frozen=True)
 class GetProjectListResult:
-    """ListAnalyzerResult"""
+    """GetProjectListResult"""
 
     projects: List[Project]
+    total_items: int
+    page_number: int
+    total_page: int
+    page_size: int
 
 
 # Contract
@@ -30,7 +43,7 @@ class AbstractGetProjectListUseCase(
     """AbstractGetProjectListUseCase"""
 
     @abstractmethod
-    def handle(self, command: GetProjectListQuery) -> GetProjectListResult:
+    def handle(self, query: GetProjectListQuery) -> GetProjectListResult:
         """handle"""
         raise NotImplementedError
 
@@ -44,6 +57,13 @@ class GetProjectListUseCase(
     def __init__(self, project_repository: AbstractProjectRepository):
         self._project_repository = project_repository
 
-    def handle(self, _: GetProjectListQuery) -> GetProjectListResult:
-        projects = self._project_repository.find_all()
-        return GetProjectListResult(projects)
+    def handle(self, query: GetProjectListQuery) -> GetProjectListResult:
+        page = self._project_repository.find_all(Pageable(query.page, query.limit))
+
+        return GetProjectListResult(
+            projects=page.items,
+            total_items=page.total_items,
+            page_number=page.page_number,
+            total_page=page.total_pages,
+            page_size=page.page_size,
+        )

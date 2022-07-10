@@ -1,15 +1,23 @@
 from dataclasses import dataclass
-from typing import NamedTuple
+from enum import Enum
 
-from pluralscan.domain.sources.source_storage import (Sourcestorage,
-                                                       Textstorage)
+
+class IssueLocationKind(Enum):
+    """IssueLocationKind"""
+
+    UNKNOWN = 0
+    SOURCE = 1
+    METADATA = 2
 
 
 @dataclass(frozen=True)
-class Issuestorage(NamedTuple):
-    """Tuple with information about the storage of a breach insides source code."""
-    absolute_path: str
-    path: str
-    module: str
-    source_storage: Sourcestorage = None
-    text_storage: Textstorage = None
+class IssueLocation:
+    """IssueLocation"""
+
+    path: str = None
+    absolute_path: str = None
+    line: int = 0
+    column: int = 0
+    end_line: int = 0
+    end_column: int = 0
+    kind: IssueLocationKind = IssueLocationKind.UNKNOWN

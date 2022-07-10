@@ -9,7 +9,7 @@
 
     export let analyzers = [];
     export let pageNumber = 1;
-    export let pageSize = 100;
+    export let pageSize = 15;
     export let totalItems = 0;
 
     const headers = [
@@ -33,7 +33,7 @@
     title="Analyzers"
     description="Pluralscan supported analyzers."
     size="medium"
-    pageSize={pageSize}
+    {pageSize}
     page={pageNumber}
     sortable
     expandable
@@ -46,12 +46,11 @@
                 <OverflowMenuItem text="Show Details" />
             </OverflowMenu>
         {:else if cell.key === "technologies"}
-            {#each cell.value as technology}
-                {technology.display_name} [{technology.languages
-                    .map((language) => language.display_name)
-                    .join(", ")}]
-            {/each}
-        {:else}{cell.value}{/if}
+            {cell.value.map((tech) => tech.display_name).join(" / ")}
+            <!-- {console.log(JSON.stringify(cell))} -->
+        {:else}
+            {cell.value}
+        {/if}
     </svelte:fragment>
 
     <svelte:fragment slot="expanded-row" let:row>
@@ -74,10 +73,10 @@
     </svelte:fragment>
 </DataTable>
 <Pagination
-  bind:pageSize={pageSize}
-  bind:page={pageNumber}
-  totalItems={totalItems}
-  pageSizeInputDisabled
+    bind:pageSize
+    bind:page={pageNumber}
+    {totalItems}
+    pageSizeInputDisabled
 />
 
 <style lang="scss">

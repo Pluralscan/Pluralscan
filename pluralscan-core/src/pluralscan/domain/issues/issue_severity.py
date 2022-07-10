@@ -2,21 +2,34 @@ from enum import Enum, unique
 
 
 @unique
-class IssueSeverity(str, Enum):
+class IssueSeverity(Enum):
     """Describes how severe an issue is."""
 
-    HIDDEN = "Hidden"
+    UNKNOWN = "unknown"
+
+    HIDDEN = "hidden"
     """
-    Something that is an issue, as determined by some authority, 
+    Something that is an issue, as determined by some authority,
     but is not surfaced through normal means.
     There may be different mechanisms that act on these issues.
     """
 
-    INFO = "Info"
+    INFO = "info"
     """Information that does not indicate a problem."""
 
-    WARNING = "Warning"
+    WARNING = "warning"
     """Something suspicious but allowed."""
 
-    ERROR = "Error"
+    ERROR = "error"
     """Something not allowed by the rules of the language or other authority."""
+
+    @staticmethod
+    def from_string(code: str) -> "IssueSeverity":
+        """Map string to IssueSeverity."""
+        if code in [IssueSeverity.HIDDEN]:
+            return IssueSeverity.HIDDEN
+        if code in [IssueSeverity.WARNING]:
+            return IssueSeverity.WARNING
+        if code in [IssueSeverity.INFO]:
+            return IssueSeverity.INFO
+        return IssueSeverity.UNKNOWN

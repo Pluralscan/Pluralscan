@@ -4,7 +4,6 @@ from typing import List, Optional
 
 from pluralscan.domain.packages.package_id import PackageId
 from pluralscan.domain.packages.package_registry import PackageRegistry
-from pluralscan.domain.projects.project_id import ProjectId
 from pluralscan.domain.technologies.technology import Technology
 
 
@@ -16,10 +15,9 @@ class Package:
     name: str
     version: str
     registry: PackageRegistry
-    storage: str
+    storage_path: str
     published_at: datetime
-    technologies: List[Technology] = field(default_factory=list)
-    uri: Optional[str] = None
-    project_id: Optional[ProjectId] = None
     description: Optional[str] = None
     created_at: datetime = field(default_factory=datetime.now)
+    technologies: List[Technology] = field(default_factory=list)
+    links: List[tuple[str, str]] = field(default_factory=list)

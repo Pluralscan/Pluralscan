@@ -4,6 +4,7 @@ from typing import Generic, List, Optional, TypeVar
 
 from pluralscan.domain.executables.executable import Executable
 from pluralscan.domain.executables.executable_action import ExecutableAction
+from pluralscan.domain.packages.package import Package
 
 
 @dataclass(frozen=True)
@@ -11,6 +12,7 @@ class ExecRunnerOptions:
     """ProcessOptions"""
 
     executable: Executable
+    package: Package
     action: ExecutableAction
     arguments: List[str] = field(default_factory=list)
 

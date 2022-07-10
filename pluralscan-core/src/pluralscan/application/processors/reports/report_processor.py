@@ -1,6 +1,8 @@
 from abc import ABCMeta, abstractmethod
+from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
 
 from pluralscan.domain.diagnosis.diagnosis import Diagnosis
+from pluralscan.domain.diagnosis.diagnosis_id import DiagnosisId
 
 
 class AbstractReportProcessor(metaclass=ABCMeta):
@@ -10,6 +12,6 @@ class AbstractReportProcessor(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def transform_to_diagnosis(self, data) -> Diagnosis:
+    def transform_to_diagnosis(self, analyzer_id: AnalyzerId, diagnosis_id: DiagnosisId, data) -> Diagnosis:
         """Serialize raw data into 'Diagnosis' entity."""
         raise NotImplementedError

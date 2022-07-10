@@ -20,22 +20,22 @@
     };
     let loadingMessage =
         "Verify if project is already registred in Pluralscan repository...";
-    let title = "Pluralscan"
+    let title = "Pluralscan";
     let isLoading = false;
     let project = {};
     let packages = [];
     let analyzers = [];
 
-    function refreshTitle(value: string){
-        if (!value){
-            title = "Pluralscan"
-            return
+    function refreshTitle(value: string) {
+        if (!value) {
+            title = "Pluralscan";
+            return;
         }
-        title = value
+        title = value;
     }
 
     async function search_project() {
-        const restClient = new RestClient({ apiUrl: "http://localhost:8000/" });
+        const restClient = new RestClient({ apiUrl: process.env.API_URI });
         loadingMessage =
             "Verify if project is already registred in Pluralscan repository...";
         isLoading = true;
@@ -93,15 +93,15 @@
                     <Column noGutter padding>
                         <Tile class="repo-input-tile">
                             <h5>
-                                Search a project from a source control provider
+                                Search for an open-source projet or package to analize
                             </h5>
                             <Row>
                                 <Column>
                                     <TextInput
                                         light
-                                        labelText="Project URL"
+                                        labelText="Source"
                                         helperText="Exemple: https://github.com/gromatluidgi/Cast.RestClient"
-                                        placeholder="Enter project url...."
+                                        placeholder="Enter project or package url...."
                                         bind:value={searchData.uri}
                                     />
                                 </Column>
@@ -128,8 +128,7 @@
                             <Column>
                                 <Tile>
                                     <h6>Scan Package</h6>
-                                    {#each analyzers as analyzer}
-                                    {/each}
+                                    {#each analyzers as analyzer}{/each}
                                 </Tile>
                                 <Button
                                     on:click={search_project}

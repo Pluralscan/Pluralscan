@@ -98,10 +98,11 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
         project_id = self._project_repository.next_id()
         project = Project(
             project_id=project_id,
-            name=project_info.name,
+            name=project_info.display_name,
+            namespace=project_info.name,
             source=project_info.source,
             last_snapshot=project_info.last_update,
-            uri=command.uri,
+            homepage=command.uri,
             language_metrics=project_info.language_metrics
         )
         self._project_repository.add(project)
@@ -109,7 +110,7 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
         # Download project sources
         output_dir = pathlib.Path.joinpath(
             pathlib.Path(command.working_directory),
-            f"{project.source.name}/{project.name.replace('.', '-')}/SNAPSHOT-{int(project.last_snapshot.timestamp()*1000)}",
+            project.snapshot_relative_path(),
         )
 
         download_result: DownloadProjectResult = project_fetcher.download(
@@ -129,12 +130,11 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
         package_id = self._package_repository.next_id()
         package = Package(
             package_id=package_id,
-            project_id=project_id,
             name=project.name,
             version="SNAPSHOT",
             published_at=project.last_snapshot,
             registry=PackageRegistry.LOCAL,
-            storage=download_result.output_dir,
+            storage_path=download_result.output_dir,
             technologies=technologies
         )
         self._package_repository.add(package)

@@ -3,9 +3,15 @@ import pathlib
 import subprocess
 from os.path import exists
 from subprocess import Popen
+import tempfile
+import zipfile
 
 from pluralscan.application.processors.executables.exec_runner import (
-    AbstractExecRunner, ExecRunnerOptions, ProcessRunResult)
+    AbstractExecRunner,
+    ExecRunnerOptions,
+    ProcessRunResult,
+)
+from pluralscan.domain.executables.executable_action import ExecutableAction
 from pluralscan.infrastructure.config import Config
 
 
@@ -20,6 +26,12 @@ class RoslynatorExecRunner(AbstractExecRunner):
 
     def execute(self, options: ExecRunnerOptions) -> ProcessRunResult:
         path = options.executable.path
+
+        # Extract package
+        temp_dir = tempfile.mkdtemp()
+        with zipfile.ZipFile(options.package.storage_path, "r") as zip_ref:
+            zip_ref.extractall(temp_dir)
+
         process_args = (
             options.executable.get_command_by_action(options.action).arguments
             + options.arguments
@@ -43,15 +55,25 @@ class RoslynatorExecRunner(AbstractExecRunner):
                 "A report file path must be specified when requesting a process report."
             )
 
-        path = str(
-            pathlib.Path.joinpath(Config.TOOLS_DIR, options.executable.path)
-        )
+        path = str(pathlib.Path.joinpath(Config.TOOLS_DIR, options.executable.path))
+
+        # Extract package
+        temp_dir = tempfile.mkdtemp()
+        with zipfile.ZipFile(options.package.storage_path, "r") as zip_ref:
+            zip_ref.extractall(temp_dir)
+
+        # Find any csproj
+        csproj = list(map(lambda x: str(x), list(pathlib.Path(temp_dir).glob("**/*.csproj"))))
+
         # Combine executable default arguments with options extra arguments.
-        process_args = (
-            options.executable.get_command_by_action(options.action).arguments
-            + options.arguments
-            + ["-o", self._report_file_path]
-        )
+        if options.action == ExecutableAction.SCAN:
+            process_args = (
+                options.executable.get_command_by_action(options.action).arguments
+                + csproj
+                + ["-o", self._report_file_path]
+            )
+        else:
+            raise NotImplementedError
 
         if not exists(self._reports_output_dir):
             os.makedirs(self._reports_output_dir)

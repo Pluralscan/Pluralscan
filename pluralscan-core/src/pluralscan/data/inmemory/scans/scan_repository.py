@@ -4,6 +4,8 @@ from typing import Dict, List
 from pluralscan.domain.scans.scan import Scan
 from pluralscan.domain.scans.scan_id import ScanId
 from pluralscan.domain.scans.scan_repository import AbstractScanRepository
+from pluralscan.libs.ddd.repositories.page import Page
+from pluralscan.libs.ddd.repositories.pagination import Pageable
 
 
 class InMemoryScanRepository(AbstractScanRepository):
@@ -22,7 +24,7 @@ class InMemoryScanRepository(AbstractScanRepository):
     def get_by_id(self, scan_id: ScanId) -> Scan:
         return self._scans.get(scan_id)
 
-    def get_all(self) -> List[Scan]:
+    def find_all(self, pageable: Pageable = ...) -> Page[Scan]:
         return list(self._scans.values())
 
     def update(self, scan: Scan) -> Scan:
@@ -36,11 +38,7 @@ class InMemoryScanRepository(AbstractScanRepository):
         return scan
 
     def add(self, scan: Scan) -> Scan:
-        if scan.scan_id is None:
-            scan.scan_id = self.next_id()
-
         self._scans[scan.scan_id] = scan
-
         return scan
 
     def add_bulk(self, scans: List[Scan]) -> List[Scan]:

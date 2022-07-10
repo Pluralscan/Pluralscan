@@ -51,7 +51,7 @@ def test_add_returns_analyzer(
     assert result.analyzer_id != None
 
 
-def test_get_all_returns_analyzers(
+def test_find_all_returns_analyzers(
         seeder: AnalyzerMongoRepositorySeeder,
         repository: MongoAnalyzerRepository):
     # Act

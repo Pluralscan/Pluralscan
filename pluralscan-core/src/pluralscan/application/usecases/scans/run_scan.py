@@ -88,8 +88,8 @@ class ScanPackageUseCase(
             raise ValueError
 
         # 4. Execute analyzer process and wait for list of report files.
-        arguments = [package.storage]
-        options = ExecRunnerOptions(executable, ExecutableAction.SCAN, arguments)
+        arguments = []
+        options = ExecRunnerOptions(executable, package, ExecutableAction.SCAN, arguments)
         process_result = self._exec_runner_factory.create(
             executable=executable, working_directory=scan.working_directory
         ).execute_with_report(options)
@@ -104,9 +104,10 @@ class ScanPackageUseCase(
         # 6. Transform reports into diagnosis.
         diagnosis_id = self._diagnosis_repository.next_id()
         diagnosis = self._report_processor.transform_to_diagnosis(
+            analyzer_id=executable.analyzer_id,
+            diagnosis_id=diagnosis_id,
             data=report_files
         )
-        diagnosis.diagnosis_id = diagnosis_id
         diagnosis.scan_id = scan.scan_id
 
         # 7. Persist diagnosis.
