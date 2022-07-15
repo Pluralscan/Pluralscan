@@ -3,6 +3,11 @@ from pluralscan.data.inmemory.analyzers.analyzer_repository import (
 )
 from pluralscan.domain.analyzer.analyzer import Analyzer
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.domain.executables.executable import Executable
+from pluralscan.domain.executables.executable_action import ExecutableAction
+from pluralscan.domain.executables.executable_command import ExecutableCommand
+from pluralscan.domain.executables.executable_platform import ExecutablePlatform
+from pluralscan.domain.executables.executable_runner import ExecutableRunner
 from pluralscan.domain.technologies.technology import Technology
 
 
@@ -30,6 +35,35 @@ class InMemoryAnalyzerRepositorySeeder:
                 technologies=[
                     Technology.dotnet(),
                 ],
+                executables=[
+                    Executable(
+                        analyzer_id=AnalyzerId("Roslynator"),
+                        platform=ExecutablePlatform.DOTNET,
+                        name="Roslynator Dotnet",
+                        version="0.3.3.0",
+                        runner=ExecutableRunner.ROSLYNATOR,
+                        commands=[
+                            ExecutableCommand(
+                                action=ExecutableAction.SCAN,
+                                arguments=["dotnet", "roslynator"],
+                            )
+                        ],
+                    ),
+                    Executable(
+                        analyzer_id=AnalyzerId("Roslynator"),
+                        platform=ExecutablePlatform.WIN,
+                        name="Roslynator Fork",
+                        path="roslynator-fork-0.3.3.0\\Roslynator.exe",
+                        version="0.3.3.0F",
+                        runner=ExecutableRunner.ROSLYNATOR,
+                        commands=[
+                            ExecutableCommand(
+                                action=ExecutableAction.SCAN,
+                                arguments=["analyze"],
+                            )
+                        ],
+                    ),
+                ],
             )
         )
 
@@ -41,7 +75,23 @@ class InMemoryAnalyzerRepositorySeeder:
                     Technology.dotnet(),
                     Technology.golang(),
                     Technology.java(),
-                    Technology.nodejs()
+                    Technology.nodejs(),
+                ],
+                executables=[
+                    Executable(
+                        analyzer_id=AnalyzerId("DependencyCheck"),
+                        platform=ExecutablePlatform.WIN,
+                        path="dependency-check-7.1.1-release\\bin\\dependency-check.bat",
+                        name="Dependency Check",
+                        version="7.1.1",
+                        runner=ExecutableRunner.DEPENDENCY_CHECK,
+                        commands=[
+                            ExecutableCommand(
+                                action=ExecutableAction.SCAN,
+                                arguments=["--scan"],
+                            )
+                        ],
+                    )
                 ],
             )
         )

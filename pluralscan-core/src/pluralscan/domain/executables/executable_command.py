@@ -11,7 +11,7 @@ class ExecutableCommand:
     action: ExecutableAction
     arguments: List[str]
 
-    def as_dict(self):
+    def to_dict(self):
         """Convert executable command properties to dictionary."""
         return {
             "action": self.action.name,

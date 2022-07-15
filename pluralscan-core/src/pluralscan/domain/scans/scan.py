@@ -1,8 +1,9 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional
+from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.domain.diagnosis.diagnosis import Diagnosis
 
-from pluralscan.domain.executables.executable_id import ExecutableId
 from pluralscan.domain.packages.package_id import PackageId
 from pluralscan.domain.scans.scan_id import ScanId
 from pluralscan.domain.scans.scan_state import ScanState
@@ -17,8 +18,10 @@ class Scan:
     scan_id: ScanId
     package_id: PackageId
     """Package under analysis."""
-    executable_id: ExecutableId
+    analyzer_id: AnalyzerId
     """Executable used for performs analysis."""
+    executable_version: str
+    diagnosis: Optional[Diagnosis] = None
     created_at: datetime = field(default_factory=datetime.now)
     started_at: Optional[datetime] = None
     ended_at: Optional[datetime] = None

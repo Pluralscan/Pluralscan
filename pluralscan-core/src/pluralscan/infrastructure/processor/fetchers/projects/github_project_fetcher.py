@@ -51,10 +51,10 @@ class GithubProjectFetcher(AbstractProjectFetcher):
             )
 
         return ProjectInfoResult(
-            name=repo.full_name,
+            namespace=repo.full_name,
             display_name=repo.name,
             description=repo.description,
-            uri=uri,
+            homepage=uri,
             source=ProjectSource.GITHUB,
             last_update=repo.updated_at,
             language_metrics=language_metrics,

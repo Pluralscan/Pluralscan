@@ -19,9 +19,9 @@ class InMemoryProjectRepository(AbstractProjectRepository):
     def next_id(self) -> ProjectId:
         return ProjectId(uuid.uuid4())
 
-    def find_one(self, name: str, source: ProjectSource) -> Optional[Project]:
+    def find_one(self, namespace: str, source: ProjectSource) -> Optional[Project]:
         for project in self._projects.values():
-            if project.source is source and project.name == name:
+            if project.source is source and project.namespace == namespace:
                 return project
         return None
 

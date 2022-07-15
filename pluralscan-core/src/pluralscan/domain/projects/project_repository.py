@@ -24,7 +24,7 @@ class AbstractProjectRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def find_one(self, name: str, source: ProjectSource) -> Optional[Project]:
+    def find_one(self, namespace: str, source: ProjectSource) -> Optional[Project]:
         """find_one"""
         raise NotImplementedError()
 

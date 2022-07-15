@@ -4,6 +4,7 @@
         "ms-vscode.powershell",
         "ryanluker.vscode-coverage-gutters",
         "svelte.svelte-vscode",
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        "mikestead.dotenv"
     ]
 }

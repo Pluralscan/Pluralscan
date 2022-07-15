@@ -155,3 +155,8 @@ cython_debug/
 
 node_modules
 coverage
+
+# Resources
+resources/packages/
+resources/tools/**/*.db
+resources/sources/GITHUB/*

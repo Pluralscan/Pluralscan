@@ -1,8 +1,4 @@
 {
-    // "python.analysis.extraPaths": [
-    //     "./pluralscan-webapp",
-    //     "./pluralscan-core/src"
-    // ],
     "python.testing.unittestArgs": [
         "-v",
         "-p",
@@ -30,7 +26,8 @@
         "--max-line-length=240"
     ],
     "python.analysis.extraPaths": [
-        "./pluralscan-core/src"
+        "./pluralscan-core/src",
+        "./pluralscan-fastapi"
     ],
     // "editor.codeActionsOnSave": {
     //     "source.organizeImports": true

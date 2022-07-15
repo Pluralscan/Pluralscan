@@ -2,7 +2,10 @@ from dataclasses import dataclass, field
 from typing import List, Optional
 from pluralscan.domain.common.language import (
     CSHARP_LANGUAGE,
+    GO_LANGUAGE,
+    JAVA_LANGUAGE,
     JAVASCRIPT_LANGUAGE,
+    TYPESCRIPT_LANGUAGE,
     Language,
 )
 
@@ -51,6 +54,7 @@ class Technology:
             display_name="Go",
             languages=[Language.golang()],
         )
+
     @staticmethod
     def nodejs() -> "Technology":
         """nodejs"""
@@ -78,10 +82,10 @@ class Technology:
         """from_code"""
         if code in [DOTNET_TECHNOLOGY, CSHARP_LANGUAGE, "C#"]:
             return Technology.dotnet()
-        if code in [NODEJS_TECHNOLOGY, JAVASCRIPT_LANGUAGE]:
+        if code in [NODEJS_TECHNOLOGY]:
             return Technology.nodejs()
-        if code in [JAVA_TECHNOLOGY]:
+        if code in [JAVA_TECHNOLOGY, JAVA_LANGUAGE]:
             return Technology.java()
-        if code in [GOLANG_TECHNOLOGY]:
+        if code in [GOLANG_TECHNOLOGY, GO_LANGUAGE]:
             return Technology.golang()
         return None

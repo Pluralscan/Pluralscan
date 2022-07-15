@@ -22,6 +22,7 @@ Pluralscan should be currently considered as a **POC/POW project** that try to d
 ### Pre-Release
 
 - Ensure validation logic exists for each layer of pluralscan-core.
+- Ensure consistency ()
 - At least 60% code coverage for pluralscan-core.
 - Logging.
 - Clean exception handling.

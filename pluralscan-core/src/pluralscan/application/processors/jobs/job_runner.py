@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
-
+# TODO: implement job value object
 class AbstractJobRunner(metaclass=ABCMeta):
     """Abstract interactor for handle asynchronous background job."""
 

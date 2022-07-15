@@ -1,12 +1,9 @@
 from pluralscan.application.usecases.projects.create_project import CreateProjectUseCase
-from pluralscan.application.usecases.projects.find_project import (
+from pluralscan.application.usecases.projects.get_project import (
     FindProjectUseCase,
 )
 from pluralscan.application.usecases.projects.get_project_list import (
     GetProjectListUseCase,
-)
-from pluralscan.data.inmemory.projects.project_repository import (
-    InMemoryProjectRepository,
 )
 from pluralscan.data.inmemory.projects.project_uow import (
     InMemoryCreateProjectUnitOfWork,

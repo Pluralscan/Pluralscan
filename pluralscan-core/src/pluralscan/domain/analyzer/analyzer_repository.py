@@ -36,8 +36,13 @@ class AbstractAnalyzerRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def find_by_technology(self, technology: Technology) -> List[Analyzer]:
-        """find_by_technology"""
+    def find_many(self, analyzer_ids: List[AnalyzerId]) -> List[Analyzer]:
+        """find_many"""
+        raise NotImplementedError()
+
+    @abstractmethod
+    def find_by_technologies(self, technologies: List[Technology]) -> List[Analyzer]:
+        """find_by_technologies"""
         raise NotImplementedError()
 
     @abstractmethod

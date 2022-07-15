@@ -30,6 +30,9 @@ class InMemoryAnalyzerRepository(AbstractAnalyzerRepository):
     def find_by_id(self, analyzer_id: AnalyzerId) -> Optional[Analyzer]:
         return self._analyzers.get(analyzer_id)
 
+    def find_many(self, analyzer_ids: List[AnalyzerId]) -> List[Analyzer]:
+        return [x for x in self._analyzers.values() if x.analyzer_id in analyzer_ids]
+
     def find_all(self, pageable: Pageable = ...) -> Page[Analyzer]:
         analyzers = list(self._analyzers.values())
         if pageable is None:
@@ -49,8 +52,13 @@ class InMemoryAnalyzerRepository(AbstractAnalyzerRepository):
             total_pages=ceil(len(analyzers) / pageable.page_size),
         )
 
-    def find_by_technology(self, technology: Technology) -> List[Analyzer]:
-        return [x for x in self._analyzers.values() if technology in x.technologies]
+    def find_by_technologies(self, technologies: List[Technology]) -> List[Analyzer]:
+        return [
+            analyzer
+            for analyzer in self._analyzers.values()
+            for analyzer_tech in analyzer.technologies
+            if analyzer_tech in technologies
+        ]
 
     def update(self, analyzer: Analyzer) -> Analyzer:
         analyzer = self.get_one_by_id(analyzer.analyzer_id)

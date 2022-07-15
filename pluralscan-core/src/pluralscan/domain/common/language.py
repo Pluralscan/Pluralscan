@@ -82,9 +82,9 @@ class Language:
     @staticmethod
     def from_code(code: str) -> "Language":
         """from_code"""
-        if code in [CSHARP_LANGUAGE, "C#"]:
+        if code in [CSHARP_LANGUAGE, 'C#']:
             return Language.csharp()
-        if code in [GO_LANGUAGE]:
+        if code in [GO_LANGUAGE, 'Go']:
             return Language.golang()
         if code in [JAVA_LANGUAGE]:
             return Language.java()

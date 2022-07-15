@@ -5,7 +5,6 @@ from pluralscan.application.processors.reports.report_processor import \
     AbstractReportProcessor
 from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
 from pluralscan.domain.diagnosis.diagnosis import Diagnosis
-from pluralscan.domain.diagnosis.diagnosis_id import DiagnosisId
 from pluralscan.domain.diagnosis.diagnosis_report import DiagnosisReport
 from pluralscan.domain.issues.issue import Issue
 from pluralscan.domain.rules.rule_id import RuleId
@@ -14,12 +13,11 @@ from pluralscan.domain.rules.rule_id import RuleId
 class RoslynatorReportProcessor(AbstractReportProcessor):
     """RoslynatorReportProcessor"""
 
-    def transform_to_diagnosis(self, analyzer_id: AnalyzerId, diagnosis_id: DiagnosisId, data) -> Diagnosis:
+    def transform_to_diagnosis(self, analyzer_id: AnalyzerId, data) -> Diagnosis:
         """transform_to_diagnosys"""
         report = self._validate_input(data)
         issues = self.read_report(report)
         diagnosis = Diagnosis(
-            diagnosis_id=diagnosis_id,
             issues=issues,
             report=DiagnosisReport(filename=report, format="XML", path=report),
         )

@@ -21,4 +21,4 @@ class AnalyzerDocument(SON):
         if self.name is not None:
             self.__setitem__('name', self.name)
         if self.executable is not None:
-            self.__setitem__('executable', SON(self.executable.as_dict()))
+            self.__setitem__('executable', SON(self.executable.to_dict()))

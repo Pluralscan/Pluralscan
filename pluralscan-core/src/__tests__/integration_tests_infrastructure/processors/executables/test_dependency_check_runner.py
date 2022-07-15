@@ -1,20 +1,14 @@
 from pathlib import Path
 from pluralscan.data.inmemory.analyzers.analyzer_repository import InMemoryAnalyzerRepository
 from pluralscan.data.inmemory.analyzers.analyzer_seeder import InMemoryAnalyzerRepositorySeeder
-from pluralscan.data.inmemory.executables.executable_repository import (
-    InMemoryExecutableRepository,
-)
-from pluralscan.data.inmemory.executables.executable_seeder import (
-    InMemoryExecutableRepositorySeeder,
-)
 from pluralscan.data.inmemory.packages.package_repository import (
     InMemoryPackageRepository,
 )
 from pluralscan.data.inmemory.packages.package_seeder import (
     InMemoryPackageRepositorySeeder,
 )
+from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
 from pluralscan.domain.executables.executable_action import ExecutableAction
-from pluralscan.domain.executables.executable_id import ExecutableId
 from pluralscan.domain.packages.package_id import PackageId
 from pluralscan.infrastructure.processor.executables.dependency_check_runner import DependencyCheckExecRunner
 
@@ -28,12 +22,6 @@ def memory_analyzer_repository():
     InMemoryAnalyzerRepositorySeeder(analyzer_repository).seed()
     return analyzer_repository
 
-@pytest.fixture
-def memory_executable_repository(memory_analyzer_repository):
-    executable_repository = InMemoryExecutableRepository()
-    InMemoryExecutableRepositorySeeder(executable_repository, memory_analyzer_repository).seed()
-    return executable_repository
-
 
 @pytest.fixture
 def memory_package_repository():
@@ -43,12 +31,12 @@ def memory_package_repository():
 
 
 def test_execute_with_output(
-    memory_executable_repository: InMemoryExecutableRepository,
+    memory_analyzer_repository: InMemoryAnalyzerRepository,
     memory_package_repository: InMemoryPackageRepository,
 ):
     # Arrange
     package = memory_package_repository.find_by_id(PackageId("NodeGoat"))
-    executable = memory_executable_repository.find_by_id(ExecutableId("DependencyCheck"))
+    executable = memory_analyzer_repository.find_by_id(AnalyzerId("DependencyCheck")).find_executable_by_version("7.1.1")
     output_result_dir = Path.joinpath(REPORTS_DIR, "NodeGoat\DEPENDENCY_CHECK_RESULTS")
     report_path = str(Path.joinpath(output_result_dir, "NodeGoat.sarif"))
     options = ExecRunnerOptions(executable, package, ExecutableAction.SCAN)

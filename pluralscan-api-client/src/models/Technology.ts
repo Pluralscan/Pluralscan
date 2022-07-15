@@ -1,7 +1,8 @@
 import { Language } from "./Language";
 
 export interface Technology {
-    name: string;
-    version: string;
-    language: Language
+    code: string;
+    display_name: string;
+    languages: Language[]
+    compilers: any[]
 }

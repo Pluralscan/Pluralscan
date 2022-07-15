@@ -1,15 +1,17 @@
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List
+from typing import Dict, List
+import functools
+import operator
 
 from pluralscan.application.processors.jobs.job_runner import AbstractJobRunner
-from pluralscan.domain.executables.executable_id import ExecutableId
-from pluralscan.domain.executables.executable_repository import \
-    AbstractExecutableRepository
+from pluralscan.domain.analyzer.analyzer import Analyzer
+from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.domain.analyzer.analyzer_repository import AbstractAnalyzerRepository
+from pluralscan.domain.executables.executable import Executable
 from pluralscan.domain.packages.package_id import PackageId
-from pluralscan.domain.packages.package_repository import \
-    AbstractPackageRepository
+from pluralscan.domain.packages.package_repository import AbstractPackageRepository
 from pluralscan.domain.scans.scan import Scan
 from pluralscan.domain.scans.scan_repository import AbstractScanRepository
 from pluralscan.domain.scans.scan_state import ScanState
@@ -20,8 +22,11 @@ class ScheduleScanCommand:
     """ScheduleRemoteScanCommand"""
 
     package_id: PackageId
-    executables: List[ExecutableId]
+    analyzers: Dict[AnalyzerId, List[str]]
     working_directory: str
+
+    def __post_init__(self):
+        pass
 
 
 @dataclass
@@ -51,12 +56,12 @@ class ScheduleScanUseCase(
         self,
         scan_repository: AbstractScanRepository,
         package_repository: AbstractPackageRepository,
-        executable_repository: AbstractExecutableRepository,
+        analyzer_repository: AbstractAnalyzerRepository,
         job_runner: AbstractJobRunner,
     ):
         self._scan_repository = scan_repository
         self._package_repository = package_repository
-        self._executable_repository = executable_repository
+        self._analyzer_repository = analyzer_repository
         self._job_runner = job_runner
 
     def handle(self, command: ScheduleScanCommand) -> ScheduleScanResult:
@@ -65,19 +70,32 @@ class ScheduleScanUseCase(
         if package is None:
             raise ValueError
 
-        # 2. Retrieve executables used to perform analysis.
-        executables = self._executable_repository.find_many(command.executables)
+        # 2. Retrieve analyzers.
+        analyzer_ids = list(command.analyzers.keys())
+        analyzers: List[Analyzer] = self._analyzer_repository.find_many(analyzer_ids)
+        if len(analyzers) == 0:
+            raise RuntimeError
+
+        # 3. Retrieve executables used to perform analysis.
+        executables: List[Executable] = [
+            analyzer.find_executables_by_version(
+                command.analyzers.get(analyzer.analyzer_id)
+            )
+            for analyzer in analyzers
+        ]
+        executables = functools.reduce(operator.iconcat, executables, [])
         if executables is None:
             raise RuntimeError("No executable found.")
 
-        # 3. Prepare and persist scans.
+        # 4. Prepare and persist scans.
         group_id = datetime.now().timestamp()
         scans = []
         for executable in executables:
             scan_id = self._scan_repository.next_id()
             scan = Scan(
                 scan_id=scan_id,
-                executable_id=executable.executable_id,
+                analyzer_id=executable.analyzer_id,
+                executable_version=executable.version,
                 package_id=package.package_id,
                 working_directory=command.working_directory,
                 state=ScanState.SCHEDULED,
@@ -87,7 +105,7 @@ class ScheduleScanUseCase(
 
         scans = self._scan_repository.add_bulk(scans)
 
-        # 4. Emit jobs
+        # 5. Emit jobs
         for scan in scans:
             self._job_runner.schedule(str(scan.scan_id))
 

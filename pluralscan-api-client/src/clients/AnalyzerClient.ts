@@ -2,9 +2,11 @@
 import { IApiClient } from "../http/ApiClient";
 import { ApiRequest } from "../http/ApiRequest";
 import { ApiResponse } from "../http/ApiResponse";
-import { ListAnalyzerResponse } from "../types";
+import { Technology } from "../models/Technology";
+import { AnalyzersByTechnologiesResponse, ListAnalyzerResponse } from "../types";
 
 const FIND_ALL_ROUTE: string = "api/analyzers?";
+const FIND_BY_TECHNOLOGIES_ROUTE: string = "api/analyzers/technologies?"
 
 export class AnalyzerClient {
     constructor(private client: IApiClient) {
@@ -16,6 +18,19 @@ export class AnalyzerClient {
         const response: ApiResponse<ListAnalyzerResponse> = await this.client.sendRequest(request);
         if (response.success)
             return response.data!;
+        throw `Error: ${response.error}`
+    }
+
+    public async findByTechnologies(technologies: [Technology]): Promise<AnalyzersByTechnologiesResponse> {
+        if (!technologies || !technologies.length){
+            throw 'At least one technology code must be defined.'
+        }
+
+        const request = new ApiRequest("GET", FIND_BY_TECHNOLOGIES_ROUTE, new URLSearchParams(technologies.map(t => ['code', t.code])) );
+        const response: ApiResponse<AnalyzersByTechnologiesResponse> = await this.client.sendRequest(request);
+        if (response.success)
+            return response.data!;
+    
         throw `Error: ${response.error}`
     }
 }

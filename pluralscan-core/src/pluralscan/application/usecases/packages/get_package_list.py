@@ -5,11 +5,10 @@ from typing import List
 from pluralscan.domain.packages.package import Package
 from pluralscan.domain.packages.package_repository import AbstractPackageRepository
 from pluralscan.libs.ddd.repositories.pagination import Pageable
-from pluralscan.libs.utils.validable import Validable
 
 
 @dataclass(frozen=True)
-class GetPackageListQuery(Validable):
+class GetPackageListQuery:
     """List Packages Command"""
 
     page: int = 1

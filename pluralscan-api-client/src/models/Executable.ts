@@ -1,10 +1,11 @@
 import { ExecutablePlatform } from "./ExecutablePlatform";
 
 export interface Executable {
+    analyzer_id: string
     platform: ExecutablePlatform,
     name: string,
-    location: string,
+    path: string,
     version: string
     semantic_version: string,
-    arguments: any
+    commands: any
 }

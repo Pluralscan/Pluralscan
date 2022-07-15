@@ -6,6 +6,8 @@
         Button,
         Tile,
         TextInput,
+Accordion,
+AccordionItem,
     } from "carbon-components-svelte";
     import { onMount } from "svelte";
     import { RestClient } from "../../libs/dist/RestClient";
@@ -18,13 +20,15 @@
     const searchData = {
         uri: "",
     };
+    let state = {
+        analyzers: [],
+        project: null,
+        package: null
+    }
     let loadingMessage =
         "Verify if project is already registred in Pluralscan repository...";
     let title = "Pluralscan";
     let isLoading = false;
-    let project = {};
-    let packages = [];
-    let analyzers = [];
 
     function refreshTitle(value: string) {
         if (!value) {
@@ -56,24 +60,28 @@
                 console.log(response);
                 loadingMessage =
                     "Project synchronized with new snapshot package...";
-                project = response.project;
-                packages.push(response.package);
+                state.project = response.project;
+                state.package = response.package;
                 await delay(1000);
 
                 loadingMessage = "Retrieve analyzers...";
+                state.analyzers = await restClient.analyzer.findByTechnologies(state.package['technologies'])
                 await delay(1000);
 
                 isLoading = false;
                 return;
             }
-            project = response;
+
+            state.project = response;
         } catch (error) {
             reportError({ message: getErrorMessage(error) });
         }
         isLoading = false;
     }
 
-    onMount(async () => {});
+    onMount(async () => {
+        const restClient = new RestClient({ apiUrl: process.env.API_URI });
+    });
 </script>
 
 <DefaultLayout>
@@ -88,7 +96,7 @@
                 <h1>Pluralscan</h1>
             </Row>
 
-            {#if project}
+            {#if !state.project}
                 <Row>
                     <Column noGutter padding>
                         <Tile class="repo-input-tile">
@@ -115,10 +123,10 @@
                 </Row>
             {/if}
 
-            {#if !project}
+            {#if state.project}
                 <Row>
                     <Column noGutter padding>
-                        <h5>Location: {project.uri}</h5>
+                        <h5>Homepage: </h5>
                         <Row>
                             <Column>
                                 <Tile><h6>Project Informations</h6></Tile>
@@ -128,7 +136,17 @@
                             <Column>
                                 <Tile>
                                     <h6>Scan Package</h6>
-                                    {#each analyzers as analyzer}{/each}
+                                    <Accordion align="start">
+                                        {#each state.analyzers as analyzer}
+                                        <AccordionItem title="{analyzer.name}">
+                                            <p>
+                                              Translate text, documents, and websites from one language to another.
+                                              Create industry or region-specific translations via the service's
+                                              customization capability.
+                                            </p>
+                                          </AccordionItem>
+                                        {/each}
+                                    </Accordion>
                                 </Tile>
                                 <Button
                                     on:click={search_project}

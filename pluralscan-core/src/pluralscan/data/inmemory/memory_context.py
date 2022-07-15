@@ -4,14 +4,12 @@ from pluralscan.data.inmemory.analyzers.analyzer_repository import (
 from pluralscan.data.inmemory.analyzers.analyzer_seeder import (
     InMemoryAnalyzerRepositorySeeder,
 )
-from pluralscan.data.inmemory.executables.executable_repository import (
-    InMemoryExecutableRepository,
-)
-from pluralscan.data.inmemory.executables.executable_seeder import InMemoryExecutableRepositorySeeder
 from pluralscan.data.inmemory.packages.package_repository import (
     InMemoryPackageRepository,
 )
-from pluralscan.data.inmemory.packages.package_seeder import InMemoryPackageRepositorySeeder
+from pluralscan.data.inmemory.packages.package_seeder import (
+    InMemoryPackageRepositorySeeder,
+)
 from pluralscan.data.inmemory.projects.project_repository import (
     InMemoryProjectRepository,
 )
@@ -37,9 +35,3 @@ class MemoryContext:
             InMemoryAnalyzerRepository()
         )
         InMemoryAnalyzerRepositorySeeder(self.analyzer_repository).seed()
-
-        # Initialize and seed Executable store
-        self.executable_repository: InMemoryExecutableRepository = (
-            InMemoryExecutableRepository()
-        )
-        InMemoryExecutableRepositorySeeder(self.executable_repository, self.analyzer_repository).seed()

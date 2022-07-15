@@ -35,7 +35,7 @@ class InMemoryPackageRepository(AbstractPackageRepository):
             raise ValueError
         return package
 
-    def find_all(self, pageable: Pageable = ...) -> Page[Package]:
+    def find_all(self, pageable: Pageable = Pageable()) -> Page[Package]:
         packages = list(self._packages.values())
         if pageable is None:
             return Page(

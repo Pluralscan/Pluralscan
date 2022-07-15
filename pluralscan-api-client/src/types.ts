@@ -16,17 +16,20 @@ export type SeachMetadata = {
 }
 
 export type ListPackageResponse = {
-    packages: [Package],
+    packages: Package[],
 } & SeachMetadata
 
 export type ListAnalyzerResponse = {
-    analyzers: [Analyzer],
+    analyzers: Analyzer[],
 } & SeachMetadata
+export type AnalyzersByTechnologiesResponse = {
+    analyzers: Analyzer[],
+}
 
 export type ListProjectResponse = {
-    projects: [Project],
+    projects: Project[],
 } & SeachMetadata
 
 export type ListScanResponse = {
-    scans: [Scan],
+    scans: Scan[],
 } & SeachMetadata

@@ -1,6 +1,5 @@
 from pluralscan.application.usecases.scans.run_scan import (ScanPackageCommand,
                                                             ScanPackageUseCase)
-from pluralscan.domain.executables.executable_action import ExecutableAction
 
 
 class ScanPackageWorker:
@@ -16,8 +15,8 @@ class ScanPackageWorker:
 
         scan_package_use_case = ScanPackageUseCase(
             scan_repository=None,
+            analyzer_repository=None,
             package_repository=None,
-            executable_repository=None,
             diagnosis_repository=None,
             exec_runner_factory=None,
             report_processor=None,

@@ -1,3 +1,4 @@
+import datetime
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -9,6 +10,8 @@ from pluralscan.application.processors.fetchers.project_fetcher import (
     DownloadProjectResult,
     ProjectInfoResult,
 )
+from pluralscan.domain.common.language import Language
+from pluralscan.domain.common.metrics import ProjectLanguageMetric
 from pluralscan.domain.projects.project_source import ProjectSource
 
 
@@ -33,17 +36,29 @@ class GitlabProjectFetcher(AbstractProjectFetcher):
 
     def get_info(self, uri: str) -> ProjectInfoResult:
         project = self._get_project(uri)
+        project_languages = project.languages()
+
         project_name = project.attributes.get("path_with_namespace")
         if project_name is None:
             raise RuntimeError
 
+        language_metrics = []
+        for lang in project_languages.keys():
+            if Language.from_code(lang).code == Language.unknown().code:
+                continue
+
+            language_metrics.append(
+                ProjectLanguageMetric(Language.from_code(lang), project_languages[lang])
+            )
+
         return ProjectInfoResult(
             source=ProjectSource.GITLAB,
-            uri=uri,
-            name=project_name,
-            display_name=project.attributes.get("name"),
+            homepage=uri,
+            namespace=project_name,
+            display_name=project.attributes.get("name", ""),
             description=project.attributes.get("description"),
-            last_update=project.attributes.get("last_activity_at"),
+            last_update=datetime.datetime.strptime(project.attributes.get("last_activity_at", datetime.datetime.now()), '%Y-%m-%dT%H:%M:%S.%f%z'),
+            language_metrics=language_metrics
         )
 
     def download(self, uri: str, output_dir: str) -> DownloadProjectResult:

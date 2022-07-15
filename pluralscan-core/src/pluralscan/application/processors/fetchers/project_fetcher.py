@@ -22,10 +22,10 @@ class ProjectInfoResult:
     """Data returned when querying a package details."""
 
     source: ProjectSource
-    uri: str
-    name: str
+    homepage: str
+    namespace: str
+    display_name: str
     last_update: datetime
-    display_name: Optional[str] = None
     description: Optional[str] = None
     language_metrics: List[ProjectLanguageMetric] = field(default_factory=list)
 

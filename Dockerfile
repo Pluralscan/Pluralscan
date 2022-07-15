@@ -19,6 +19,9 @@ RUN apt install -y dotnet-sdk-${DOTNET_VERSION} dotnet-runtime-${DOTNET_VERSION}
 # Install Golang
 RUN apt install -y golang-go
 
+# Install Java Dev Kit
+RUN apt install -y openjdk-18-jdk
+
 # Install python and pip
 RUN apt install -y python3-pip python3-venv python-is-python3
 

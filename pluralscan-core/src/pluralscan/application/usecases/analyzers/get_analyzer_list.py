@@ -4,9 +4,6 @@ from typing import List
 
 from pluralscan.domain.analyzer.analyzer import Analyzer
 from pluralscan.domain.analyzer.analyzer_repository import AbstractAnalyzerRepository
-from pluralscan.domain.executables.executable_repository import (
-    AbstractExecutableRepository,
-)
 from pluralscan.libs.ddd.repositories.pagination import Pageable
 
 
@@ -60,18 +57,11 @@ class GetAnalyzerListUseCase(
     def __init__(
         self,
         analyzer_repository: AbstractAnalyzerRepository,
-        executable_repository: AbstractExecutableRepository,
     ):
         self._analyzer_repository = analyzer_repository
-        self._executable_repository = executable_repository
 
     def handle(self, query: GetAnalyzerListQuery) -> GetAnalyzerListResult:
         page = self._analyzer_repository.find_all(Pageable(query.page, query.limit))
-
-        for analyzer in page.items:
-            analyzer.executables = self._executable_repository.find_by_analyzer(
-                analyzer.analyzer_id
-            )
 
         return GetAnalyzerListResult(
             analyzers=page.items,

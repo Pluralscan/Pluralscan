@@ -2,9 +2,10 @@
 import { IApiClient } from "../http/ApiClient";
 import { ApiRequest } from "../http/ApiRequest";
 import { ApiResponse } from "../http/ApiResponse";
+import { Package } from "../models/Package";
 import { Project } from "../models/Project";
 import { ProjectSource } from "../models/ProjectSource";
-import { CreateProjectResponse } from "../types";
+import { CreateProjectResponse, ListProjectResponse } from "../types";
 
 const FIND_ALL_ROUTE: string = "api/projects";
 const FIND_PROJECT_ROUTE: string = "api/projects/";
@@ -15,9 +16,9 @@ export class ProjectClient {
         
     } 
     
-    public async list(page: number, limit: number): Promise<Project[]> {
+    public async list(page: number, limit: number): Promise<ListProjectResponse> {
         const request = new ApiRequest("GET", FIND_ALL_ROUTE);
-        const response: ApiResponse<Project[]> = await this.client.sendRequest(request);
+        const response: ApiResponse<ListProjectResponse> = await this.client.sendRequest(request);
         if (response.success)
             return response.data!;
         throw `Error: ${response.error}`

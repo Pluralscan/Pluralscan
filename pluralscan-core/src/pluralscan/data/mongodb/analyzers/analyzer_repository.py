@@ -12,6 +12,9 @@ from pluralscan.domain.analyzer.analyzer_repository import \
     AbstractAnalyzerRepository
 from pluralscan.domain.technologies.technology import Technology
 from pymongo import ReturnDocument
+from pluralscan.libs.ddd.repositories.page import Page
+
+from pluralscan.libs.ddd.repositories.pagination import Pageable
 
 
 class MongoAnalyzerRepository(AbstractAnalyzerRepository):
@@ -32,13 +35,16 @@ class MongoAnalyzerRepository(AbstractAnalyzerRepository):
         document = self._collection.find_one({"_id": ObjectId(str(analyzer_id))})
         return AnalyzerMapper.from_document(document)
 
-    def find_all(self, filters: AnalyzerFilter = None) -> List[Analyzer]:
+    def find_many(self, analyzer_ids: List[AnalyzerId]) -> List[Analyzer]:
+        raise NotImplementedError
+
+    def find_all(self, pageable: Pageable = Pageable()) -> Page[Analyzer]:
         documents: List[AnalyzerDocument] = []
         for document in self._collection.find():
             documents.append(document)
         return AnalyzerMapper.from_documents(documents)
 
-    def find_by_technology(self, technology: Technology) -> List[Analyzer]:
+    def find_by_technologies(self, technologies: List[Technology]) -> List[Analyzer]:
         raise NotImplementedError
 
     def update(self, analyzer: Analyzer) -> Analyzer:

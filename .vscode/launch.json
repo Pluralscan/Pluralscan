@@ -35,6 +35,13 @@
             "django": true
         },
 
+        {
+            "name": "Debug FastApi",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}\\pluralscan-fastapi\\main.py",
+        },
+
         // Debugging Command Line
         {
             "name": "Debug Commandline",

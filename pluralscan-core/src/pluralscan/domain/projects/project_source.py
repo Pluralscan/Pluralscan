@@ -16,11 +16,11 @@ LOCAL_SOURCE_PATTERN = r"[^/]+.zip$"
 class ProjectSource(Enum):
     """ProjectSource"""
 
-    LOCAL = "local"
-    GIT = "git"
-    GITHUB = "github"
-    GITLAB = "gitlab"
-    BITBUCKET = "bitbucket"
+    LOCAL = "Local"
+    GIT = "Git"
+    GITHUB = "Github"
+    GITLAB = "Gitlab"
+    BITBUCKET = "Bitbucket"
 
     @staticmethod
     def from_uri(uri) -> "ProjectSource":
@@ -39,13 +39,15 @@ class ProjectSource(Enum):
         raise ValueError()
 
     @staticmethod
-    def from_str(label):
+    def from_str(label: str):
         """from_str"""
-        if label in ("github", "Github"):
+        if label.lower() in ["github"]:
             return ProjectSource.GITHUB
-        elif label in ("gitlab", "Gitlab"):
+
+        if label.lower() in ["gitlab"]:
             return ProjectSource.GITLAB
-        elif label in ("local", "Local"):
+
+        if label.lower() in ["local"]:
             return ProjectSource.LOCAL
         else:
             raise NotImplementedError

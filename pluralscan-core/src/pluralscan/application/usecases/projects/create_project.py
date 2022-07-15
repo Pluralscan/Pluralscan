@@ -89,7 +89,7 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
 
         # Check if project is already referenced
         project = self._project_repository.find_one(
-            name=project_info.name, source=project_info.source
+            namespace=project_info.namespace, source=project_info.source
         )
         if project is not None:
             raise RuntimeError
@@ -99,10 +99,10 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
         project = Project(
             project_id=project_id,
             name=project_info.display_name,
-            namespace=project_info.name,
+            namespace=project_info.namespace,
             source=project_info.source,
             last_snapshot=project_info.last_update,
-            homepage=command.uri,
+            homepage=project_info.homepage,
             language_metrics=project_info.language_metrics
         )
         self._project_repository.add(project)
@@ -133,6 +133,7 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
             name=project.name,
             version="SNAPSHOT",
             published_at=project.last_snapshot,
+            project_id=project_id,
             registry=PackageRegistry.LOCAL,
             storage_path=download_result.output_dir,
             technologies=technologies

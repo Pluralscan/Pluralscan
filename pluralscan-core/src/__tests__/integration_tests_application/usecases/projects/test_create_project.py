@@ -40,3 +40,6 @@ def test_handle_returns(url, output_dir, project_fetcher_factory, create_project
 
     # Assert
     assert result is not None
+    assert result.project is not None
+    assert result.package is not None
+    assert len(result.package.technologies) > 0
