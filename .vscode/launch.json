@@ -1,0 +1,72 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        // Specific configuration for debugging.
+        // Disable code coverage.
+        {
+            "name": "Debug Tests",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "purpose": ["debug-test"],
+            "console": "integratedTerminal",
+            // "env": {
+            //     "PYTEST_ADDOPTS": "--no-cov"
+            // },
+            "justMyCode": false
+        },
+
+        // Debugging Web Application
+        {
+            "name": "Debug Django WebApp",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}\\pluralscan-webapp\\manage.py",
+            "args": [
+                "runserver",
+                "5400"
+            ],
+            "env": {
+                "DJANGO_DEBUG": "ON"
+            },
+            "django": true
+        },
+
+        {
+            "name": "Debug FastApi",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}\\pluralscan-fastapi\\main.py",
+        },
+
+        // Debugging Command Line
+        {
+            "name": "Debug Commandline",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}\\pluralscan-webapp\\manage.py",
+            "args": [
+            ],
+            "env": {
+            },
+        },
+
+        // Jest Debug - API Client
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Jest Tests API Client",
+            "program": "${workspaceRoot}\\pluralscan-api-client\\node_modules\\jest\\bin\\jest.js",
+            "args": [
+                "-i",
+                "-c",
+                "${workspaceRoot}/pluralscan-api-client/jest.config.ts"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+        }
+    ]
+}

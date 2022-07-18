@@ -1,0 +1,1 @@
+pip install -r .\pluralscan\requirements.txt

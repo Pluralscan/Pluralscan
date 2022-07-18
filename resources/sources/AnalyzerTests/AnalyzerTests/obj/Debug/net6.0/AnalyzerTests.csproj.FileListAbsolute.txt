@@ -1,0 +1,12 @@
+C:\_dev\CleanSecPy\resources\sources\AnalyzerTests\AnalyzerTests\bin\Debug\net6.0\AnalyzerTests.deps.json
+C:\_dev\CleanSecPy\resources\sources\AnalyzerTests\AnalyzerTests\bin\Debug\net6.0\AnalyzerTests.dll
+C:\_dev\CleanSecPy\resources\sources\AnalyzerTests\AnalyzerTests\bin\Debug\net6.0\AnalyzerTests.pdb
+C:\_dev\CleanSecPy\resources\sources\AnalyzerTests\AnalyzerTests\obj\Debug\net6.0\AnalyzerTests.csproj.AssemblyReference.cache
+C:\_dev\CleanSecPy\resources\sources\AnalyzerTests\AnalyzerTests\obj\Debug\net6.0\AnalyzerTests.GeneratedMSBuildEditorConfig.editorconfig
+C:\_dev\CleanSecPy\resources\sources\AnalyzerTests\AnalyzerTests\obj\Debug\net6.0\AnalyzerTests.AssemblyInfoInputs.cache
+C:\_dev\CleanSecPy\resources\sources\AnalyzerTests\AnalyzerTests\obj\Debug\net6.0\AnalyzerTests.AssemblyInfo.cs
+C:\_dev\CleanSecPy\resources\sources\AnalyzerTests\AnalyzerTests\obj\Debug\net6.0\AnalyzerTests.csproj.CoreCompileInputs.cache
+C:\_dev\CleanSecPy\resources\sources\AnalyzerTests\AnalyzerTests\obj\Debug\net6.0\AnalyzerTests.dll
+C:\_dev\CleanSecPy\resources\sources\AnalyzerTests\AnalyzerTests\obj\Debug\net6.0\refint\AnalyzerTests.dll
+C:\_dev\CleanSecPy\resources\sources\AnalyzerTests\AnalyzerTests\obj\Debug\net6.0\AnalyzerTests.pdb
+C:\_dev\CleanSecPy\resources\sources\AnalyzerTests\AnalyzerTests\obj\Debug\net6.0\ref\AnalyzerTests.dll

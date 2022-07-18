@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+
+  pluralscan:
+    image: pluralscan
+    container_name: pluralscan
+    volumes:
+      - "./pluralscan/:/usr/src/pluralscan"
+    ports:
+      - "5000:5000"
+    external_links:
+      - mongo
+    depends_on:
+      - mongo

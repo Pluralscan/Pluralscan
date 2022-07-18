@@ -1,0 +1,35 @@
+{
+    "python.testing.unittestArgs": [
+        "-v",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestArgs": [
+        "-c",
+        "pytest.ini",
+        "-v",
+        "-s",
+        "--pdb"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.autoTestDiscoverOnSaveEnabled": false,
+    "files.exclude": {
+        "**/__pycache__": true
+    },
+    //"python.linting.pylintPath": "${workspaceFolder}\\.venv\\Scripts\\pylint.exe",
+    "python.linting.pylintEnabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "black",
+    "python.formatting.autopep8Args": [
+        "--max-line-length=240"
+    ],
+    "python.analysis.extraPaths": [
+        "./pluralscan-core/src",
+        "./pluralscan-fastapi"
+    ],
+    // "editor.codeActionsOnSave": {
+    //     "source.organizeImports": true
+    // }
+}

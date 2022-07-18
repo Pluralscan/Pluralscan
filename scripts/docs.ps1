@@ -1,0 +1,1 @@
+pydoc .\pluralscan -p 8090
