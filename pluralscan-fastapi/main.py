@@ -8,6 +8,7 @@ from configs.environment import get_environment_variables
 from routers.v1.analyzer_router import ANALYZER_ROUTER
 from routers.v1.package_router import PACKAGE_ROUTER
 from routers.v1.project_router import PROJECT_ROUTER
+from routers.v1.scan_router import SCAN_ROUTER
 
 env = get_environment_variables()
 
@@ -35,6 +36,7 @@ app.add_middleware(
 app.include_router(PROJECT_ROUTER)
 app.include_router(ANALYZER_ROUTER)
 app.include_router(PACKAGE_ROUTER)
+app.include_router(SCAN_ROUTER)
 
 app.mount('', StaticFiles(directory="pluralscan-svelte/public/", html=True), name="static")
 

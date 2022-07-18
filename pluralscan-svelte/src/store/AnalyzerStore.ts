@@ -1,3 +1,27 @@
-import { writable } from "svelte/store";
+import { derived, Writable, writable } from "svelte/store";
+import type { AnalyzerList } from "../../libs/pluralscan-api/types";
+import type { Pagination } from "../types";
 
-export const pagination = writable({});
+class AnalyzerStore {
+    constructor(
+        public analyzers: Writable<AnalyzerList> = writable([]),
+        public pagination: Writable<Pagination> = writable()
+    ) { }
+
+    get currentPage(){
+        return derived(this.pagination, ($pagination) => {
+            if ($pagination){
+                return $pagination;
+            }
+            return {
+                pageIndex: 0,
+                pageSize: 10,
+                pageCount: 0,
+                itemCount: 0
+            }
+        });
+    }
+}
+
+// Export store as singleton
+export const analyzerStore = new AnalyzerStore();

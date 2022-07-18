@@ -1,36 +1,46 @@
 <script lang="ts">
-    import { Grid, Row, Column } from "carbon-components-svelte";
+    import { Column, Grid, Row } from "carbon-components-svelte";
     import { onMount } from "svelte";
-    import { RestClient } from "../../libs/dist/RestClient";
+    import { RestClient } from "../../libs/pluralscan-api/RestClient";
+    import { RestClientOptions } from "../../libs/pluralscan-api/RestClientOptions";
+
     import OverlayLoading from "../common/components/loader/OverlayLoading.svelte";
     import Wave from "../common/components/loader/Wave.svelte";
     import DefaultLayout from "../common/layouts/DefaultLayout.svelte";
     import ProjectList from "./components/ProjectList.svelte";
+    import { projectStore } from "../store/ProjectStore";
+
+    const apiOptions = new RestClientOptions(process.env.API_URI);
+    const apiClient = new RestClient(apiOptions);
+    const { projects, currentPage, pagination } = projectStore;
 
     let loading = false;
-    let state = {
-        projects: [],
-        pageNumber: 1,
-        pageSize: 15,
-        totalItems: 0,
-    };
 
     onMount(async () => {
-        loading = true;
-        const restClient = new RestClient({ apiUrl: process.env.API_URI });
-        try {
-            const result = await restClient.project.list(
-                state.pageNumber,
-                state.pageSize
-            );
-            state = {
-                ...result,
-            };
-        } catch {
-        } finally {
-            loading = false;
+        if ($currentPage.itemCount == 0){
+            await fetchProjects($currentPage.pageIndex, $currentPage.pageSize);
         }
     });
+
+    async function fetchProjects(pageIndex, pageSize) {
+        loading = true;
+        
+        const response = await apiClient.project.list(pageIndex, pageSize);
+        // Sync backend pagination index with front
+        response.searchMetadata.pageIndex += 1;
+        projects.set(response.projects)
+        pagination.set(response.searchMetadata);
+
+        loading = false;
+    }
+
+    function onPageChange(event) {
+        const paginationInfo = event.detail;
+        console.log(paginationInfo)
+        if (paginationInfo && paginationInfo.pageSize && paginationInfo.page) {
+            fetchProjects(paginationInfo.page-1, paginationInfo.pageSize);
+        }
+    }
 </script>
 
 <DefaultLayout>
@@ -39,21 +49,23 @@
             <OverlayLoading duration="400">
                 <Wave />
             </OverlayLoading>
+        {:else}
+            <Grid fullWidth>
+                <Row>
+                    <h1>Projects Registry</h1>
+                </Row>
+                <Row padding>
+                    <Column noGutter>
+                        <ProjectList
+                            pageNumber={$currentPage.pageIndex}
+                            pageSize={$currentPage.pageSize}
+                            projects={$projects}
+                            totalItems={$currentPage.itemCount}
+                            {onPageChange}
+                        />
+                    </Column>
+                </Row>
+            </Grid>
         {/if}
-        <Grid fullWidth>
-            <Row>
-                <h1>Projects Registry</h1>
-            </Row>
-            <Row padding>
-                <Column noGutter>
-                    <ProjectList
-                        projects={state.projects}
-                        pageNumber={state.pageNumber}
-                        pageSize={state.pageSize}
-                        totalItems={state.totalItems}
-                    />
-                </Column>
-            </Row>
-        </Grid>
     </div>
 </DefaultLayout>

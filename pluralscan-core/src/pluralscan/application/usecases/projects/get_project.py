@@ -41,7 +41,7 @@ class FindProjectUseCase(AbstractFindProjectUseCase):
         self._project_repository = project_repository
 
     def handle(self, query: FindProjectQuery) -> FindProjectQueryResult:
-        # Find a project in internal registry.
+        # Find a project in internal system.
         project = self._project_repository.find_one(query.namespace, ProjectSource.from_str(query.source))
 
         return FindProjectQueryResult(project=project)

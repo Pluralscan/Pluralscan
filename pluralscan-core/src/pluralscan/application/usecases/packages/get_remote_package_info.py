@@ -5,7 +5,7 @@
 # from pluralscan.application.processors.fetchers.package_fetcher import \
 #     AbstractPackageFetcher
 # from pluralscan.domain.packages.package_origin import PackageOrigin
-# from pluralscan.domain.packages.package_registry import PackageRegistry
+# from pluralscan.domain.packages.package_system import PackageSystem
 # from pluralscan.domain.technologies.technology import Technology
 
 

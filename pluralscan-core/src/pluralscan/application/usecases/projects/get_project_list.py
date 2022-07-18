@@ -30,9 +30,9 @@ class GetProjectListResult:
     """GetProjectListResult"""
 
     projects: List[Project]
-    total_items: int
-    page_number: int
-    total_page: int
+    item_count: int
+    page_index: int
+    page_count: int
     page_size: int
 
 
@@ -62,8 +62,8 @@ class GetProjectListUseCase(
 
         return GetProjectListResult(
             projects=page.items,
-            total_items=page.total_items,
-            page_number=page.page_number,
-            total_page=page.total_pages,
+            item_count=page.total_items,
+            page_index=page.page_number,
+            page_count=page.total_pages,
             page_size=page.page_size,
         )

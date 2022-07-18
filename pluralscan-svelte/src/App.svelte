@@ -1,13 +1,12 @@
 <script lang="ts">
-	import Router from "svelte-spa-router";
-	import Home from "./home/Home.svelte";
-	import Analyzers from "./analyzers/Analyzers.svelte";
-	import Projects from "./projects/Projects.svelte";
-	import Packages from "./packages/Packages.svelte";
 	import "carbon-components-svelte/css/all.css";
-	import '@carbon/ibm-products/css/index.min.css';
+	import Router from "svelte-spa-router";
+	import Analyzers from "./analyzers/Analyzers.svelte";
+	import Home from "./home/Home.svelte";
+	import Packages from "./packages/Packages.svelte";
+	import Projects from "./projects/Projects.svelte";
 	import Scans from "./scans/Scans.svelte";
-import ScheduleScan from "./scans/ScheduleScan.svelte";
+	import ScheduleScan from "./scans/ScheduleScan.svelte";
 
 	const routes = {
 		"/": Home,

@@ -1,5 +1,6 @@
+from math import ceil
 import uuid
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from pluralscan.domain.scans.scan import Scan
 from pluralscan.domain.scans.scan_id import ScanId
@@ -21,21 +22,31 @@ class InMemoryScanRepository(AbstractScanRepository):
     def next_id(self) -> ScanId:
         return ScanId(uuid.uuid4())
 
-    def get_by_id(self, scan_id: ScanId) -> Scan:
+    def find_by_id(self, scan_id: ScanId) -> Optional[Scan]:
         return self._scans.get(scan_id)
 
-    def find_all(self, pageable: Pageable = ...) -> Page[Scan]:
-        return list(self._scans.values())
+    def find_all(self, pageable: Pageable = Pageable()) -> Page[Scan]:
+        scans = list(self._scans.values())
+        if pageable is None:
+            return Page(
+                items=scans,
+                total_items=len(scans),
+                page_number=1,
+                page_size=15,
+                total_pages=ceil(len(scans) / 15),
+            )
+
+        return Page(
+            items=scans[pageable.offset() : pageable.offset() + pageable.page_size],
+            total_items=len(scans),
+            page_number=pageable.current_page(),
+            page_size=pageable.page_size,
+            total_pages=ceil(len(scans) / pageable.page_size),
+        )
 
     def update(self, scan: Scan) -> Scan:
-        scan = self.get_by_id(scan.scan_id)
-
-        if scan is None:
-            raise Exception
-
         self._scans[scan.scan_id] = scan
-
-        return scan
+        return self._scans[scan.scan_id]
 
     def add(self, scan: Scan) -> Scan:
         self._scans[scan.scan_id] = scan
@@ -47,12 +58,7 @@ class InMemoryScanRepository(AbstractScanRepository):
             _scans.append(self.add(scan))
         return _scans
 
-    def remove(self, scan_id: str):
-        scan = self.get_by_id(scan_id)
-
-        if scan is None:
-            raise Exception
-
+    def remove(self, scan_id: ScanId):
         self._scans.pop(scan_id)
 
     def count(self) -> int:

@@ -33,7 +33,7 @@ class InMemoryAnalyzerRepository(AbstractAnalyzerRepository):
     def find_many(self, analyzer_ids: List[AnalyzerId]) -> List[Analyzer]:
         return [x for x in self._analyzers.values() if x.analyzer_id in analyzer_ids]
 
-    def find_all(self, pageable: Pageable = ...) -> Page[Analyzer]:
+    def find_all(self, pageable: Pageable = Pageable()) -> Page[Analyzer]:
         analyzers = list(self._analyzers.values())
         if pageable is None:
             return Page(

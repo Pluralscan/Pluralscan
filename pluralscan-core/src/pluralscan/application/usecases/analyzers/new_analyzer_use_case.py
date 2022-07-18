@@ -1,9 +1,11 @@
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
+from typing import Set
 
 from pluralscan.domain.analyzer.analyzer import Analyzer
 from pluralscan.domain.analyzer.analyzer_repository import \
     AbstractAnalyzerRepository
+from pluralscan.domain.technologies.technology import Technology
 from pluralscan.libs.utils.validable import Validable
 
 
@@ -13,6 +15,7 @@ class NewAnalyzerCommand(Validable):
     """New Analyzer Command"""
 
     name: str
+    technologies: Set[Technology]
 
 
 # Output
@@ -46,6 +49,6 @@ class NewAnalyzerUseCase(
 
     def handle(self, command: NewAnalyzerCommand) -> NewAnalyzerResult:
         analyzer_id = self._analyzer_repository.next_id()
-        analyzer = Analyzer(analyzer_id, command.name)
+        analyzer = Analyzer(analyzer_id, command.name, command.technologies)
         analyzer = self._analyzer_repository.add(analyzer)
         return NewAnalyzerResult(analyzer)

@@ -11,6 +11,7 @@
     export let pageNumber = 1;
     export let pageSize = 15;
     export let totalItems = 0;
+    export let onPageChange = (event) => {};
 
     const headers = [
         {
@@ -33,8 +34,6 @@
     title="Analyzers"
     description="Pluralscan supported analyzers."
     size="medium"
-    {pageSize}
-    page={pageNumber}
     sortable
     expandable
     rows={analyzers}
@@ -72,10 +71,12 @@
         {/each}
     </svelte:fragment>
 </DataTable>
+
 <Pagination
-    bind:pageSize
-    bind:page={pageNumber}
+    {pageSize}
+    page={pageNumber}
     {totalItems}
+    on:update={onPageChange}
     pageSizeInputDisabled
 />
 

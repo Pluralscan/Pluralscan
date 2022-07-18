@@ -6,7 +6,7 @@ from pluralscan.data.inmemory.packages.package_repository import (
 )
 from pluralscan.domain.packages.package import Package
 from pluralscan.domain.packages.package_id import PackageId
-from pluralscan.domain.packages.package_registry import PackageRegistry
+from pluralscan.domain.packages.package_system import PackageSystem
 from pluralscan.domain.technologies.technology import Technology
 from pluralscan.infrastructure.config import Config
 
@@ -33,7 +33,7 @@ class InMemoryPackageRepositorySeeder:
                 package_id=PackageId("WebGoat.NET"),
                 name="WebGoat.NET",
                 version="1.0.0",
-                registry=PackageRegistry.LOCAL,
+                system=PackageSystem.LOCAL,
                 storage_path=str(
                     pathlib.Path.joinpath(
                         Config.PACKAGES_DIR, "TEST/WebGoat.NET-master.zip"
@@ -49,7 +49,7 @@ class InMemoryPackageRepositorySeeder:
                 package_id=PackageId("NodeGoat"),
                 name="NodeGoat",
                 version="1.4",
-                registry=PackageRegistry.LOCAL,
+                system=PackageSystem.LOCAL,
                 storage_path=str(
                     pathlib.Path.joinpath(
                         Config.PACKAGES_DIR, "TEST/NodeGoat-master.zip"
@@ -65,7 +65,7 @@ class InMemoryPackageRepositorySeeder:
                 package_id=PackageId("AnalyzerTests"),
                 name="AnalyzerTests",
                 version="1.0",
-                registry=PackageRegistry.LOCAL,
+                system=PackageSystem.LOCAL,
                 storage_path=str(
                     pathlib.Path.joinpath(Config.PACKAGES_DIR, "TEST/AnalyzerTests.zip")
                 ),
@@ -80,7 +80,7 @@ class InMemoryPackageRepositorySeeder:
                 name="gat",
                 version="1.0",
                 description="Gat is a program that can be used in a terminal, it allows you to count the number of words or lines...",
-                registry=PackageRegistry.LOCAL,
+                system=PackageSystem.LOCAL,
                 storage_path=str(
                     pathlib.Path.joinpath(Config.PACKAGES_DIR, "TEST/GatGitlab.zip")
                 ),

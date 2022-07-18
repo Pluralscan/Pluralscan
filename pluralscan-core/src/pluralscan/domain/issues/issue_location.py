@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+from typing import Optional
 
 
 class IssueLocationKind(Enum):
@@ -14,8 +15,8 @@ class IssueLocationKind(Enum):
 class IssueLocation:
     """IssueLocation"""
 
-    path: str = None
-    absolute_path: str = None
+    path: Optional[str] = None
+    absolute_path: Optional[str] = None
     line: int = 0
     column: int = 0
     end_line: int = 0

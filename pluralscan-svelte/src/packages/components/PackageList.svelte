@@ -1,31 +1,16 @@
 <script lang="ts">
-    import { DataTable, OverflowMenu, OverflowMenuItem, Pagination } from "carbon-components-svelte";
-    import { onMount } from "svelte";
-    import { RestClient } from "../../../libs/dist/RestClient";
-    import OverlayLoading from "../../common/components/loader/OverlayLoading.svelte";
-    import Wave from "../../common/components/loader/Wave.svelte";
+    import {
+        DataTable,
+        OverflowMenu,
+        OverflowMenuItem,
+        Pagination,
+    } from "carbon-components-svelte";
 
     export let packages = [];
     export let pageNumber = 1;
     export let pageSize = 15;
     export let totalItems = 0;
-
-    let loading = false;
-
-    onMount(async () => {
-        const restClient = new RestClient({ apiUrl: process.env.API_URI });
-        try {
-            loading = true;
-            const result = await restClient.package.list(pageNumber, pageSize);
-            packages = result.packages;
-            totalItems = result.totalItems;
-            pageNumber = result.pageNumber;
-            pageSize = result.pageSize;
-        } catch {
-        } finally {
-            loading = false;
-        }
-    });
+    export let onPageChange = (event) => {};
 
     const headers = [
         {
@@ -37,8 +22,8 @@
             value: "Version",
         },
         {
-            key: "registry",
-            value: "Registry",
+            key: "system",
+            value: "System",
         },
         {
             key: "published_at",
@@ -48,18 +33,10 @@
     ];
 </script>
 
-{#if loading}
-    <OverlayLoading duration="400">
-        <Wave />
-    </OverlayLoading>
-{/if}
-
 <DataTable
     title="Packages"
     description="Pluralscan package registry."
     size="medium"
-    {pageSize}
-    page={pageNumber}
     sortable
     expandable
     rows={packages}
@@ -76,18 +53,14 @@
                 <OverflowMenuItem text="Show Details" />
                 <OverflowMenuItem text="Schedule Scan" />
             </OverflowMenu>
-        {:else}{cell.value}{/if} 
+        {:else}{cell.value}{/if}
     </svelte:fragment>
 </DataTable>
+
 <Pagination
-    bind:pageSize
-    bind:page={pageNumber}
+    {pageSize}
+    page={pageNumber}
     {totalItems}
+    on:update={onPageChange}
     pageSizeInputDisabled
 />
-
-<style lang="scss">
-    // :global(tr.bx--parent-row.bx--expandable-row + tr[data-child-row] td) {
-    //     padding-left: 1rem;
-    // }
-</style>

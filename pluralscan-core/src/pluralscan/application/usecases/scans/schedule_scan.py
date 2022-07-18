@@ -65,7 +65,7 @@ class ScheduleScanUseCase(
         self._job_runner = job_runner
 
     def handle(self, command: ScheduleScanCommand) -> ScheduleScanResult:
-        # 1. Find package inside internal registry
+        # 1. Find package inside internal system
         package = self._package_repository.get_one(command.package_id)
         if package is None:
             raise ValueError
@@ -77,13 +77,13 @@ class ScheduleScanUseCase(
             raise RuntimeError
 
         # 3. Retrieve executables used to perform analysis.
-        executables: List[Executable] = [
+        executables_group: List[List[Executable]] = [
             analyzer.find_executables_by_version(
-                command.analyzers.get(analyzer.analyzer_id)
+                command.analyzers.get(analyzer.analyzer_id, [])
             )
             for analyzer in analyzers
         ]
-        executables = functools.reduce(operator.iconcat, executables, [])
+        executables: List[Executable] = functools.reduce(operator.iconcat, executables_group, [])
         if executables is None:
             raise RuntimeError("No executable found.")
 

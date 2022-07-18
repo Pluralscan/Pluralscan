@@ -74,7 +74,7 @@
 #             description=package_info.description,
 #             storage_path=download_result.output_dir,
 #             technologies=package_info.technologies,
-#             registry=package_info.type,
+#             system=package_info.type,
 #         )
 #         package = self._package_repository.add(package)
 

@@ -12,7 +12,7 @@ class Diagnosis:
     """Diagnosis Value Object."""
 
     scan_id: Optional[ScanId] = None
-    created_on: datetime = field(default_factory=datetime.now)
+    created_at: datetime = field(default_factory=datetime.now)
     issues: List[Issue] = field(default_factory=list)
     report: Optional[DiagnosisReport] = None
 

@@ -31,10 +31,12 @@ def index(
     result = usecase.handle(query)
     return {
         "analyzers": [analyzer.to_dict() for analyzer in result.analyzers],
-        "totalItems": result.total_items,
-        "pageNumber": result.page_number,
-        "totalPage": result.total_page,
-        "pageSize": result.page_size,
+        "searchMetadata": {
+            "itemCount": result.item_count,
+            "pageIndex": result.page_index,
+            "pageCount": result.page_count,
+            "pageSize": result.page_size,
+        }
     }
 
 

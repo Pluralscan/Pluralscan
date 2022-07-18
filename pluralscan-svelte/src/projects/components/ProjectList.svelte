@@ -1,15 +1,17 @@
 <script lang="ts">
     import {
         DataTable,
-        Pagination,
         OverflowMenu,
         OverflowMenuItem,
+        Pagination,
     } from "carbon-components-svelte";
 
     export let projects = [];
     export let pageNumber = 1;
     export let pageSize = 15;
     export let totalItems = 0;
+    export let onPageChange = (event) => {};
+    //$: onPageChange({ pageSize, pageNumber });
 
     const headers = [
         {
@@ -36,8 +38,6 @@
     title="Projects"
     description="Pluralscan source projects registry."
     size="medium"
-    {pageSize}
-    page={pageNumber}
     sortable
     expandable
     rows={projects}
@@ -55,9 +55,11 @@
         {:else}{cell.value}{/if}
     </svelte:fragment>
 </DataTable>
+
 <Pagination
-    bind:pageSize
-    bind:page={pageNumber}
-    {totalItems}
+    pageSize={pageSize}
+    page={pageNumber}
+    totalItems={totalItems}
+    on:update={onPageChange}
     pageSizeInputDisabled
 />

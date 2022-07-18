@@ -8,28 +8,37 @@ export type ProjectNameWithSource = { name: string, source: ProjectSource }
 
 export type CreateProjectResponse = { project: Project, package: Package }
 
-export type SeachMetadata = {
-    totalItems: number,
-    pageNumber: number,
-    totalPage: number,
-    pageSize: number,
+export type PageResponse = {
+    searchMetadata: SearchMetadata
 }
 
-export type ListPackageResponse = {
-    packages: Package[],
-} & SeachMetadata
-
-export type ListAnalyzerResponse = {
-    analyzers: Analyzer[],
-} & SeachMetadata
-export type AnalyzersByTechnologiesResponse = {
-    analyzers: Analyzer[],
+export type SearchMetadata = {
+    itemCount: number;
+    pageIndex: number;
+    pageCount: number;
+    pageSize: number;
 }
 
-export type ListProjectResponse = {
-    projects: Project[],
-} & SeachMetadata
+// Packages
+export type PackageList = Package[]
+export type PackagePage = {
+    packages: Package[]
+} & PageResponse
 
-export type ListScanResponse = {
+// Analyzers
+export type AnalyzerList = Analyzer[]
+export type AnalyzerPage = {
+    analyzers: Analyzer[]
+} & PageResponse
+
+// Projects
+export type ProjectList = Project[]
+export type ProjectPage = {
+    projects: Project[]
+} & PageResponse
+
+// Scans
+export type ScanList = Scan[]
+export type ScanPage = {
     scans: Scan[],
-} & SeachMetadata
+} & PageResponse

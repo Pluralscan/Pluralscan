@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import List, Optional
 
 from pluralscan.domain.packages.package_id import PackageId
-from pluralscan.domain.packages.package_registry import PackageRegistry
+from pluralscan.domain.packages.package_system import PackageSystem
 from pluralscan.domain.projects.project_id import ProjectId
 from pluralscan.domain.technologies.technology import Technology
 
@@ -15,7 +15,8 @@ class Package:
     package_id: PackageId
     name: str
     version: str
-    registry: PackageRegistry
+    system: PackageSystem
+    """The dependency management system of the package-version."""
     storage_path: str
     published_at: datetime
     project_id: Optional[ProjectId] = None
@@ -30,7 +31,7 @@ class Package:
             "id": repr(self.package_id),
             "name": self.name,
             "version": self.version,
-            "registry": self.registry.name,
+            "system": self.system.name,
             "storage_path": self.storage_path,
             "published_at": self.published_at,
             "project_id": repr(self.project_id),

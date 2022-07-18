@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Generic, List, TypeVar
+from typing import Generic, List, Optional, TypeVar
 from pluralscan.libs.ddd.repositories.filter import Filter
 
 from pluralscan.libs.ddd.repositories.sort import Sort
@@ -17,5 +17,5 @@ class Page(Generic[TEntity]):
     page_number: int
     page_size: int
     total_pages: int
-    sort: Sort = None
-    filter: Filter = None
+    sort: Optional[Sort] = None
+    filter: Optional[Filter] = None

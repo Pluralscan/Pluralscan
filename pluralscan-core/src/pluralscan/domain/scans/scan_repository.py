@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import List
+from typing import List, Optional
 from pluralscan.libs.ddd.repositories.page import Page
 
 from pluralscan.libs.ddd.repositories.pagination import Pageable
@@ -22,7 +22,7 @@ class AbstractScanRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_by_id(self, scan_id: ScanId) -> Scan:
+    def find_by_id(self, scan_id: ScanId) -> Optional[Scan]:
         """Retrieve a scan by id."""
         raise NotImplementedError()
 
@@ -47,7 +47,7 @@ class AbstractScanRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def remove(self, scan_id: str):
+    def remove(self, scan_id: ScanId):
         """Remove a scan."""
         raise NotImplementedError()
 

@@ -1,22 +1,23 @@
 <script lang="ts">
     import {
-        Grid,
-        Row,
-        Column,
-        Button,
-        Tile,
-        TextInput,
         Accordion,
         AccordionItem,
+        Button,
+        Column,
+        Grid,
+        Row,
+        Tile,
     } from "carbon-components-svelte";
-    
+
     import { onMount } from "svelte";
-    import { RestClient } from "../../libs/dist/RestClient";
+    import { location } from "svelte-spa-router";
+    import { RestClient } from "../../libs/pluralscan-api/RestClient";
+    import { RestClientOptions } from "../../libs/pluralscan-api/RestClientOptions";
     import OverlayLoading from "../common/components/loader/OverlayLoading.svelte";
     import Wave from "../common/components/loader/Wave.svelte";
     import DefaultLayout from "../common/layouts/DefaultLayout.svelte";
-    import { delay, getErrorMessage } from "../utils";
-    import {location} from 'svelte-spa-router'
+
+    const API_OPTIONS = new RestClientOptions(process.env.API_URI);
 
     let state = {
         analyzers: [],
@@ -27,27 +28,28 @@
     let loading = true;
 
     async function getPackage(package_id) {
-        const restClient = new RestClient({ apiUrl: process.env.API_URI });
+        const restClient = new RestClient(API_OPTIONS);
         const response = await restClient.package.get(package_id);
-        return response.package;
+        return response;
     }
 
     async function getAnalyzers(technologies) {
-        const restClient = new RestClient({ apiUrl: process.env.API_URI });
-        const response = await restClient.analyzer.findByTechnologies(technologies)
-        return response.analyzers;
+        const restClient = new RestClient(API_OPTIONS);
+        const response = await restClient.analyzer.findByTechnologies(
+            technologies
+        );
+        return response;
     }
 
     onMount(async () => {
         try {
             loading = true;
-            const package_id = $location.split('/').pop();
-            state.package = await getPackage(package_id)
-            console.log(state.package)
-            state.analyzers = await getAnalyzers(state.package.technologies)
-            console.log(state.analyzers)
+            const package_id = $location.split("/").pop();
+            state.package = await getPackage(package_id);
+            console.log(state.package);
+            state.analyzers = await getAnalyzers(state.package.technologies);
+            console.log(state.analyzers);
         } catch {
-
         } finally {
             loading = false;
         }
@@ -63,7 +65,7 @@
         {:else}
             <Grid>
                 <Row>
-                    <h1>Schedule a scan for {state.package['name']}</h1>
+                    <h1>Schedule a scan for {state.package["name"]}</h1>
                 </Row>
 
                 {#if state.project}
@@ -84,22 +86,12 @@
                                                 <AccordionItem
                                                     title={analyzer.name}
                                                 >
-                                                    <p>
-                                                        Translate text, documents,
-                                                        and websites from one
-                                                        language to another. Create
-                                                        industry or region-specific
-                                                        translations via the
-                                                        service's customization
-                                                        capability.
-                                                    </p>
+                                                    <p />
                                                 </AccordionItem>
                                             {/each}
                                         </Accordion>
                                     </Tile>
-                                    <Button
-                                        class="load-repo-button">Scan</Button
-                                    >
+                                    <Button class="load-repo-button">Scan</Button>
                                 </Column>
                             </Row>
                         </Column>

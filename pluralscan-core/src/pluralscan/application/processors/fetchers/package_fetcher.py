@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass, field
 from typing import List, Optional
 
-from pluralscan.domain.packages.package_registry import PackageRegistry
+from pluralscan.domain.packages.package_system import PackageSystem
 from pluralscan.domain.technologies.technology import Technology
 
 
@@ -19,7 +19,7 @@ class DownloadPackageResult:
 class PackageInfoResult:
     """Data returned when querying a package details."""
 
-    registry: PackageRegistry
+    system: PackageSystem
     name: str = field(default_factory=str)
     full_name: Optional[str] = None
     description: Optional[str] = None

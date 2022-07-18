@@ -1,22 +1,19 @@
 <script lang="ts">
     import {
-        Grid,
-        Row,
-        Column,
-        Button,
-        Tile,
-        TextInput,
-Accordion,
-AccordionItem,
+    Accordion,
+    AccordionItem,Button,Column,Grid,
+    Row,TextInput,Tile
     } from "carbon-components-svelte";
     import { onMount } from "svelte";
-    import { RestClient } from "../../libs/dist/RestClient";
-    import { extractProjectSource } from "../../libs/dist/utils/uri";
+    import { RestClient } from "../../libs/pluralscan-api/RestClient";
+    import { RestClientOptions } from "../../libs/pluralscan-api/RestClientOptions";
+    import { extractProjectSource } from "../../libs/pluralscan-api/utils";
     import OverlayLoading from "../common/components/loader/OverlayLoading.svelte";
     import Wave from "../common/components/loader/Wave.svelte";
     import DefaultLayout from "../common/layouts/DefaultLayout.svelte";
-    import { delay, getErrorMessage } from "../utils";
+    import { delay,getErrorMessage } from "../utils";
 
+    const API_OPTIONS = new RestClientOptions(process.env.API_URI);
     const searchData = {
         uri: "",
     };
@@ -30,51 +27,44 @@ AccordionItem,
     let title = "Pluralscan";
     let isLoading = false;
 
-    function refreshTitle(value: string) {
-        if (!value) {
-            title = "Pluralscan";
-            return;
-        }
-        title = value;
-    }
 
     async function search_project() {
-        const restClient = new RestClient({ apiUrl: process.env.API_URI });
+        const restClient = new RestClient(API_OPTIONS);
         loadingMessage =
             "Verify if project is already registred in Pluralscan repository...";
         isLoading = true;
 
         try {
             const projectNameAndSource = extractProjectSource(searchData.uri);
-            let response = await restClient.project.findProject(
+            const project = await restClient.project.findProject(
                 projectNameAndSource.name,
                 projectNameAndSource.source
             );
 
-            if (!response) {
+            if (!project) {
                 loadingMessage = "No project found, try to create a new one...";
                 await delay(1000);
-                response = await restClient.project.createProject(
+                const createProjectResponse = await restClient.project.createProject(
                     searchData.uri
                 );
-                console.log(response);
+                console.log(createProjectResponse);
                 loadingMessage =
                     "Project synchronized with new snapshot package...";
-                state.project = response.project;
-                state.package = response.package;
+                state.project = createProjectResponse.project;
+                state.package = createProjectResponse.package;
                 await delay(1000);
             } else {
-                state.project = response.project;                
+                state.project = project;                
                 loadingMessage =
                     "Fetch latest snapshot package...";
-                response = await restClient.package.latestSnapshot(state.project['id'])
-                state.package = response.package;
+                const latestSnapshot = await restClient.package.latestSnapshot(state.project['id'])
+                state.package = latestSnapshot
                 await delay(1000);
             }
 
             loadingMessage = "Retrieve analyzers...";
-            response = await restClient.analyzer.findByTechnologies(state.package['technologies'])
-            state.analyzers = response.analyzers;
+            const analyzers = await restClient.analyzer.findByTechnologies(state.package['technologies'])
+            state.analyzers = analyzers
             await delay(1000);
         } catch (error) {
             reportError({ message: getErrorMessage(error) });
@@ -84,7 +74,6 @@ AccordionItem,
     }
 
     onMount(async () => {
-        const restClient = new RestClient({ apiUrl: process.env.API_URI });
     });
 </script>
 

@@ -28,7 +28,7 @@ class InMemoryProjectRepository(AbstractProjectRepository):
     def get_by_id(self, project_id: ProjectId) -> Project:
         return self._projects[project_id]
 
-    def find_all(self, pageable: Pageable = ...) -> Page[Project]:
+    def find_all(self, pageable: Pageable = Pageable()) -> Page[Project]:
         projects = list(self._projects.values())
         if pageable is None:
             return Page(

@@ -8,7 +8,7 @@ from pluralscan.application.processors.fetchers.project_fetcher import (
     DownloadProjectResult,
 )
 from pluralscan.domain.packages.package import Package
-from pluralscan.domain.packages.package_registry import PackageRegistry
+from pluralscan.domain.packages.package_system import PackageSystem
 from pluralscan.domain.packages.package_repository import AbstractPackageRepository
 from pluralscan.domain.projects.project import Project
 from pluralscan.domain.projects.project_repository import AbstractProjectRepository
@@ -134,7 +134,7 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
             version="SNAPSHOT",
             published_at=project.last_snapshot,
             project_id=project_id,
-            registry=PackageRegistry.LOCAL,
+            system=PackageSystem.LOCAL,
             storage_path=download_result.output_dir,
             technologies=technologies
         )

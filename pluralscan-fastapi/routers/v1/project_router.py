@@ -28,19 +28,21 @@ PROJECT_ROUTER = APIRouter(prefix="/api/projects", tags=["project"])
 
 @PROJECT_ROUTER.get("", response_class=JSONResponse)
 def index(
-    page_size: Optional[int] = 100,
     page: Optional[int] = 0,
+    limit: Optional[int] = 100,
     usecase: GetProjectListUseCase = Depends(get_project_list_use_case),
 ):
     """_summary_"""
-    query = GetProjectListQuery(page, page_size)
+    query = GetProjectListQuery(page, limit)
     result = usecase.handle(query)
     return {
         "projects": [project.to_dict() for project in result.projects],
-        "totalItems": result.total_items,
-        "pageNumber": result.page_number,
-        "totalPage": result.total_page,
-        "pageSize": result.page_size,
+        "searchMetadata": {
+            "itemCount": result.item_count,
+            "pageIndex": result.page_index,
+            "pageCount": result.page_count,
+            "pageSize": result.page_size,
+        }
     }
 
 
@@ -57,7 +59,6 @@ def get_one(
     if result.project is None:
         return Response(status_code=status.HTTP_204_NO_CONTENT)
     return {"project": result.project.to_dict()}
-
 
 
 @PROJECT_ROUTER.post(

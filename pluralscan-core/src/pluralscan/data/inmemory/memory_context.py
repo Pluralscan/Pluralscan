@@ -16,6 +16,7 @@ from pluralscan.data.inmemory.projects.project_repository import (
 from pluralscan.data.inmemory.projects.project_seeder import (
     InMemoryProjectRepositorySeeder,
 )
+from pluralscan.data.inmemory.scans.scan_repository import InMemoryScanRepository
 
 
 class MemoryContext:
@@ -35,3 +36,6 @@ class MemoryContext:
             InMemoryAnalyzerRepository()
         )
         InMemoryAnalyzerRepositorySeeder(self.analyzer_repository).seed()
+
+        # Initialize Scan store
+        self.scan_repository: InMemoryScanRepository = InMemoryScanRepository()

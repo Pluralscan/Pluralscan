@@ -44,7 +44,7 @@ class PackageSerializer(serializers.Serializer):
     id = serializers.CharField(source="package_id")
     name = serializers.CharField(required=False)
     version = serializers.CharField(required=False)
-    registry = serializers.CharField(required=False)
+    system = serializers.CharField(required=False)
     storage_path = serializers.CharField(required=False)
     published_at = serializers.DateTimeField(required=False)
     #project_id = serializers.CharField(required=False)
