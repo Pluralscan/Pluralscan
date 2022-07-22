@@ -13,7 +13,7 @@ from pymongo import MongoClient
 def options():
     return MongoRepositoryOptions(
         MongoClient(),
-        "cleansecpy_test",
+        "pluralscan_test",
         "packages"
     )
 

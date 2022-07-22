@@ -21,21 +21,6 @@
 
         // Debugging Web Application
         {
-            "name": "Debug Django WebApp",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder}\\pluralscan-webapp\\manage.py",
-            "args": [
-                "runserver",
-                "5400"
-            ],
-            "env": {
-                "DJANGO_DEBUG": "ON"
-            },
-            "django": true
-        },
-
-        {
             "name": "Debug FastApi",
             "type": "python",
             "request": "launch",

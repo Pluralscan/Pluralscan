@@ -46,13 +46,13 @@ WORKDIR /home/pluralscan-core
 RUN poetry build -vvv
 RUN $VIRTUAL_ENV/bin/pip install --no-cache-dir ./dist/*.whl
 
-# Install Django API
-WORKDIR /home/pluralscan-webapp
+# Install FastApi
+WORKDIR /home/pluralscan-fastapi
 RUN poetry install --no-dev
 RUN poetry add tzdata
 
 FROM base AS production
-COPY --from=builder /home/pluralscan-webapp /app
+COPY --from=builder /home/pluralscan-fastapi /app
 COPY --from=builder $VIRTUAL_ENV $VIRTUAL_ENV
 WORKDIR /app
 

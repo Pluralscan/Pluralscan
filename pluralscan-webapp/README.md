@@ -1,1 +1,0 @@
-# Pluralscan - Web Application

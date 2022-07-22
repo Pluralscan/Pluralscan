@@ -64,7 +64,7 @@ docker build -t pluralscan/pluralscan .
 ### Run image
 
 ```bash
-docker run -dp 5400:5400 --env DJANGO_DEBUG=ON pluralscan/pluralscan
+docker run -dp 5400:5400 pluralscan/pluralscan
 ```
 
 Navigate to http://localhost:5400
@@ -74,14 +74,11 @@ Navigate to http://localhost:5400
 
 ### Core Business Packages
 
-- **Python 3.10** as language and runtime environment
-- [poetry]()
-- [django]()
-- [gunicorn]()
-- [pytest]()
-- [pytest-cov]()
+- **Python 3.10** as language and runtime environment.
+- [poetry](https://python-poetry.org/) for packaging and dependency management.
+- [pytest](https://docs.pytest.org/en/7.1.x/) framework for testing.
+- [pytest-cov](https://pytest-cov.readthedocs.io/en/latest/readme.html)
 - [mypy](https://github.com/python/mypy) for static type checking.
-- [python-rq](https://python-rq.org/) for queuing jobs and process them in background with workers **(Redis is required)**.
 
 #### Recommendation
 
@@ -92,22 +89,22 @@ Navigate to http://localhost:5400
 
 - **Python 3.10*** as language and runtime environment
 
-### Backend Web Application (API + SPA Rendering)
+### Backend Web Application (API + Front Serving)
 
 - **Python 3.10*** as language and runtime environment
 - [FastApi]() as web framework used for API and serving SPA
-
+- [python-rq](https://python-rq.org/) for queuing jobs and process them in background with workers **(Redis is required)**.
 
 ### Front-end Web Application
 
-- **NodeJS 16.13.0** as runtime environment
-- **Typescript** as main language
-- **Svelte 3** as front-end framework
-- [Carbon Design System for Svelte]() as design framework 
-- [jest]() to run unit and integration tests
-- [ts-jest]() which allow to write tests in Typescript
-- [svelte-jester](https://github.com/svelteness/svelte-jester)
-- [tailwindcss](https://tailwindcss.com/)
+- **NodeJS 16.13.0** as runtime environment.
+- **Typescript** as main language.
+- [Svelte 3](https://svelte.dev/) as front-end framework.
+- [Carbon Design System for Svelte]() as design framework. 
+- [jest](https://jestjs.io/fr/) as testing framework.
+- [ts-jest](https://github.com/kulshekhar/ts-jest) for writing tests in Typescript.
+- [svelte-jester](https://github.com/svelteness/svelte-jester) for precompile svelte components before importing them in to tests.
+- [tailwindcss](https://tailwindcss.com/) as utility css framework.
 
 ### Data Management & Persistence
 

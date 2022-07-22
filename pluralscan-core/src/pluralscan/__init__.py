@@ -1,4 +1,4 @@
-"""Top-level package for CleanSecPy."""
+"""Top-level package for Pluralscan."""
 # pluralscan/__init__.py
 
 __author__ = 'Gromat Luidgi'
