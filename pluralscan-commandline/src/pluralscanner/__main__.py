@@ -14,7 +14,7 @@ app.add_typer(package.app, name='package')
 def main(context: typer.Context):
     """main"""
     if context.invoked_subcommand is None:
-        typer.echo("Initialize CleanSecPy Interactive Cli")
+        typer.echo("Initialize Pluralscan Interactive Cli")
         command = typer.prompt("Command")
         typer.echo(command)
 

@@ -1,4 +1,4 @@
-# CleanSecPy - Core Packages
+# Pluralscan - Core Packages
 
 ## Domain
 
