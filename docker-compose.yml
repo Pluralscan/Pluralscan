@@ -1,18 +1,43 @@
+# https://docs.docker.com/compose/compose-file/compose-file-v3/
+
 version: '3.9'
 
 services:
   mongo:
-    container_name: mongo
+    container_name: pluralscan-mongo
     image: mongo
-
-  pluralscan:
-    image: pluralscan
-    container_name: pluralscan
-    volumes:
-      - "./pluralscan/:/usr/src/pluralscan"
+    restart: always
     ports:
-      - "5000:5000"
-    external_links:
-      - mongo
+      - 27017:27017
+    env_file:
+      - ./.docker.env
+    volumes: 
+      - ./.storage/mongo:/data/db
+  redis:
+    container_name: pluralscan-redis-stack
+    image: redis/redis-stack:latest
+    restart: always
+    ports:
+      - 8001:8001
+      - 6379:6379
+    env_file:
+      - ./.docker.env
+    volumes: 
+      - ./.storage/redis:/data
+  pluralscan:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      cache_from:
+        - pluralscan/pluralscan
+    image: pluralscan/pluralscan
+    container_name: pluralscan
+    ports:
+      - 5400:5400
+    env_file:
+      - ./.docker.env
+    volumes:
+      - ./.storage/pluralscan-resources:/resources
     depends_on:
       - mongo
+      - redis

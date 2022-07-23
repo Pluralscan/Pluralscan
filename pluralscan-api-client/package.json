@@ -10,8 +10,8 @@
     "test": "jest",
     "build": "tsc -p ."
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Luidgi GROMAT",
+  "license": "MIT",
   "devDependencies": {
     "@types/jest": "^28.1.1",
     "dotenv": "^16.0.1",

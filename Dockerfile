@@ -32,6 +32,11 @@ RUN pip install --upgrade setuptools wheel
 # Install git
 RUN apt install -y git
 
+# Install NodeJs
+RUN apt install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt update && apt install -y nodejs
+
 FROM base AS builder
 # Copy application and resources
 WORKDIR /home
@@ -46,13 +51,24 @@ WORKDIR /home/pluralscan-core
 RUN poetry build -vvv
 RUN $VIRTUAL_ENV/bin/pip install --no-cache-dir ./dist/*.whl
 
-# Install FastApi
+# Build Pluralscan Api Client
+WORKDIR /home/pluralscan-api-client
+RUN npm install
+RUN npm run build
+
+# Build Svelte Web App
+WORKDIR /home/pluralscan-svelte
+RUN npm install
+RUN npm run build
+
+# Install FastAPI dependencies
 WORKDIR /home/pluralscan-fastapi
 RUN poetry install --no-dev
-RUN poetry add tzdata
 
 FROM base AS production
 COPY --from=builder /home/pluralscan-fastapi /app
+COPY --from=builder /home/pluralscan-svelte /app/pluralscan-svelte
+COPY --from=builder /home/resources /resources
 COPY --from=builder $VIRTUAL_ENV $VIRTUAL_ENV
 WORKDIR /app
 
@@ -60,4 +76,4 @@ WORKDIR /app
 EXPOSE 5400
 
 # Run web application
-CMD ["poetry", "run", "gunicorn", "--bind", ":5400", "--workers", "3", "backend.wsgi:application"]
+CMD ["poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5400"]

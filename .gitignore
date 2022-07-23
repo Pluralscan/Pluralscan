@@ -160,3 +160,7 @@ coverage
 resources/packages/
 resources/tools/**/*.db
 resources/sources/GITHUB/*
+.mongo
+.pluralscan-resources
+.redis
+.storage

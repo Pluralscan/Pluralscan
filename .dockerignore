@@ -1,5 +1,12 @@
-# https://docs.docker.com/engine/reference/builder/#dockerignore-file
-*/.docker*
+# Documentation: https://docs.docker.com/engine/reference/builder/#dockerignore-file
+
+.mypy_cache
+.storage
+.notes
+**/.pytest_cache
+.venv
+**/.venv
+**/coverage
 */.github*
 */.notes*
 */.vscode*
@@ -15,3 +22,4 @@ coverage.xml
 *.md
 LICENCE
 pytest.ini
+**/node_modules
