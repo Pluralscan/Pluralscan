@@ -3,9 +3,10 @@ from datetime import datetime
 from typing import List, Optional
 
 from pluralscan.domain.packages.package_id import PackageId
+from pluralscan.domain.packages.package_link import PackageLink
 from pluralscan.domain.packages.package_system import PackageSystem
 from pluralscan.domain.projects.project_id import ProjectId
-from pluralscan.domain.technologies.technology import Technology
+from pluralscan.domain.shared.technology import Technology
 
 
 @dataclass
@@ -19,23 +20,27 @@ class Package:
     """The dependency management system of the package-version."""
     storage_path: str
     published_at: datetime
+    author: Optional[str] = None
+    licenses: List[str] = field(default_factory=list)
     project_id: Optional[ProjectId] = None
     description: Optional[str] = None
     created_at: datetime = field(default_factory=datetime.now)
     technologies: List[Technology] = field(default_factory=list)
-    links: List[tuple[str, str]] = field(default_factory=list)
+    links: List[PackageLink] = field(default_factory=list)
 
     def to_dict(self):
         """Transform entity object into dictonary representation."""
         return {
             "id": repr(self.package_id),
             "name": self.name,
+            "author": self.author,
+            "licenses": self.licenses,
             "version": self.version,
             "system": self.system.name,
-            "storage_path": self.storage_path,
-            "published_at": self.published_at,
-            "project_id": repr(self.project_id),
+            "storagePath": self.storage_path,
+            "publishedAt": self.published_at.strftime("%m/%d/%Y, %H:%M:%S"),
+            "projectId": repr(self.project_id),
             "description": self.description,
-            "created_at": self.created_at,
+            "createdAt": self.created_at,
             "technologies": [asdict(x) for x in self.technologies],
         }

@@ -6,7 +6,7 @@ from factories.analyzer_factory import (
     find_analyzers_by_technologies_use_case,
     get_analyzer_list_use_case,
 )
-from pluralscan.application.usecases.analyzers.find_analyzers_by_technologies import (
+from pluralscan.application.usecases.analyzers.get_analyzers_by_technologies import (
     AbstractFindAnalyzersByTechnologiesUseCase,
     FindAnalyzersByTechnologiesQuery,
 )
@@ -14,7 +14,7 @@ from pluralscan.application.usecases.analyzers.get_analyzer_list import (
     AbstractGetAnalyzerListUseCase,
     GetAnalyzerListQuery,
 )
-from pluralscan.domain.technologies.technology import Technology
+from pluralscan.domain.shared.technology import Technology
 
 
 ANALYZER_ROUTER = APIRouter(prefix="/api/analyzers", tags=["analyzer"])
@@ -52,6 +52,4 @@ def find_by_technologies(
         [Technology.from_code(tech) for tech in code]
     )
     result = usecase.handle(query)
-    return {
-        "analyzers": [analyzer.to_dict() for analyzer in result.analyzers],
-    }
+    return [analyzer.to_dict() for analyzer in result.analyzers]

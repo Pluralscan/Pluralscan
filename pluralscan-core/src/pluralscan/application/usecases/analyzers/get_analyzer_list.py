@@ -2,8 +2,8 @@ from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
 from typing import List
 
-from pluralscan.domain.analyzer.analyzer import Analyzer
-from pluralscan.domain.analyzer.analyzer_repository import AbstractAnalyzerRepository
+from pluralscan.domain.analyzers.analyzer import Analyzer
+from pluralscan.domain.analyzers.analyzer_repository import AbstractAnalyzerRepository
 from pluralscan.libs.ddd.repositories.pagination import Pageable
 
 

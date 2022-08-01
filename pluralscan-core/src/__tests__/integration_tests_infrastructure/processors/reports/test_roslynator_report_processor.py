@@ -1,5 +1,5 @@
 from pathlib import Path
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
 from pluralscan.infrastructure.processor.reports.roslynator_report_processor import \
     RoslynatorReportProcessor
 

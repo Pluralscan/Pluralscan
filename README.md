@@ -14,9 +14,11 @@ Pluralscan should be currently considered as a **POC/POW project** that try to d
 ## Goals
 
 - Fetch source code from **various locations** *(Git, Github, Gitlab, Disk...)*.
-- Fetch package built with **various packaging system** *(pip, poetry, npm, pip, cargo...)*
-- Perform code analysis on a package with **various analyzer's** *(Roslyn, Sonar, Security Code Scan...)*.
+- Fetch package built with **various packaging systems** *(pip, poetry, npm, pip, cargo...)*
+- Perform code analysis on a package with **various analyzers** *(Roslyn, Sonar, Security Code Scan...)*.
 - Centralize and persist analysis reports into a **generic business model representation**.
+
+![UML DRAFT](PluralscanDraft.png)
 
 ## Roadmap
 
@@ -35,7 +37,7 @@ Pluralscan should be currently considered as a **POC/POW project** that try to d
 
 - Move from Svelte 3 to **Svelte Kit**
   - Justification: Even if svelte kit is still in beta, must have features likes routing are natively implemented. However, the opinated way to realize scallable and maintenable front-end application, is the foremost reason of this choice.
-- Implements abstract filesystem for store resources (packages, source code, tools...)
+- Implements abstract filesystem for stored resources *(packages, source code, tools...)*
 - Build a rules registry:
   - Mapper:
     - Dependency Check
@@ -51,24 +53,42 @@ Pluralscan should be currently considered as a **POC/POW project** that try to d
 
 ## Try with Docker
 
-### Build fresh image
+### docker-compose
 
-##### Dotnet
+Setup a complete stack with MongoDB, Redis and Pluralscan.
+```bash
+docker-compose up
+```
+
+Remove containers.
+```bash
+docker-compose down
+```
+
+
+### Build and run fresh image
+
+##### Ubuntu
+
 ```bash
 mkdir pluralscan
 cd pluralscan
 git clone https://github.com/pluralscan/pluralscan.git
 docker build -t pluralscan/pluralscan .
-```
-
-### Run image
-
-```bash
 docker run -dp 5400:5400 pluralscan/pluralscan
 ```
 
-Navigate to http://localhost:5400
+### First usage
 
+#### Check Redis
+
+- Navigate to http://localhost:8001
+- Accept RedisInsight license.
+- Login with the password defined inside `.docker.env`
+
+#### Check Mongo
+
+- Navigate to http://localhost:
 
 ## Stack Overview
 
@@ -114,7 +134,8 @@ Navigate to http://localhost:5400
 
 ### Containerization
 
-- Docker
+- Docker 
+- docker-compose 3.9
 
 ### Cloud Infrastructure
 
@@ -254,3 +275,9 @@ cd htmlcov
 ### Python
 
 - [PEP 563 – Postponed Evaluation of Annotations](https://peps.python.org/pep-0563/)
+
+### DDD
+
+#### Events
+
+- [Handle events consistancy - Committing before dispatching](https://enterprisecraftsmanship.com/posts/domain-events-simple-reliable-solution/)

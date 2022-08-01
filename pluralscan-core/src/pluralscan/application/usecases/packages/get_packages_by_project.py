@@ -1,14 +1,9 @@
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List
 from pluralscan.domain.packages.package import Package
 from pluralscan.domain.packages.package_repository import AbstractPackageRepository
-
-
-from pluralscan.domain.projects.project import Project
 from pluralscan.domain.projects.project_id import ProjectId
-from pluralscan.domain.projects.project_repository import AbstractProjectRepository
-from pluralscan.domain.projects.project_source import ProjectSource
 
 
 @dataclass

@@ -1,7 +1,7 @@
 # import pytest
 # from pluralscan.domain.analyzer.analyzer import Analyzer
 # from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
-# from pluralscan.domain.executables.executable import Executable
+# from pluralscan.domain.analyzers.executables.executable import Executable
 
 
 # @pytest.fixture

@@ -4,10 +4,6 @@ import { Project } from "./models/Project";
 import { ProjectSource } from "./models/ProjectSource";
 import { Scan } from "./models/Scan";
 
-export type ProjectNameWithSource = { name: string, source: ProjectSource }
-
-export type CreateProjectResponse = { project: Project, package: Package }
-
 export type PageResponse = {
     searchMetadata: SearchMetadata
 }
@@ -36,9 +32,13 @@ export type ProjectList = Project[]
 export type ProjectPage = {
     projects: Project[]
 } & PageResponse
+export type ProjectNameWithSource = { name: string, source: ProjectSource }
+export type CreateProjectResponse = { project: Project, package: Package }
+
 
 // Scans
 export type ScanList = Scan[]
 export type ScanPage = {
     scans: Scan[],
 } & PageResponse
+export type ScheduleScanResponse = { scans: Scan[] }

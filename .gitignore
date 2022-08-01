@@ -160,6 +160,7 @@ coverage
 resources/packages/
 resources/tools/**/*.db
 resources/sources/GITHUB/*
+resources/tools/dependency-check-7.1.1-release/data/**
 .mongo
 .pluralscan-resources
 .redis

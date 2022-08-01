@@ -36,5 +36,7 @@ class GetScanByIdUseCase(
         self._scan_repository = scan_repository
 
     def handle(self, scan_id: ScanId) -> GetScanByIdResult:
-        scan = self._scan_repository.get_by_id(scan_id)
+        scan = self._scan_repository.find_by_id(scan_id)
+        if scan is None:
+            raise RuntimeError
         return GetScanByIdResult(scan)

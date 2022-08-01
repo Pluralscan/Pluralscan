@@ -1,6 +1,7 @@
 import pathlib
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
+from eventsourcing.application import Application
 
 from pluralscan.application.processors.fetchers.project_fetcher import (
     AbstractProjectFetcher,
@@ -12,7 +13,6 @@ from pluralscan.domain.packages.package_system import PackageSystem
 from pluralscan.domain.packages.package_repository import AbstractPackageRepository
 from pluralscan.domain.projects.project import Project
 from pluralscan.domain.projects.project_repository import AbstractProjectRepository
-from pluralscan.domain.technologies.technology import Technology
 
 
 @dataclass
@@ -31,8 +31,10 @@ class CreateProjectResult:
     package: Package
 
 
-class AbstractCreateProjectUseCase(metaclass=ABCMeta):
+class AbstractCreateProjectUseCase(Application, metaclass=ABCMeta):
     """AbstractCreateProjectUseCase"""
+
+    event_bus = None
 
     @abstractmethod
     def handle(self, command: CreateProjectCommand) -> CreateProjectResult:
@@ -70,6 +72,7 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
         project_fetcher_factory: AbstractProjectFetcherFactory,
         unit_of_work: AbstractCreateProjectUnitOfWork,
     ) -> None:
+        super().__init__()
         self._project_fetcher_factory = project_fetcher_factory
         self._project_repository = unit_of_work.project_repository
         self._package_repository = unit_of_work.package_repository
@@ -97,13 +100,13 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
         # Create and persist a project entity
         project_id = self._project_repository.next_id()
         project = Project(
-            project_id=project_id,
+            aggregate_id=project_id,
             name=project_info.display_name,
             namespace=project_info.namespace,
             source=project_info.source,
             last_snapshot=project_info.last_update,
             homepage=project_info.homepage,
-            language_metrics=project_info.language_metrics
+            technologies=project_info.technologies
         )
         self._project_repository.add(project)
 
@@ -119,13 +122,6 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
         if download_result.success is not True:
             raise RuntimeError(download_result.error)
 
-        # Naive technology detection [TODO: use technology detector]
-        technologies = []
-        for metric in project_info.language_metrics:
-            technology = Technology.from_code(metric.language.code)
-            if technology is not None:
-                technologies.append(technology)
-
         # Create a snapshot package
         package_id = self._package_repository.next_id()
         package = Package(
@@ -136,7 +132,7 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
             project_id=project_id,
             system=PackageSystem.LOCAL,
             storage_path=download_result.output_dir,
-            technologies=technologies
+            technologies=project_info.technologies
         )
         self._package_repository.add(package)
 

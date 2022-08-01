@@ -27,7 +27,7 @@ class InMemoryProjectRepositorySeeder:
     def _add_entities(self):
         self._project_repository.add(
             Project(
-                project_id=ProjectId("gromatluidgi/gromatluidgi"),
+                aggregate_id=ProjectId("gromatluidgi/gromatluidgi"),
                 name="gromatluidgi",
                 namespace="gromatluidgi/gromatluidgi",
                 source=ProjectSource.GITHUB,
@@ -38,7 +38,7 @@ class InMemoryProjectRepositorySeeder:
 
         self._project_repository.add(
             Project(
-                project_id=ProjectId("gromatluidgi/Cast.RestClient"),
+                aggregate_id=ProjectId("gromatluidgi/Cast.RestClient"),
                 name="Cast.RestClient",
                 namespace="gromatluidgi/Cast.RestClient",
                 source=ProjectSource.GITHUB,

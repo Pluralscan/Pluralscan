@@ -2,6 +2,7 @@ import datetime
 import re
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any, Dict, List
 
 import gitlab
 from gitlab.v4.objects.projects import Project
@@ -10,9 +11,9 @@ from pluralscan.application.processors.fetchers.project_fetcher import (
     DownloadProjectResult,
     ProjectInfoResult,
 )
-from pluralscan.domain.common.language import Language
-from pluralscan.domain.common.metrics import ProjectLanguageMetric
+from pluralscan.domain.shared.language import Language
 from pluralscan.domain.projects.project_source import ProjectSource
+from pluralscan.domain.shared.technology import Technology
 
 
 @dataclass
@@ -42,14 +43,15 @@ class GitlabProjectFetcher(AbstractProjectFetcher):
         if project_name is None:
             raise RuntimeError
 
-        language_metrics = []
-        for lang in project_languages.keys():
-            if Language.from_code(lang).code == Language.unknown().code:
-                continue
+        technologies: List[Technology] = []
+        if isinstance(project_languages, Dict):
+            for lang in project_languages.keys():
+                if Language.from_code(lang).code == Language.unknown().code:
+                    continue
 
-            language_metrics.append(
-                ProjectLanguageMetric(Language.from_code(lang), project_languages[lang])
-            )
+                technologies.append(
+                    Technology.from_code(lang)
+                )
 
         return ProjectInfoResult(
             source=ProjectSource.GITLAB,
@@ -58,7 +60,7 @@ class GitlabProjectFetcher(AbstractProjectFetcher):
             display_name=project.attributes.get("name", ""),
             description=project.attributes.get("description"),
             last_update=datetime.datetime.strptime(project.attributes.get("last_activity_at", datetime.datetime.now()), '%Y-%m-%dT%H:%M:%S.%f%z'),
-            language_metrics=language_metrics
+            technologies=technologies
         )
 
     def download(self, uri: str, output_dir: str) -> DownloadProjectResult:

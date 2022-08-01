@@ -47,7 +47,7 @@ def index(
 
 
 @PROJECT_ROUTER.get("/{source}/{owner}/{name}", response_class=JSONResponse)
-def get_one(
+def find_by_id(
     source: str,
     owner: str,
     name: str,
@@ -58,7 +58,7 @@ def get_one(
     result = usecase.handle(query)
     if result.project is None:
         return Response(status_code=status.HTTP_204_NO_CONTENT)
-    return {"project": result.project.to_dict()}
+    return result.project.to_dict()
 
 
 @PROJECT_ROUTER.post(

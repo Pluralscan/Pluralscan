@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from bson import SON, ObjectId
-from pluralscan.domain.executables.executable import Executable
+from pluralscan.domain.analyzers.executables.executable import Executable
 
 
 @dataclass

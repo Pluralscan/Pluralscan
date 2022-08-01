@@ -25,5 +25,3 @@
     <slot name="content" />
 </Content>
 
-<style>
-</style>

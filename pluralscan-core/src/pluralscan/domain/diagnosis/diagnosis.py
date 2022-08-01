@@ -3,13 +3,13 @@ from datetime import datetime
 from typing import List, Optional
 
 from pluralscan.domain.diagnosis.diagnosis_report import DiagnosisReport
-from pluralscan.domain.issues.issue import Issue
+from pluralscan.domain.diagnosis.issues.issue import Issue
 from pluralscan.domain.scans.scan_id import ScanId
 
 
 @dataclass
 class Diagnosis:
-    """Diagnosis Value Object."""
+    """Diagnosis Entity."""
 
     scan_id: Optional[ScanId] = None
     created_at: datetime = field(default_factory=datetime.now)

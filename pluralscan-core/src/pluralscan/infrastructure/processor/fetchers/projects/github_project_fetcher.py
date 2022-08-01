@@ -3,6 +3,7 @@ import re
 
 from dataclasses import dataclass
 import tempfile
+from typing import List
 
 from git import Repo
 from github import Github, Repository
@@ -11,9 +12,9 @@ from pluralscan.application.processors.fetchers.project_fetcher import (
     DownloadProjectResult,
     ProjectInfoResult,
 )
-from pluralscan.domain.common.language import Language
-from pluralscan.domain.common.metrics import ProjectLanguageMetric
+from pluralscan.domain.shared.language import Language
 from pluralscan.domain.projects.project_source import ProjectSource
+from pluralscan.domain.shared.technology import Technology
 
 
 @dataclass
@@ -41,13 +42,13 @@ class GithubProjectFetcher(AbstractProjectFetcher):
         repo = self._github_client.get_repo(uri)
         repo_languages = repo.get_languages()
 
-        language_metrics = []
+        technologies: List[Technology] = []
         for lang in repo_languages.keys():
             if Language.from_code(lang).code == Language.unknown().code:
                 continue
 
-            language_metrics.append(
-                ProjectLanguageMetric(Language.from_code(lang), repo_languages[lang])
+            technologies.append(
+                Technology.from_code(lang)
             )
 
         return ProjectInfoResult(
@@ -57,7 +58,7 @@ class GithubProjectFetcher(AbstractProjectFetcher):
             homepage=uri,
             source=ProjectSource.GITHUB,
             last_update=repo.updated_at,
-            language_metrics=language_metrics,
+            technologies=technologies,
         )
 
     def download(self, uri, output_dir: str) -> DownloadProjectResult:

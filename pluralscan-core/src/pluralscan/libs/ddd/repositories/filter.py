@@ -1,10 +1,10 @@
 from abc import ABCMeta
-from typing import List
+from typing import Any, List
 
 
 class AbstractRepositoryFilter(metaclass=ABCMeta):
     """AbstractRepositoryFilter"""
-    filters: List[any]
+    filters: List[Any]
 
 class Filter:
     def __init__(self) -> None:

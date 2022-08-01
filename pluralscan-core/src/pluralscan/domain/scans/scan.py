@@ -1,47 +1,76 @@
 from dataclasses import asdict, dataclass, field
 from datetime import datetime
 from typing import Optional
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
 from pluralscan.domain.diagnosis.diagnosis import Diagnosis
 
 from pluralscan.domain.packages.package_id import PackageId
 from pluralscan.domain.scans.scan_id import ScanId
 from pluralscan.domain.scans.scan_state import ScanState
+from pluralscan.domain.shared.scans.events.scan_scheduled_event import ScanScheduledEvent
+from pluralscan.libs.ddd.aggregate_root import AbstractAggregateRoot
+from pluralscan.libs.utils.dataclass import DataclassUtils
 
 
 @dataclass
-class Scan:
+class Scan(AbstractAggregateRoot[ScanId]):
     """
-    A scan represent an analysis task to execute for a specific package.
+    Scan Aggregate Root represent an analysis task to execute for a specific package.
     """
 
-    scan_id: ScanId
     package_id: PackageId
     """Package under analysis."""
     analyzer_id: AnalyzerId
     """Executable used for performs analysis."""
     executable_version: str
+    working_directory: str # TODO: replace with StorageId
     diagnosis: Optional[Diagnosis] = None
     created_at: datetime = field(default_factory=datetime.now)
     started_at: Optional[datetime] = None
     ended_at: Optional[datetime] = None
-    working_directory: Optional[str] = None
     state: ScanState = ScanState.SCHEDULED
-    batch: Optional[str] = None
+    job_id: Optional[str] = None
     """If the scan is bulk scheduled, a batch identifier may exists."""
 
+    def __post_init__(self):
+        # TODO: validate business rules
+        #self.aggregate_id = ScanId(str(uuid4()))
+        self.add_domain_event(ScanScheduledEvent(self.aggregate_id, self.to_dict()))
+
+
     def to_dict(self):
-        """Transform entity object into dictonary representation."""
+        """Transform entity class into parsable json dictionary."""
+
+        diagnosis = (
+            asdict(
+                self.diagnosis, dict_factory=DataclassUtils.datetimes_as_string_factory
+            )
+            if self.diagnosis is not None
+            else {}
+        )
+
+        started_at = (
+            self.started_at.strftime("%m/%d/%Y, %H:%M:%S")
+            if self.started_at is not None
+            else ""
+        )
+
+        ended_at = (
+            self.ended_at.strftime("%m/%d/%Y, %H:%M:%S")
+            if self.ended_at is not None
+            else ""
+        )
+
         return {
-            "id": repr(self.scan_id),
+            "id": repr(self.aggregate_id),
             "package_id": repr(self.package_id),
             "analyzer_id": repr(self.analyzer_id),
             "executable_version": self.executable_version,
-            "diagnosis": asdict(self.diagnosis),
-            "created_at": self.created_at,
-            "started_at": self.started_at,
-            "ended_at": self.ended_at,
+            "diagnosis": diagnosis,
+            "created_at": self.created_at.strftime("%m/%d/%Y, %H:%M:%S"),
+            "started_at": started_at,
+            "ended_at": ended_at,
             "working_directory": self.working_directory,
-            "state": self.state.name,
-            "batch": self.batch,
+            "state": self.state.value,
+            "job_id": self.job_id or "",
         }

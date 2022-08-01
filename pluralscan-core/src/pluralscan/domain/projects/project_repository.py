@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import List, Optional
+from typing import Optional
 
 from pluralscan.domain.projects.project import Project
 from pluralscan.domain.projects.project_id import ProjectId
@@ -13,6 +13,7 @@ class AbstractProjectRepository(metaclass=ABCMeta):
     Type: Abstract Repository\n
     DAO contract for projects persistence.
     """
+
     @abstractmethod
     def next_id(self) -> ProjectId:
         """next_id"""

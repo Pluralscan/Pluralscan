@@ -2,7 +2,7 @@ from typing import List
 
 from pluralscan.application.processors.technologies.technology_detector import \
     AbstractTechnologyDetector
-from pluralscan.domain.technologies.technology import Technology
+from pluralscan.domain.shared.technology import Technology
 
 
 class SourceTechnologyDetector(AbstractTechnologyDetector):

@@ -1,19 +1,20 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List
-from pluralscan.domain.common.metrics import ProjectLanguageMetric
 
 from pluralscan.domain.projects.project_id import ProjectId
 from pluralscan.domain.projects.project_source import ProjectSource
+from pluralscan.domain.shared.projects.events.project_created_event import ProjectCreatedEvent
+from pluralscan.domain.shared.technology import Technology
+from pluralscan.libs.ddd.aggregate_root import AbstractAggregateRoot
 
 
 @dataclass
-class Project:
-    """Project"""
-
-    project_id: ProjectId  # TODO: compose project_id with namespace and source
+class Project(AbstractAggregateRoot[ProjectId]):
+    """Project Aggregate Root"""
 
     name: str
+    """Project name."""
 
     namespace: str
     """
@@ -31,13 +32,16 @@ class Project:
     A link to the homepage of the project (case insensitive).
     """
 
-    language_metrics: List[ProjectLanguageMetric] = field(default_factory=list)
+    technologies: List[Technology] = field(default_factory=list)
+
     description: str = field(default="No description available.")
+
     created_at: datetime = field(default_factory=datetime.now)
 
     def __post_init__(self):
         self.namespace = self.namespace.lower()
         self.homepage = self.homepage.lower()
+        self.add_domain_event(ProjectCreatedEvent(str(self.aggregate_id)))
 
     def snapshot_relative_path(self) -> str:
         """
@@ -48,7 +52,7 @@ class Project:
     def to_dict(self):
         """Transform Project object into dictonary representation."""
         return {
-            "id": repr(self.project_id),
+            "id": repr(self.aggregate_id),
             "name": self.name,
             "namespace": self.namespace,
             "source": self.source.name,
@@ -56,5 +60,5 @@ class Project:
             "homepage": self.homepage,
             "description": self.description,
             "created_at": self.created_at,
-            "language_metrics": self.language_metrics,
+            "technologies": self.technologies,
         }

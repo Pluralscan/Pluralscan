@@ -4,4 +4,5 @@ export interface Technology {
     display_name: string;
     languages: Language[];
     compilers: any[];
+    manifests: string[];
 }

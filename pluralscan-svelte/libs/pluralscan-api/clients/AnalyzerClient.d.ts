@@ -5,5 +5,5 @@ export declare class AnalyzerClient {
     private client;
     constructor(client: IApiClient);
     list(page: number, limit: number): Promise<AnalyzerPage>;
-    findByTechnologies(technologies: [Technology]): Promise<AnalyzerList>;
+    findByTechnologies(technologies: Technology[]): Promise<AnalyzerList>;
 }

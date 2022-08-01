@@ -2,9 +2,9 @@ from pathlib import Path
 
 import pytest
 from __tests__.test_helpers import REPORTS_DIR, SOURCES_DIR, TOOLS_DIR
-from pluralscan.domain.executables.executable import Executable
-from pluralscan.domain.executables.executable_action import ExecutableAction
-from pluralscan.domain.executables.executable_platform import \
+from pluralscan.domain.analyzers.executables.executable import Executable
+from pluralscan.domain.analyzers.executables.executable_action import ExecutableAction
+from pluralscan.domain.analyzers.executables.executable_platform import \
     ExecutablePlatform
 from pluralscan.infrastructure.processor.executables.sonar_exec_runner import (
     SonarExecOptions, SonarExecRunner)

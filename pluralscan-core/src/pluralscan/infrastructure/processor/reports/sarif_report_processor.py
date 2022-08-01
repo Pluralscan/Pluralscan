@@ -4,13 +4,13 @@ from sarif import loader
 from pluralscan.application.processors.reports.report_processor import (
     AbstractReportProcessor,
 )
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
-from pluralscan.domain.issues.issue_location import IssueLocation
-from pluralscan.domain.issues.issue_severity import IssueSeverity
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
+from pluralscan.domain.diagnosis.issues.issue_location import IssueLocation
+from pluralscan.domain.diagnosis.issues.issue_severity import IssueSeverity
 from pluralscan.domain.diagnosis.diagnosis import Diagnosis
 from pluralscan.domain.diagnosis.diagnosis_report import DiagnosisReport
-from pluralscan.domain.issues.issue import Issue
-from pluralscan.domain.rules.rule_id import RuleId
+from pluralscan.domain.diagnosis.issues.issue import Issue
+from pluralscan.domain.analyzers.rules.rule_id import RuleId
 
 
 class SarifReportProcessor(AbstractReportProcessor):
