@@ -1,5 +1,7 @@
 # Pluralscan
 
+![UML DRAFT](ScanDemo.gif)
+
 Pluralscan is a quality and security analysis platform aimed to provides a single solution for :
 - Static Application Security Testing (SAST)
 - Software Composition Analysis (SCA)
