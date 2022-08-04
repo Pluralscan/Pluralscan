@@ -1,6 +1,7 @@
 # Pluralscan
 
-![UML DRAFT](ScanDemo.gif)
+![Project scraping](ProjectFlowPluralscan.gif)
+![Batch analysis](BatchAnalysis.gif)
 
 Pluralscan is a quality and security analysis platform aimed to provides a single solution for :
 - Static Application Security Testing (SAST)
@@ -175,11 +176,17 @@ docker run -dp 5400:5400 pluralscan/pluralscan
 
 **Architecture:** 
 
-Clean Architecture/Onion Architecture/Ports & Adapters (Hexagonal)... all these are pretty much names for the same thing, and they all boil down to the dependency inversion principle: **high-level modules** (the domain) **MUST NOT** depend on **low-level** ones (the infrastructure)
+Pluralscan adopt a Monolith Clean Architecture/Onion Architecture/Ports & Adapters (Hexagonal) with Tactical DDD Patterns... all these are pretty much names for the same thing, and they all boil down to the dependency inversion principle: **high-level modules** (the domain) **MUST NOT** depend on **low-level** ones (the infrastructure). All those layers provides modules specific module according to bounded context.
 
 #### Domain
 
-Contains all the entities related to the business.
+The domain encapsulate a user or business concern that can be used to draw clear boundaries around features integration.
+
+- **Entity**: An entity is an object that has an independent identifier and a lifecycle.
+- **Aggregate**: An aggregate is a collection of one or more related entities. An aggregate has a root entity called the aggregate root. Aggregates can also contain references to other entities, but not the referenced entity metadata. It’s then up to the consuming services to call other services to synthesize the entity references.
+- **Value Object**: Value objects contain metadata related to a given entity; they’re also tied to the lifecycle of the given entity.
+- **Domain Events**:
+  - If you **dispatch the domain events right before committing the original transaction**, it is because you want the side effects of those events to be included in the same transaction. This recommandation is applicable according to the ORM transaction mecanisms used in a given domain.
 
 #### Application
 
@@ -274,12 +281,24 @@ cd htmlcov
 
 ## References
 
+### Masters
+
+- Vaughn Vernon - Implementing Domain Design
+
 ### Python
 
 - [PEP 563 – Postponed Evaluation of Annotations](https://peps.python.org/pep-0563/)
 
 ### DDD
 
+#### Methodology
+
+- [The Bounded Context Canvas](https://github.com/ddd-crew/bounded-context-canvas)
+
 #### Events
 
 - [Handle events consistancy - Committing before dispatching](https://enterprisecraftsmanship.com/posts/domain-events-simple-reliable-solution/)
+
+## Usefull resources
+
+- [SVG Repo](https://www.svgrepo.com/)
