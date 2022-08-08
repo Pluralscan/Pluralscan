@@ -24,8 +24,10 @@ class PackageInfoResult:
     full_name: Optional[str] = None
     description: Optional[str] = None
     version: Optional[str] = None
+    author: str = ""
     url: str = field(default_factory=str)
     technologies: List[Technology] = field(default_factory=list)
+    links: List[str] = field(default_factory=list)
     error: Optional[str] = None
     success: bool = error is None
 

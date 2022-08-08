@@ -7,7 +7,7 @@ from pluralscan.domain.scans.scan import Scan
 from pluralscan.domain.scans.scan_id import ScanId
 from pluralscan.domain.scans.scan_repository import AbstractScanRepository
 from pluralscan.domain.scans.scan_state import ScanState
-from pluralscan.libs.ddd.event_dispatcher import AbstractEventDispatcher, MemoryEventDispatcher
+from pluralscan.libs.ddd.event_dispatcher import AbstractEventDispatcher
 from pluralscan.libs.ddd.repositories.page import Page
 from pluralscan.libs.ddd.repositories.pagination import Pageable
 
@@ -19,7 +19,7 @@ class InMemoryScanRepository(AbstractScanRepository):
     WARNING: The data will be lost on application shutdown.
     """
 
-    def __init__(self, event_dispacher: AbstractEventDispatcher = MemoryEventDispatcher()):
+    def __init__(self, event_dispacher: AbstractEventDispatcher):
         self._event_dispatcher = event_dispacher
         self._scans: Dict[ScanId, Scan] = {}
 
@@ -56,16 +56,14 @@ class InMemoryScanRepository(AbstractScanRepository):
         return scans
 
     def update(self, scan: Scan) -> Scan:
-        self._scans[scan.aggregate_id] = scan
-        self._event_dispatcher.dispatch(scan.domain_events)
-        self._scans[scan.aggregate_id].clear_events()
-        return self._scans[scan.aggregate_id]
+        self._scans[scan.uuid] = scan
+        self._event_dispatcher.dispatch(scan.domain_events.pop(0))
+        return self._scans[scan.uuid]
 
     def add(self, scan: Scan) -> Scan:
-        self._scans[scan.aggregate_id] = scan
-        self._event_dispatcher.dispatch(scan.domain_events)
-        self._scans[scan.aggregate_id].clear_events()
-        return self._scans[scan.aggregate_id]
+        self._scans[scan.uuid] = scan
+        self._event_dispatcher.dispatch(scan.domain_events.pop(0))
+        return self._scans[scan.uuid]
 
     def add_bulk(self, scans: List[Scan]) -> List[Scan]:
         _scans = []

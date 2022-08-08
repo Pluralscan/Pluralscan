@@ -50,17 +50,17 @@ class InMemoryProjectRepository(AbstractProjectRepository):
         )
 
     def update(self, project: Project) -> Project:
-        project = self.get_by_id(project.aggregate_id)
+        project = self.get_by_id(project.uuid)
 
         if project is None:
             raise Exception
 
-        self._projects[project.aggregate_id] = project
+        self._projects[project.uuid] = project
 
         return project
 
     def add(self, project: Project) -> Project:
-        self._projects[project.aggregate_id] = project
+        self._projects[project.uuid] = project
         self._event_dispatcher.dispatch(project.domain_events)
         return project
 

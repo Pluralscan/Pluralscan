@@ -8,7 +8,7 @@ class AbstractDomainEvent(metaclass=ABCMeta):
     """AbstractDomainEvent"""
 
     aggregate_id: str
-    event_id: str = field(init=False, default=str(uuid4()))
+    event_id: str = field(init=False, default_factory=uuid4().__str__)
 
     def __repr__(self) -> str:
         return self.__class__.__name__

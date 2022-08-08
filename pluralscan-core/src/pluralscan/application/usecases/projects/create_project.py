@@ -9,6 +9,7 @@ from pluralscan.application.processors.fetchers.project_fetcher import (
     DownloadProjectResult,
 )
 from pluralscan.domain.packages.package import Package
+from pluralscan.domain.packages.package_link import PackageLink, PackageLinkLabel
 from pluralscan.domain.packages.package_system import PackageSystem
 from pluralscan.domain.packages.package_repository import AbstractPackageRepository
 from pluralscan.domain.projects.project import Project
@@ -100,8 +101,10 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
         # Create and persist a project entity
         project_id = self._project_repository.next_id()
         project = Project(
-            aggregate_id=project_id,
+            uuid=project_id,
+            version=0,
             name=project_info.display_name,
+            description=project_info.description,
             namespace=project_info.namespace,
             source=project_info.source,
             last_snapshot=project_info.last_update,
@@ -128,11 +131,14 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
             package_id=package_id,
             name=project.name,
             version="SNAPSHOT",
+            author=project_info.author,
+            description=project_info.description,
             published_at=project.last_snapshot,
             project_id=project_id,
             system=PackageSystem.LOCAL,
             storage_path=download_result.output_dir,
-            technologies=project_info.technologies
+            technologies=project_info.technologies,
+            links=[PackageLink(PackageLinkLabel.SOURCE_REPO, project.homepage)]
         )
         self._package_repository.add(package)
 

@@ -81,7 +81,7 @@ class Language:
     @staticmethod
     def unknown(code: str = "") -> "Language":
         """unknown"""
-        return Language(code="Uknown", display_name=code, source_extensions=[])
+        return Language(code="Unknown", display_name=code, source_extensions=[])
 
     @staticmethod
     def from_code(code: str) -> "Language":

@@ -41,7 +41,7 @@ class Project(AbstractAggregateRoot[ProjectId]):
     def __post_init__(self):
         self.namespace = self.namespace.lower()
         self.homepage = self.homepage.lower()
-        self.add_domain_event(ProjectCreatedEvent(str(self.aggregate_id)))
+        self.add_domain_event(ProjectCreatedEvent(str(self.uuid)))
 
     def snapshot_relative_path(self) -> str:
         """
@@ -52,7 +52,7 @@ class Project(AbstractAggregateRoot[ProjectId]):
     def to_dict(self):
         """Transform Project object into dictonary representation."""
         return {
-            "id": repr(self.aggregate_id),
+            "id": repr(self.uuid),
             "name": self.name,
             "namespace": self.namespace,
             "source": self.source.name,

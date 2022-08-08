@@ -13,6 +13,7 @@ from pluralscan.infrastructure.processor.executables.dependency_check_runner imp
 from pluralscan.infrastructure.processor.executables.roslynator_exec_runner import (
     RoslynatorExecRunner,
 )
+from pluralscan.infrastructure.processor.executables.staticcheck_exec_runner import StaticcheckExecRunner
 
 
 class ExecRunnerFactory(AbstractExecRunnerFactory):
@@ -49,5 +50,12 @@ class ExecRunnerFactory(AbstractExecRunnerFactory):
             return DependencyCheckExecRunner(
                 str(output_directory), str(report_file_path)
             )
-
+        if exec_type is ExecutableRunner.STATICCHECK:
+            report_file_path = pathlib.Path.joinpath(
+                output_directory,
+                "Staticcheck_Report.json",
+            )
+            return StaticcheckExecRunner(
+                str(output_directory), str(report_file_path)
+            )
         raise NotImplementedError

@@ -38,7 +38,8 @@ def test_execute_with_output(
 ):
     # Arrange
     package = memory_package_repository.find_by_id(PackageId("AnalyzerTests"))
-    executable = memory_analyzer_repository.find_by_id(AnalyzerId("RoslynatorFork")).find_executable_by_version("0.3.3.0F")
+    analyzer = memory_analyzer_repository.find_by_id(AnalyzerId("RoslynatorFork"))
+    executable = analyzer.find_executable_by_version("0.3.3.0F")
     output_result_dir = Path.joinpath(REPORTS_DIR, "AnalyzerTests\ROSLYNATOR_RESULTS")
     report_path = str(Path.joinpath(output_result_dir, "RoslynatorResults.txt"))
     options = ExecRunnerOptions(executable, package, ExecutableAction.SCAN)

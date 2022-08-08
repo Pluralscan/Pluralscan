@@ -35,18 +35,17 @@ class Scan(AbstractAggregateRoot[ScanId]):
     def __post_init__(self):
         # TODO: validate business rules
         #self.aggregate_id = ScanId(str(uuid4()))
-        self.add_domain_event(ScanScheduledEvent(self.aggregate_id, self.to_dict()))
+        if self.state is ScanState.SCHEDULED:
+            self.add_domain_event(ScanScheduledEvent(self.uuid, self.to_dict()))
 
 
     def to_dict(self):
         """Transform entity class into parsable json dictionary."""
 
         diagnosis = (
-            asdict(
-                self.diagnosis, dict_factory=DataclassUtils.datetimes_as_string_factory
-            )
+            self.diagnosis.to_dict()
             if self.diagnosis is not None
-            else {}
+            else ""
         )
 
         started_at = (
@@ -62,7 +61,7 @@ class Scan(AbstractAggregateRoot[ScanId]):
         )
 
         return {
-            "id": repr(self.aggregate_id),
+            "id": repr(self.uuid),
             "package_id": repr(self.package_id),
             "analyzer_id": repr(self.analyzer_id),
             "executable_version": self.executable_version,

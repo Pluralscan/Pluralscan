@@ -5,9 +5,13 @@
 
   import type { Scan } from "../../../libs/pluralscan-api/models/Scan";
   import type { ScanState } from "../../../libs/pluralscan-api/models/ScanState";
+import DiagnosisModal from "./DiagnosisModal.svelte";
 
   export let analyzerName: string;
+  export let packageName: string;
   export let scan: Scan;
+
+  let showModal = false;
 
   onMount(async () => {
     const eventSource = new EventSource(
@@ -16,6 +20,7 @@
 
     eventSource.addEventListener("scan_state", function (evt) {
       let scanUpdate: Scan = JSON.parse(evt.data);
+      console.log(scanUpdate.state);
       if (scanUpdate.state == "Completed") {
         console.log("Closing event source");
         eventSource.close();
@@ -105,11 +110,13 @@
   </div>
   {#if scan.state === "Completed"}
     <div class="mt-4 text-right">
-      <Button on:click={() => push("/scans/" + scan["id"])}
+      <Button on:click={() => {showModal = true}}
         >Show Diagnosis</Button>
     </div>
   {/if}
 </Tile>
+
+<DiagnosisModal bind:show={showModal} packageName={packageName} scan={scan}/>
 
 <style lang="scss">
   :global(.scan-state-inline-loading) {

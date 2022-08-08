@@ -59,7 +59,7 @@ class DependencyCheckExecRunner(AbstractExecRunner):
 
         # Extract package
         temp_dir = tempfile.mkdtemp()
-        with zipfile.ZipFile(options.package.storage_path, "r") as zip_ref:
+        with zipfile.ZipFile(options.package.storage_path + "/package.zip", "r") as zip_ref:
             zip_ref.extractall(temp_dir)
 
         # Combine executable default arguments with options extra arguments.

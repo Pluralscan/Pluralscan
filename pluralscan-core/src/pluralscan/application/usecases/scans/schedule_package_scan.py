@@ -98,7 +98,8 @@ class ScheduleScanUseCase(
         for executable in executables:
             scan_id = self._scan_repository.next_id() # obsolete ?
             scan = Scan(
-                aggregate_id=scan_id,
+                uuid=scan_id,
+                version=0,
                 analyzer_id=executable.analyzer_id,
                 executable_version=executable.version,
                 package_id=package.package_id,
@@ -113,6 +114,6 @@ class ScheduleScanUseCase(
         # 5. Emit jobs
         if self._job_runner is not None:
             for scan in scans:
-                self._job_runner.schedule(str(scan.aggregate_id))
+                self._job_runner.schedule(str(scan.uuid))
 
         return ScheduleScanResult(scans)

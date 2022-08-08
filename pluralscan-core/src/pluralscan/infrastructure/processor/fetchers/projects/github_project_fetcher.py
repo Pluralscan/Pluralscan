@@ -47,9 +47,7 @@ class GithubProjectFetcher(AbstractProjectFetcher):
             if Language.from_code(lang).code == Language.unknown().code:
                 continue
 
-            technologies.append(
-                Technology.from_code(lang)
-            )
+            technologies.append(Technology.from_code(Language.from_code(lang).code))
 
         return ProjectInfoResult(
             namespace=repo.full_name,
@@ -59,6 +57,7 @@ class GithubProjectFetcher(AbstractProjectFetcher):
             source=ProjectSource.GITHUB,
             last_update=repo.updated_at,
             technologies=technologies,
+            author=repo.owner.name,
         )
 
     def download(self, uri, output_dir: str) -> DownloadProjectResult:

@@ -11,6 +11,7 @@ from pluralscan.domain.diagnosis.diagnosis_report import DiagnosisReport
 from pluralscan.domain.diagnosis.issues.issue import Issue
 from pluralscan.domain.diagnosis.issues.issue_location import IssueLocation
 from pluralscan.domain.analyzers.rules.rule_id import RuleId
+from pluralscan.domain.diagnosis.issues.issue_severity import IssueSeverity
 
 
 class RoslynatorReportProcessor(AbstractReportProcessor):
@@ -37,14 +38,20 @@ class RoslynatorReportProcessor(AbstractReportProcessor):
         tree = ET.parse(path)
         root = tree.getroot()
 
-        for item in root.findall("./CodeAnalysis/Summary/Diagnostic"):
+        for item in root.findall("./CodeAnalysis/Projects/Project/Diagnostics/Diagnostic"):
             rule_id = item.attrib["Id"]
-            message = item.attrib["Title"]
+            message = item.findtext("Message") or ""
+            severity = item.findtext("Severity") or ""
             issues.append(
                 Issue(
                     rule_id=RuleId(rule_id, analyzer_id),
                     message=message,
-                    location=IssueLocation(),
+                    severity=IssueSeverity.from_string(severity),
+                    location=IssueLocation(
+                        path=item.findtext("FilePath"),
+                        line=int(item.find("Location").attrib["Line"]),
+                        column=int(item.find("Location").attrib["Character"])
+                    ),
                 )
             )
 

@@ -22,3 +22,10 @@ class IssueLocation:
     end_line: int = 0
     end_column: int = 0
     kind: IssueLocationKind = IssueLocationKind.UNKNOWN
+
+    def to_dict(self):
+        return {
+            "path": repr(self.path) if self.path is not None else "",
+            "line": self.line,
+            "column": self.column
+        }

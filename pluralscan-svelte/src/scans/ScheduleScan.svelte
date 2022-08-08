@@ -83,7 +83,7 @@
               <Column>
                 {#if $scheduledScans.length > 0}
                   {#each $scheduledScans as scan}
-                    <ScanCard analyzerName={scan.analyzer_id} {scan} />
+                    <ScanCard packageName={packageToScan.name} analyzerName={scan.analyzer_id} {scan} />
                   {/each}
                 {:else}
                   <AnalyzerSelectionBox

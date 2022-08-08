@@ -10,3 +10,5 @@ class ExecutableRunner(Enum):
     ROSLYN = "Roslyn"
     DEPENDENCY_CHECK = "Dependency Check"
     CLIPPY = "Clippy"
+    STATICCHECK = "Staticcheck"
+    SECURITYCODESCAN = "Security Code Scan"

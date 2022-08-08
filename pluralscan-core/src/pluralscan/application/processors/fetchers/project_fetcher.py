@@ -25,8 +25,10 @@ class ProjectInfoResult:
     namespace: str
     display_name: str
     last_update: datetime
-    description: Optional[str] = None
+    author: str = ""
+    description:str = ""
     technologies: List[Technology] = field(default_factory=list)
+    links: List[str] = field(default_factory=list)
 
 
 class AbstractProjectFetcher(metaclass=ABCMeta):

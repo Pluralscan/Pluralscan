@@ -39,8 +39,12 @@ class GitlabProjectFetcher(AbstractProjectFetcher):
         project = self._get_project(uri)
         project_languages = project.languages()
 
-        project_name = project.attributes.get("path_with_namespace")
+        project_name: str = project.attributes.get("path_with_namespace", None)
         if project_name is None:
+            raise RuntimeError
+
+        namespace: dict = project.attributes.get("namespace", None)
+        if namespace is None:
             raise RuntimeError
 
         technologies: List[Technology] = []
@@ -50,15 +54,16 @@ class GitlabProjectFetcher(AbstractProjectFetcher):
                     continue
 
                 technologies.append(
-                    Technology.from_code(lang)
+                    Technology.from_code(Language.from_code(lang).code)
                 )
 
         return ProjectInfoResult(
             source=ProjectSource.GITLAB,
+            author=namespace.get('name', ""),
             homepage=uri,
             namespace=project_name,
             display_name=project.attributes.get("name", ""),
-            description=project.attributes.get("description"),
+            description=project.attributes.get("description", ""),
             last_update=datetime.datetime.strptime(project.attributes.get("last_activity_at", datetime.datetime.now()), '%Y-%m-%dT%H:%M:%S.%f%z'),
             technologies=technologies
         )

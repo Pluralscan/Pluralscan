@@ -26,10 +26,10 @@ class IssueSeverity(Enum):
     @staticmethod
     def from_string(code: str) -> "IssueSeverity":
         """Map string to IssueSeverity."""
-        if code in [IssueSeverity.HIDDEN]:
+        if code.lower() in ["hidden"]:
             return IssueSeverity.HIDDEN
-        if code in [IssueSeverity.WARNING]:
+        if code.lower() in ["warning"]:
             return IssueSeverity.WARNING
-        if code in [IssueSeverity.INFO]:
+        if code.lower() in ["info"]:
             return IssueSeverity.INFO
         return IssueSeverity.UNKNOWN

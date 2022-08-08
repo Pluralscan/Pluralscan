@@ -77,7 +77,7 @@ class ScanPackageUseCase(
         # 1.1. Update scan state
         scan.state = ScanState.RUNNING
         scan.started_at = datetime.now()
-        scan.add_domain_event(ScanUpdatedEvent(repr(scan.aggregate_id), scan.to_dict()))
+        scan.add_domain_event(ScanUpdatedEvent(repr(scan.uuid), scan.to_dict()))
         scan = self._scan_repository.update(scan)
 
         # 2. Retrieve analyzers.
@@ -118,7 +118,7 @@ class ScanPackageUseCase(
         scan.diagnosis = diagnosis
         scan.ended_at = datetime.now()
         scan.state = ScanState.COMPLETED
-        scan.add_domain_event(ScanUpdatedEvent(repr(scan.aggregate_id), scan.to_dict()))
+        scan.add_domain_event(ScanUpdatedEvent(repr(scan.uuid), scan.to_dict()))
         scan = self._scan_repository.update(scan)
 
         return ScanPackageResult(scan=scan, package=package, executable=executable)

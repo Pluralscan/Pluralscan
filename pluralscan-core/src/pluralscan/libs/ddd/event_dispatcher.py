@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 import asyncio
 from collections import defaultdict
-from typing import Any, Dict, List, Set
+from typing import Any, Dict, Set
 
 from pluralscan.libs.ddd.domain_event import AbstractDomainEvent
 
@@ -14,7 +14,7 @@ class AbstractEventDispatcher(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def dispatch(self, events: List[AbstractDomainEvent]):
+    def dispatch(self, event: AbstractDomainEvent):
         """subscribe"""
         raise NotImplementedError
 
@@ -50,16 +50,15 @@ class MemoryEventDispatcher(AbstractEventDispatcher):
         """
         self.subscriptions[event_name].add(subscriber)
 
-    def dispatch(self, events: List[AbstractDomainEvent]):
+    def dispatch(self, event: AbstractDomainEvent):
         """
-        Method for dispatching a stack of events
+        Method for dispatching an event to subscribers.
         :param event_name: Event name for emitting their subscribers
         """
-        for event in events:
-            subscribers = self.subscriptions[event.__class__.__name__]
-            if not subscribers:
-                continue
-            asyncio.run(self.__run_subscribers(subscribers, event))
+        subscribers = self.subscriptions[event.__class__.__name__]
+        if not subscribers:
+            return
+        asyncio.run(self.__run_subscribers(subscribers, event))
 
     async def __run_subscribers(self, subscribers, event):
         await asyncio.wait([subscriber(event) for subscriber in subscribers])

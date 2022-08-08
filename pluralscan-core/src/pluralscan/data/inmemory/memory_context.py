@@ -23,7 +23,7 @@ from pluralscan.libs.ddd.event_dispatcher import AbstractEventDispatcher, Memory
 class MemoryContext:
     """Provide a seeded memory database context."""
 
-    def __init__(self, event_dispatcher: AbstractEventDispatcher = MemoryEventDispatcher()) -> None:
+    def __init__(self, event_dispatcher: AbstractEventDispatcher) -> None:
         # Initialize and seed Projects store
         self.project_repository: InMemoryProjectRepository = InMemoryProjectRepository(event_dispatcher)
         InMemoryProjectRepositorySeeder(self.project_repository).seed()

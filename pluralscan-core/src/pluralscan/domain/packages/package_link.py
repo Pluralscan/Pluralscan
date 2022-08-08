@@ -3,10 +3,10 @@ from enum import Enum
 
 class PackageLinkLabel(Enum):
     """PackageLinkLabel"""
-    HOMEPAGE = "homepage"
-    SOURCE_REPO = "source_repo"
-    DOCUMENTATION = "documentation"
-    ISSUE_TRACKER = "issue_tracker"
+    HOMEPAGE = "Homepage"
+    SOURCE_REPO = "SourceRepository"
+    DOCUMENTATION = "Documentation"
+    ISSUE_TRACKER = "IssueTracker"
 
 
 @dataclass(frozen=True)

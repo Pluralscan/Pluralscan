@@ -13,3 +13,12 @@ class Issue:
     message: str
     severity: IssueSeverity = IssueSeverity.UNKNOWN
     location: IssueLocation = IssueLocation()
+
+    def to_dict(self):
+        return {
+            "rule_id": self.rule_id.code,
+            "analyzer_id": str(self.rule_id.analyzer_id),
+            "message": self.message,
+            "severity": self.severity.name,
+            "location": self.location.to_dict(),
+        }

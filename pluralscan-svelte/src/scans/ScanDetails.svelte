@@ -7,7 +7,7 @@
   import { scanStore } from "../store/ScanStore";
   import { location } from "svelte-spa-router";
   import ScheduledScanBox from "./components/ScheduledScanBox.svelte";
-import ErrorView from "../common/components/ErrorView/ErrorView.svelte";
+  import ErrorView from "../common/components/ErrorView/ErrorView.svelte";
 
   const { currentScan, getScanById, error } = scanStore;
 
@@ -18,7 +18,7 @@ import ErrorView from "../common/components/ErrorView/ErrorView.svelte";
     await getScanById(scanId);
   });
 
-  $: console.log($error)
+  $: console.log($error);
 </script>
 
 <DefaultLayout>
@@ -27,7 +27,7 @@ import ErrorView from "../common/components/ErrorView/ErrorView.svelte";
       <Wave />
     </OverlayLoading>
 
-    <ErrorView active={$error != undefined} message={$error}/>
+    <ErrorView active={$error != undefined} message={$error} />
 
     {#if $currentScan}
       <Grid fullWidth>
@@ -36,7 +36,10 @@ import ErrorView from "../common/components/ErrorView/ErrorView.svelte";
         </Row>
         <Row padding>
           <Column noGutter>
-            <ScheduledScanBox analyzerName={$currentScan.analyzer_id} scan={$currentScan} />
+            <ScheduledScanBox
+              packageName={$currentScan.package_id}
+              analyzerName={$currentScan.analyzer_id}
+              scan={$currentScan} />
           </Column>
         </Row>
       </Grid>

@@ -1,14 +1,16 @@
+from abc import ABCMeta
 from dataclasses import dataclass, field
-from typing import Generic, List, TypeVar
+from typing import List, TypeVar
 from pluralscan.libs.ddd.domain_event import AbstractDomainEvent
+from pluralscan.libs.ddd.entity import AbstractEntity
 
 TKey = TypeVar("TKey")
 
 @dataclass
-class AbstractAggregateRoot(Generic[TKey]):
+class AbstractAggregateRoot(AbstractEntity[TKey], metaclass=ABCMeta):
     """AbstractAggregateRoot"""
 
-    aggregate_id: TKey
+    version: int
     _domain_events: List[AbstractDomainEvent] = field(init=False, repr=False, default_factory=list)
 
     @property

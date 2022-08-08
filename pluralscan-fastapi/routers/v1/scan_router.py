@@ -76,28 +76,16 @@ async def stream_by_id(
     request: Request,
     get_scan_by_id: AbstractGetScanByIdUseCase = Depends(get_scan_by_id_use_case),
 ):
-    """_summary_
-
-    Args:
-        scan_id (str): _description_
-        request (Request): _description_
-        get_scan_by_id (AbstractGetScanByIdUseCase, optional): _description_. Defaults to Depends(get_scan_by_id_use_case).
-
-    Returns:
-        _type_: _description_
-
-    Yields:
-        _type_: _description_
-    """
-
+    """stream_by_id"""
+    event_source = EVENT_SOURCING
     async def event_generator():
         events_stack: List[AbstractDomainEvent] = []
 
-        def scan_state_handler(event: AbstractDomainEvent):
+        async def scan_state_handler(event: AbstractDomainEvent) -> None:
             if event.aggregate_id == scan_id:
                 events_stack.append(event)
 
-        EVENT_SOURCING.subscribe(ScanUpdatedEvent.__name__, scan_state_handler)
+        event_source.subscribe(ScanUpdatedEvent.__name__, scan_state_handler)
 
         def dequeue_event():
             if len(events_stack) > 0:
@@ -116,7 +104,7 @@ async def stream_by_id(
                 if event is not None:
                     result = get_scan_by_id.handle(ScanId(event.aggregate_id))
                     yield {
-                        "event": "scan_state",
+                        "event": "scan_state", 
                         "id": str(uuid4()),
                         "data": json.dumps(
                             result.scan.to_dict(),
@@ -128,8 +116,9 @@ async def stream_by_id(
                     if result.scan.state is ScanState.COMPLETED:
                         break
 
-                await asyncio.sleep(5)
-            except Exception:
+                await asyncio.sleep(2)
+            except Exception as e:
+                print(e)
                 break
 
     return EventSourceResponse(event_generator())
@@ -159,7 +148,7 @@ def schedule(
 
     for scan in result.scans:
         background_tasks.add_task(
-            execute_usecase.handle, ScanPackageCommand(scan.aggregate_id)
+            execute_usecase.handle, ScanPackageCommand(scan.uuid)
         )
 
     return {"scans": [scan.to_dict() for scan in result.scans]}
