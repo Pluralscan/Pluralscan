@@ -1,13 +1,17 @@
+import os
 import xml.etree.ElementTree as ET
 from typing import List
 
-from pluralscan.application.processors.reports.report_processor import \
-    AbstractReportProcessor
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.application.processors.reports.report_processor import (
+    AbstractReportProcessor,
+)
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
 from pluralscan.domain.diagnosis.diagnosis import Diagnosis
 from pluralscan.domain.diagnosis.diagnosis_report import DiagnosisReport
-from pluralscan.domain.issues.issue import Issue
-from pluralscan.domain.rules.rule_id import RuleId
+from pluralscan.domain.diagnosis.issues.issue import Issue
+from pluralscan.domain.diagnosis.issues.issue_location import IssueLocation
+from pluralscan.domain.analyzers.rules.rule_id import RuleId
+from pluralscan.domain.diagnosis.issues.issue_severity import IssueSeverity
 
 
 class RoslynatorReportProcessor(AbstractReportProcessor):
@@ -15,25 +19,41 @@ class RoslynatorReportProcessor(AbstractReportProcessor):
 
     def transform_to_diagnosis(self, analyzer_id: AnalyzerId, data) -> Diagnosis:
         """transform_to_diagnosys"""
-        report = self._validate_input(data)
-        issues = self.read_report(report)
+        report_path = self._validate_input(data)
+        issues = self._read_report(report_path, analyzer_id)
         diagnosis = Diagnosis(
             issues=issues,
-            report=DiagnosisReport(filename=report, format="XML", path=report),
+            report=DiagnosisReport(filename=report_path, format="XML", path=report_path),
         )
         return diagnosis
 
     @classmethod
-    def read_report(cls, path) -> List[Issue]:
+    def _read_report(cls, path, analyzer_id) -> List[Issue]:
         """read_report"""
+        issues: List[Issue] = []
+
+        if cls._is_empty_file(path):
+            return issues
+
         tree = ET.parse(path)
         root = tree.getroot()
-        issues = []
 
-        for item in root.findall("./CodeAnalysis/Summary/Diagnostic"):
+        for item in root.findall("./CodeAnalysis/Projects/Project/Diagnostics/Diagnostic"):
             rule_id = item.attrib["Id"]
-            message = item.attrib["Title"]
-            issues.append(Issue(rule_id=RuleId(rule_id), message=message, location=""))
+            message = item.findtext("Message") or ""
+            severity = item.findtext("Severity") or ""
+            issues.append(
+                Issue(
+                    rule_id=RuleId(rule_id, analyzer_id),
+                    message=message,
+                    severity=IssueSeverity.from_string(severity),
+                    location=IssueLocation(
+                        path=item.findtext("FilePath"),
+                        line=int(item.find("Location").attrib["Line"]),
+                        column=int(item.find("Location").attrib["Character"])
+                    ),
+                )
+            )
 
         return issues
 
@@ -50,3 +70,7 @@ class RoslynatorReportProcessor(AbstractReportProcessor):
                 "Only one report file can be processed at a time for Roslynator."
             )
         return data[0]
+
+    @classmethod
+    def _is_empty_file(cls, path) -> bool:
+        return os.path.isfile(path) and os.path.getsize(path) == 0

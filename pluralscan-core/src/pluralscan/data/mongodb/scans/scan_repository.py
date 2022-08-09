@@ -37,7 +37,7 @@ class MongoScanRepository(AbstractScanRepository):
         document["_id"] = self._collection.insert_one(document).inserted_id
         return ScanMapper.from_document(document)
 
-    def remove(self, scan_id: str):
+    def remove(self, scan_id: ScanId):
         raise NotImplementedError
     
     def count(self) -> int:

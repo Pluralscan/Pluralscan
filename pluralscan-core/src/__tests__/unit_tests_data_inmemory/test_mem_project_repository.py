@@ -19,8 +19,8 @@ class TestInMemoryanalyzerRepository(unittest.TestCase):
 
         # Assert
         self.assertIsNotNone(result)
-        self.assertIsNotNone(result.project_id)
-        self.assertTrue(TestHelpers.is_valid_uuid(result.project_id))
+        self.assertIsNotNone(result.aggregate_id)
+        self.assertTrue(TestHelpers.is_valid_uuid(result.aggregate_id))
 
     def test_find_all_returns_projects(self):
         # Arrange
@@ -39,7 +39,7 @@ class TestInMemoryanalyzerRepository(unittest.TestCase):
         # Arrange
         project = Project()
         self.repository.add(project)
-        project_id = project.project_id
+        project_id = project.aggregate_id
 
         # Act
         result = self.repository.get_by_id(project_id)
@@ -63,7 +63,7 @@ class TestInMemoryanalyzerRepository(unittest.TestCase):
         # Arrange
         project = Project()
         self.repository.add(project)
-        project_id = project.id
+        project_id = project.aggregate_id
 
         # Act
         def callable():

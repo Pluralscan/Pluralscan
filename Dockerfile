@@ -37,6 +37,8 @@ RUN apt install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt update && apt install -y nodejs
 
+# Install Rust
+
 FROM base AS builder
 # Copy application and resources
 WORKDIR /home

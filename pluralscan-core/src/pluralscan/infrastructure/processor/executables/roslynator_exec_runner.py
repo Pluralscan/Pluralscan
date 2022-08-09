@@ -11,7 +11,7 @@ from pluralscan.application.processors.executables.exec_runner import (
     ExecRunnerOptions,
     ProcessRunResult,
 )
-from pluralscan.domain.executables.executable_action import ExecutableAction
+from pluralscan.domain.analyzers.executables.executable_action import ExecutableAction
 from pluralscan.infrastructure.config import Config
 
 
@@ -40,22 +40,20 @@ class RoslynatorExecRunner(AbstractExecRunner):
         with Popen([path, *process_args]) as process:
             exit_code = process.wait()
             if exit_code == 0:
-                return ProcessRunResult(None, True)
+                return ProcessRunResult()
 
-            return ProcessRunResult(exit_code, False)
+            return ProcessRunResult(error="Err")
 
     def execute_with_report(self, options: ExecRunnerOptions) -> ProcessRunResult:
-        if not bool(self._reports_output_dir):
+        if not bool(self._reports_output_dir) or self._reports_output_dir is None:
             raise ValueError(
                 "An output directory must be specified when requesting a process report."
             )
 
-        if not bool(self._report_file_path):
+        if not bool(self._report_file_path) or self._report_file_path is None:
             raise ValueError(
                 "A report file path must be specified when requesting a process report."
             )
-
-        path = str(pathlib.Path.joinpath(Config.TOOLS_DIR, options.executable.path))
 
         # Extract package
         temp_dir = tempfile.mkdtemp()
@@ -63,7 +61,9 @@ class RoslynatorExecRunner(AbstractExecRunner):
             zip_ref.extractall(temp_dir)
 
         # Find any csproj
-        csproj = list(map(lambda x: str(x), list(pathlib.Path(temp_dir).glob("**/*.csproj"))))
+        csproj = list(
+            map(lambda x: str(x), list(pathlib.Path(temp_dir).glob("**/*.csproj")))
+        )
 
         # Combine executable default arguments with options extra arguments.
         if options.action == ExecutableAction.SCAN:
@@ -82,8 +82,15 @@ class RoslynatorExecRunner(AbstractExecRunner):
         with open(self._report_file_path, "w", encoding="UTF8") as file:
             file.close()
 
+        # Set process args with a path if executable is a file
+        if bool(options.executable.path):
+            process_args = [
+                str(pathlib.Path.joinpath(Config.TOOLS_DIR, options.executable.path)),
+                *process_args,
+            ]
+
         with Popen(
-            [path, *process_args],
+            [*process_args],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             universal_newlines=True,
@@ -93,4 +100,4 @@ class RoslynatorExecRunner(AbstractExecRunner):
             if bool(errors and not errors.isspace()):
                 raise RuntimeError(errors)
 
-            return ProcessRunResult(output)
+            return ProcessRunResult(output, "Roslynator")

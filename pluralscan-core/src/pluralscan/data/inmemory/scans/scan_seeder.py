@@ -5,7 +5,7 @@ from pluralscan.data.inmemory.packages.package_repository import (
     InMemoryPackageRepository,
 )
 from pluralscan.data.inmemory.scans.scan_repository import InMemoryScanRepository
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
 from pluralscan.domain.packages.package_id import PackageId
 from pluralscan.domain.scans.scan import Scan
 from pluralscan.domain.scans.scan_id import ScanId
@@ -34,9 +34,9 @@ class ScanRepositorySeeder:
     def _add_entities(self):
         self._scan_repository.add(
             Scan(
-                scan_id=ScanId("TestScheduled"),
-                analyzer_id=AnalyzerId("RoslynatorFork"),
-                executable_version="Test",
+                aggregate_id=ScanId("TestScheduled"),
+                analyzer_id=AnalyzerId("Roslynator"),
+                executable_version="0.3.3.0F",
                 working_directory=str(
                     pathlib.Path.joinpath(
                         Config.REPORTS_DIR,
@@ -52,9 +52,9 @@ class ScanRepositorySeeder:
 
         self._scan_repository.add(
             Scan(
-                scan_id=ScanId("TestRunning"),
-                analyzer_id=AnalyzerId("RoslynatorFork"),
-                executable_version="Test",
+                aggregate_id=ScanId("TestRunning"),
+                analyzer_id=AnalyzerId("Roslynator"),
+                executable_version="0.3.3.0F",
                 working_directory=str(
                     pathlib.Path.joinpath(
                         Config.REPORTS_DIR,
@@ -70,9 +70,9 @@ class ScanRepositorySeeder:
 
         self._scan_repository.add(
             Scan(
-                scan_id=ScanId("gat"),
+                aggregate_id=ScanId("gat"),
                 analyzer_id=AnalyzerId("DependencyCheck"),
-                executable_version="Test",
+                executable_version="7.1.1",
                 working_directory=str(
                     pathlib.Path.joinpath(
                         Config.REPORTS_DIR,
@@ -82,6 +82,24 @@ class ScanRepositorySeeder:
                     )
                 ),
                 package_id=PackageId("gat"),
+                state=ScanState.SCHEDULED,
+            )
+        )
+
+        self._scan_repository.add(
+            Scan(
+                aggregate_id=ScanId("machin"),
+                analyzer_id=AnalyzerId("Clippy"),
+                executable_version="0.1.57",
+                working_directory=str(
+                    pathlib.Path.joinpath(
+                        Config.REPORTS_DIR,
+                        f"machin_Clippy_{0}".format(
+                            str(datetime.timestamp(datetime.now()))
+                        ),
+                    )
+                ),
+                package_id=PackageId("machin"),
                 state=ScanState.SCHEDULED,
             )
         )

@@ -11,7 +11,7 @@ from pluralscan.application.processors.executables.exec_runner import (
     ExecRunnerOptions,
     ProcessRunResult,
 )
-from pluralscan.domain.executables.executable_action import ExecutableAction
+from pluralscan.domain.analyzers.executables.executable_action import ExecutableAction
 from pluralscan.infrastructure.config import Config
 
 
@@ -40,17 +40,17 @@ class DependencyCheckExecRunner(AbstractExecRunner):
         with Popen([path, *process_args]) as process:
             exit_code = process.wait()
             if exit_code == 0:
-                return ProcessRunResult(None, True)
+                return ProcessRunResult(None, None)
 
-            return ProcessRunResult(exit_code, False)
+            return ProcessRunResult()
 
     def execute_with_report(self, options: ExecRunnerOptions) -> ProcessRunResult:
-        if not bool(self._reports_output_dir):
+        if not bool(self._reports_output_dir) or self._reports_output_dir is None:
             raise ValueError(
                 "An output directory must be specified when requesting a process report."
             )
 
-        if not bool(self._report_file_path):
+        if not bool(self._report_file_path) or self._report_file_path is None:
             raise ValueError(
                 "A report file path must be specified when requesting a process report."
             )
@@ -59,19 +59,16 @@ class DependencyCheckExecRunner(AbstractExecRunner):
 
         # Extract package
         temp_dir = tempfile.mkdtemp()
-        with zipfile.ZipFile(options.package.storage_path, "r") as zip_ref:
+        with zipfile.ZipFile(options.package.storage_path + "/package.zip", "r") as zip_ref:
             zip_ref.extractall(temp_dir)
 
         # Combine executable default arguments with options extra arguments.
-        if options.action == ExecutableAction.SCAN:
-            process_args = (
-                options.executable.get_command_by_action(options.action).arguments
-                + [temp_dir]
-                + ['-f', 'SARIF']
-                + ["-o", self._report_file_path]
-            )
-        else:
-            raise NotImplementedError
+        process_args = (
+            options.executable.get_command_by_action(options.action).arguments
+            + [temp_dir]
+            + ["-f", "SARIF"]
+            + ["-o", self._report_file_path]
+        )
 
         if not exists(self._reports_output_dir):
             os.makedirs(self._reports_output_dir)
@@ -91,4 +88,4 @@ class DependencyCheckExecRunner(AbstractExecRunner):
             if bool(errors and not errors.isspace()):
                 raise RuntimeError(errors)
 
-            return ProcessRunResult(output)
+            return ProcessRunResult(output, "SARIF")

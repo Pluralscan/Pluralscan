@@ -36,5 +36,5 @@ class GetPackageByIdUseCase(
         self._package_repository = package_repository
 
     def handle(self, package_id: PackageId) -> GetPackageByIdResult:
-        package = self._package_repository.get_one(package_id=package_id)
+        package = self._package_repository.find_by_id(package_id=package_id)
         return GetPackageByIdResult(package)

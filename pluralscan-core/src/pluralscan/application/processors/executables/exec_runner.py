@@ -2,8 +2,8 @@ from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass, field
 from typing import Generic, List, Optional, TypeVar
 
-from pluralscan.domain.executables.executable import Executable
-from pluralscan.domain.executables.executable_action import ExecutableAction
+from pluralscan.domain.analyzers.executables.executable import Executable
+from pluralscan.domain.analyzers.executables.executable_action import ExecutableAction
 from pluralscan.domain.packages.package import Package
 
 
@@ -27,7 +27,8 @@ TOptions = TypeVar("TOptions", ExecRunnerOptions, None)
 class ProcessRunResult:
     """ProcessRunResult"""
 
-    output: Optional[str] = None
+    output: str = field(default_factory=str)
+    output_format: str = field(default_factory=str)
     error: Optional[str] = None
     success: bool = error is None
 

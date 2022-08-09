@@ -33,11 +33,6 @@ class AbstractPackageRepository(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_one(self, package_id: PackageId) -> Package:
-        """Get a package by id."""
-        raise NotImplementedError()
-
-    @abstractmethod
     def find_all(self, pageable: Pageable = Pageable()) -> Page[Package]:
         """Get all packages."""
         raise NotImplementedError()

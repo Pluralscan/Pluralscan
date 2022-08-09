@@ -16,6 +16,14 @@ test = ["coverage[toml] (>=4.5)", "hypothesis (>=4.0)", "pytest (>=7.0)", "pytes
 trio = ["trio (>=0.16)"]
 
 [[package]]
+name = "asyncio"
+version = "3.4.3"
+description = "reference implementation of PEP 3156"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "click"
 version = "8.1.3"
 description = "Composable command line interface toolkit"
@@ -120,6 +128,17 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
+name = "sse-starlette"
+version = "1.1.3"
+description = "\"SSE plugin for Starlette\""
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+starlette = "*"
+
+[[package]]
 name = "starlette"
 version = "0.19.1"
 description = "The little ASGI library that shines."
@@ -159,10 +178,11 @@ standard = ["websockets (>=10.0)", "httptools (>=0.4.0)", "watchfiles (>=0.13)",
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "798a3bdc244ccc1ea3046c9cf91856152298608985da7f6806d7f3d4bb7c12b2"
+content-hash = "9e52a1c26beea5bf003ac9ad75110fea12c9f44254eb2d8f4e206361cfc7baca"
 
 [metadata.files]
 anyio = []
+asyncio = []
 click = [
     {file = "click-8.1.3-py3-none-any.whl", hash = "sha256:bb4d8133cb15a609f44e8213d9b391b0809795062913b383c62be0ee95b1db48"},
     {file = "click-8.1.3.tar.gz", hash = "sha256:7682dc8afb30297001674575ea00d1814d808d6a36af415a82bd481d37ba7b8e"},
@@ -265,6 +285,7 @@ pymongo = [
 ]
 python-dotenv = []
 sniffio = []
+sse-starlette = []
 starlette = []
 typing-extensions = []
 uvicorn = []

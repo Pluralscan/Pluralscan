@@ -1,15 +1,13 @@
 from dataclasses import dataclass
-from typing import Any
 
 
 @dataclass(frozen=True, repr=False)
-class ScanId:
+class ScanId():
     """An immutable Scan identifier."""
-
-    identity: Any
+    identity: str
 
     def __str__(self) -> str:
-        return str(self.identity)
+        return self.identity
 
     def __repr__(self) -> str:
-        return str(self.identity)
+        return self.identity

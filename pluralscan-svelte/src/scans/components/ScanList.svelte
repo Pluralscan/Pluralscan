@@ -5,6 +5,7 @@
         OverflowMenuItem,
         Pagination,
     } from "carbon-components-svelte";
+import { push } from "svelte-spa-router";
 
     export let scans = [];
     export let pageNumber = 1;
@@ -19,7 +20,7 @@
         },
         {
             key: "package_id",
-            value: "Pacage",
+            value: "Package",
         },
         {
             key: "analyzer_id",
@@ -47,13 +48,12 @@
     {headers}
 >
     <svelte:fragment slot="expanded-row" let:row>
-        <h5>Description</h5>
-        <p>{row.description}</p>
+        <h5>Details</h5>
     </svelte:fragment>
-    <svelte:fragment slot="cell" let:cell>
+    <svelte:fragment slot="cell" let:cell let:row>
         {#if cell.key === "overflow"}
             <OverflowMenu flipped>
-                <OverflowMenuItem text="Show Details" />
+                <OverflowMenuItem text="Show Details" on:click={() => push('/scans/' + row.id)} />
             </OverflowMenu>
         {:else}{cell.value}{/if}
     </svelte:fragment>

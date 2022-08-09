@@ -1,7 +1,1 @@
-export enum ScanState {
-    SCHEDULED,
-    RUNNING,
-    COMPLETED,
-    CANCELLED,
-    ERROR
-}
+export type ScanState = "Completed" | "Paused" | "Running" | "Completed"

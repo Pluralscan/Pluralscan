@@ -5,12 +5,12 @@ from pluralscan.data.mongodb.analyzers.analyzer_document import \
     AnalyzerDocument
 from pluralscan.data.mongodb.analyzers.analyzer_mapper import AnalyzerMapper
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
-from pluralscan.domain.analyzer.analyzer import Analyzer
-from pluralscan.domain.analyzer.analyzer_filter import AnalyzerFilter
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
-from pluralscan.domain.analyzer.analyzer_repository import \
+from pluralscan.domain.analyzers.analyzer import Analyzer
+from pluralscan.domain.analyzers.analyzer_filter import AnalyzerFilter
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
+from pluralscan.domain.analyzers.analyzer_repository import \
     AbstractAnalyzerRepository
-from pluralscan.domain.technologies.technology import Technology
+from pluralscan.domain.shared.technology import Technology
 from pymongo import ReturnDocument
 from pluralscan.libs.ddd.repositories.page import Page
 
@@ -28,7 +28,7 @@ class MongoAnalyzerRepository(AbstractAnalyzerRepository):
     def next_id(self) -> AnalyzerId:
         return AnalyzerId(ObjectId())
 
-    def get_one_by_id(self, analyzer_id: AnalyzerId) -> Analyzer:
+    def find_by_id_by_id(self, analyzer_id: AnalyzerId) -> Analyzer:
         raise NotImplementedError
 
     def find_by_id(self, analyzer_id: AnalyzerId) -> Analyzer:

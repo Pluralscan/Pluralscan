@@ -21,7 +21,7 @@ export class AnalyzerClient {
         throw `Error: ${response.error}`
     }
 
-    public async findByTechnologies(technologies: [Technology]): Promise<AnalyzerList> {
+    public async findByTechnologies(technologies: Technology[]): Promise<AnalyzerList> {
         if (!technologies || !technologies.length){
             throw 'At least one technology code must be defined.'
         }

@@ -54,7 +54,7 @@ def get_by_id(
     result = usecase.handle(PackageId(package_id))
     if result.package is None:
         return Response(status_code=status.HTTP_204_NO_CONTENT)
-    return {"package": result.package.to_dict()}
+    return result.package.to_dict()
 
 
 @PACKAGE_ROUTER.get("/{project_id}/packages/latest", response_class=JSONResponse)
@@ -66,4 +66,4 @@ def latest_snapshot(
     result = usecase.handle(ProjectId(project_id))
     if result.package is None:
         return Response(status_code=status.HTTP_204_NO_CONTENT)
-    return {"package": result.package.to_dict()}
+    return result.package.to_dict()

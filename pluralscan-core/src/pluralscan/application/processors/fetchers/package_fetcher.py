@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from typing import List, Optional
 
 from pluralscan.domain.packages.package_system import PackageSystem
-from pluralscan.domain.technologies.technology import Technology
+from pluralscan.domain.shared.technology import Technology
 
 
 @dataclass(frozen=True)
@@ -24,8 +24,10 @@ class PackageInfoResult:
     full_name: Optional[str] = None
     description: Optional[str] = None
     version: Optional[str] = None
+    author: str = ""
     url: str = field(default_factory=str)
     technologies: List[Technology] = field(default_factory=list)
+    links: List[str] = field(default_factory=list)
     error: Optional[str] = None
     success: bool = error is None
 

@@ -4,6 +4,7 @@
   "include": ["src/**/*", "libs/**/*"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
   "compilerOptions": {
-    "types": ["jest"]
+    "types": ["jest", "node"],
+    "allowJs": true,
   }
 }

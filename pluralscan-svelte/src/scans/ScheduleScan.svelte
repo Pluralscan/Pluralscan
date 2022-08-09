@@ -1,113 +1,107 @@
 <script lang="ts">
-    import {
-        Accordion,
-        AccordionItem,
-        Button,
-        Column,
-        Grid,
-        Row,
-        Tile,
-    } from "carbon-components-svelte";
+  import {
+    Button,
+    Column,
+    Grid,
+    Row,
+  } from "carbon-components-svelte";
 
-    import { onMount } from "svelte";
-    import { location } from "svelte-spa-router";
-    import { RestClient } from "../../libs/pluralscan-api/RestClient";
-    import { RestClientOptions } from "../../libs/pluralscan-api/RestClientOptions";
-    import OverlayLoading from "../common/components/loader/OverlayLoading.svelte";
-    import Wave from "../common/components/loader/Wave.svelte";
-    import DefaultLayout from "../common/layouts/DefaultLayout.svelte";
+  import { onMount } from "svelte";
+  import { location, push } from "svelte-spa-router";
+  import { RestClient } from "../../libs/pluralscan-api/RestClient";
+  import { RestClientOptions } from "../../libs/pluralscan-api/RestClientOptions";
+  import OverlayLoading from "../common/components/loader/OverlayLoading.svelte";
+  import Wave from "../common/components/loader/Wave.svelte";
+  import DefaultLayout from "../common/layouts/DefaultLayout.svelte";
+  import ScanCard from "./components/ScheduledScanBox.svelte";
+  import { scanStore } from "../store/ScanStore";
+  import AnalyzerSelectionBox from "./components/AnalyzerSelectionBox.svelte";
+  import PackageInfoBox from "./components/PackageInfoBox.svelte";
+  import type { Package } from "../../libs/pluralscan-api/models/Package";
 
-    const API_OPTIONS = new RestClientOptions(process.env.API_URI);
+  const { scheduleScan, loading, scheduledScans } = scanStore;
+  const API_OPTIONS = new RestClientOptions(process.env.API_URI);
+  const restClient = new RestClient(API_OPTIONS);
 
-    let state = {
-        analyzers: [],
-        project: null,
-        package: null,
-    };
-    let loadingMessage = "";
-    let loading = true;
+  let state = {
+    analyzers: [],
+    scans: [],
+  };
+  let packageToScan: Package = null;
+  let loadingMessage = "";
+  let selectedRowIds = [];
 
-    async function getPackage(package_id) {
-        const restClient = new RestClient(API_OPTIONS);
-        const response = await restClient.package.get(package_id);
-        return response;
-    }
-
-    async function getAnalyzers(technologies) {
-        const restClient = new RestClient(API_OPTIONS);
-        const response = await restClient.analyzer.findByTechnologies(
-            technologies
-        );
-        return response;
-    }
-
-    onMount(async () => {
-        try {
-            loading = true;
-            const package_id = $location.split("/").pop();
-            state.package = await getPackage(package_id);
-            console.log(state.package);
-            state.analyzers = await getAnalyzers(state.package.technologies);
-            console.log(state.analyzers);
-        } catch {
-        } finally {
-            loading = false;
-        }
+  function parseSelectedExecutables() {
+    let selectedAnalyzers = new Map<string, string[]>();
+    selectedRowIds.map((raw) => {
+      let analyzer = raw.split(";;");
+      if (selectedAnalyzers.has(analyzer[0])) {
+        selectedAnalyzers.get(analyzer[0]).push(analyzer[1]);
+      } else {
+        selectedAnalyzers.set(analyzer[0], [analyzer[1]]);
+      }
     });
+    return selectedAnalyzers;
+  }
+
+  onMount(async () => {
+    try {
+      $loading = true;
+      const package_id = $location.split("/").pop();
+      packageToScan = await restClient.package.get(package_id);
+      console.log(packageToScan)
+      state.analyzers = await restClient.analyzer.findByTechnologies(
+        packageToScan.technologies
+      );
+    } catch (ex) {
+      console.log(ex);
+    } finally {
+      $loading = false;
+    }
+  });
 </script>
 
 <DefaultLayout>
-    <div slot="content">
-        {#if loading}
-            <OverlayLoading duration="400" message={loadingMessage}>
-                <Wave />
-            </OverlayLoading>
-        {:else}
-            <Grid>
-                <Row>
-                    <h1>Schedule a scan for {state.package["name"]}</h1>
-                </Row>
+  <div slot="content">
+    <OverlayLoading duration="400" message={loadingMessage} active={$loading}>
+      <Wave />
+    </OverlayLoading>
 
-                {#if state.project}
-                    <Row>
-                        <Column noGutter padding>
-                            <h5>Homepage:</h5>
-                            <Row>
-                                <Column>
-                                    <Tile><h6>Project Informations</h6></Tile>
-                                    <Tile><h6>Package Informations</h6></Tile>
-                                </Column>
+    <Grid>
+      {#if packageToScan !== null}
+        <Row>
+          <h1>Schedule a scan for {packageToScan.name}</h1>
+        </Row>
 
-                                <Column>
-                                    <Tile>
-                                        <h6>Scan Package</h6>
-                                        <Accordion align="start">
-                                            {#each state.analyzers as analyzer}
-                                                <AccordionItem
-                                                    title={analyzer.name}
-                                                >
-                                                    <p />
-                                                </AccordionItem>
-                                            {/each}
-                                        </Accordion>
-                                    </Tile>
-                                    <Button class="load-repo-button">Scan</Button>
-                                </Column>
-                            </Row>
-                        </Column>
-                    </Row>
+        <Row>
+          <Column noGutter padding>
+            <Row>
+              <Column>
+                <PackageInfoBox packageToScan={packageToScan} />
+              </Column>
+
+              <Column>
+                {#if $scheduledScans.length > 0}
+                  {#each $scheduledScans as scan}
+                    <ScanCard packageName={packageToScan.name} analyzerName={scan.analyzer_id} {scan} />
+                  {/each}
+                {:else}
+                  <AnalyzerSelectionBox
+                    analyzers={state.analyzers}
+                    bind:selectedRowIds={selectedRowIds} />
+                  <Button
+                    disabled={selectedRowIds.length === 0 ? true : false}
+                    on:click={async () =>
+                      await scheduleScan(
+                        packageToScan.id,
+                        parseSelectedExecutables()
+                      )}>Scan</Button>
                 {/if}
-            </Grid>
-        {/if}
-    </div>
+              </Column>
+            </Row>
+          </Column>
+        </Row>
+      {/if}
+    </Grid>
+  </div>
 </DefaultLayout>
-
-<style lang="scss">
-    h5 {
-        margin-bottom: var(--cds-spacing-05);
-    }
-
-    :global(.load-repo-button) {
-        margin-top: var(--cds-spacing-05) !important;
-    }
-</style>

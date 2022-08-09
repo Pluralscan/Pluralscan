@@ -9,7 +9,6 @@
         "pytest.ini",
         "-v",
         "-s",
-        "--pdb"
     ],
     "python.testing.pytestEnabled": true,
     "python.testing.unittestEnabled": false,
@@ -26,10 +25,13 @@
         "--max-line-length=240"
     ],
     "python.analysis.extraPaths": [
-        "./pluralscan-core/src",
+        "./pluralscan-core/src/",
         "./pluralscan-fastapi"
     ],
     // "editor.codeActionsOnSave": {
     //     "source.organizeImports": true
     // }
+    "[svelte]": {
+        "editor.defaultFormatter": "svelte.svelte-vscode"
+    },
 }

@@ -6,6 +6,7 @@ from pluralscan.domain.projects.project import Project
 from pluralscan.domain.projects.project_id import ProjectId
 from pluralscan.domain.projects.project_repository import AbstractProjectRepository
 from pluralscan.domain.projects.project_source import ProjectSource
+from pluralscan.libs.ddd.event_dispatcher import AbstractEventDispatcher, MemoryEventDispatcher
 from pluralscan.libs.ddd.repositories.page import Page
 from pluralscan.libs.ddd.repositories.pagination import Pageable
 
@@ -13,7 +14,8 @@ from pluralscan.libs.ddd.repositories.pagination import Pageable
 class InMemoryProjectRepository(AbstractProjectRepository):
     """InMemoryProjectRepository"""
 
-    def __init__(self):
+    def __init__(self, event_dispacher: AbstractEventDispatcher = MemoryEventDispatcher()):
+        self._event_dispatcher = event_dispacher
         self._projects: Dict[ProjectId, Project] = {}
 
     def next_id(self) -> ProjectId:
@@ -48,17 +50,18 @@ class InMemoryProjectRepository(AbstractProjectRepository):
         )
 
     def update(self, project: Project) -> Project:
-        project = self.get_by_id(project.project_id)
+        project = self.get_by_id(project.uuid)
 
         if project is None:
             raise Exception
 
-        self._projects[project.project_id] = project
+        self._projects[project.uuid] = project
 
         return project
 
     def add(self, project: Project) -> Project:
-        self._projects[project.project_id] = project
+        self._projects[project.uuid] = project
+        self._event_dispatcher.dispatch(project.domain_events)
         return project
 
     def remove(self, project_id: ProjectId):

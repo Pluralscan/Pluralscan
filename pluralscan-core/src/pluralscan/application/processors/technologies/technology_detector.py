@@ -1,12 +1,13 @@
 from abc import abstractmethod
+from typing import Any
 
-from pluralscan.domain.technologies.technology import Technology
+from pluralscan.domain.shared.technology import Technology
 
 
 class AbstractTechnologyDetector:
     """AbstractTechnologyDetector"""
 
     @abstractmethod
-    def detect(self, data: any) -> Technology:
+    def detect(self, data: Any) -> Technology:
         """detect"""
         raise NotImplementedError

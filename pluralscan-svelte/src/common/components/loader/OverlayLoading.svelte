@@ -2,16 +2,17 @@
     import { fade } from "svelte/transition";
     export let duration;
     export let message = "Loading";
+    export let active = false;
 </script>
 
-<div transition:fade={{ duration: duration }} class="overlay">
+<div transition:fade={{ duration: duration }} class="overlay" style="--loading-visibility: {active ? 'visible': 'hidden'}">
     <div>
         <slot class="loader" />
         <p class="message">{message}</p>
     </div>
 </div>
 
-<style type="text/scss">
+<style lang="scss">
     .overlay {
         position: absolute;
         top: 0;
@@ -20,6 +21,7 @@
         height: 100%;
         z-index: 999;
         background: #333333;
+        visibility: var(--loading-visibility);
     }
 
     .overlay :first-child {

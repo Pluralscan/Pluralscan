@@ -1,5 +1,6 @@
 import hashlib
 from pathlib import Path
+from typing import Any
 
 
 class CryptoUtils:
@@ -19,7 +20,7 @@ class CryptoUtils:
         """
         sha256_hash = hashlib.sha256()
         with open(filepath, "rb") as file:
-            chunk = 0
+            chunk: Any = None
             while chunk != b"":
                 chunk = file.read(1024)
                 sha256_hash.update(chunk)

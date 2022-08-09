@@ -4,8 +4,8 @@ from pluralscan.data.mongodb.analyzers.analyzer_document import \
 from pluralscan.data.mongodb.analyzers.analyzer_validation import \
     AnalyzerRepositoryValidation
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
-from pluralscan.domain.executables.executable import Executable
-from pluralscan.domain.executables.executable_platform import \
+from pluralscan.domain.analyzers.executables.executable import Executable
+from pluralscan.domain.analyzers.executables.executable_platform import \
     ExecutablePlatform
 
 

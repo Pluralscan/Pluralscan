@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Roslynator>
+  <CodeAnalysis>
+    <Summary>
+      <Diagnostic Id="CA1050" Title="Declare types in namespaces" Count="1" />
+      <Diagnostic Id="CA1822" Title="Mark members as static" Count="13" />
+      <Diagnostic Id="CA2211" Title="Non-constant fields should not be visible" Count="1" />
+      <Diagnostic Id="CS8632" Title="L'annotation pour les types référence Nullable doit être utilisée uniquement dans le code au sein d'un contexte d'annotations '#nullable'." Count="8" />
+    </Summary>
+    <Projects>
+      <Project Name="WebGoatCore" FilePath="C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\WebGoatCore.csproj">
+        <Diagnostics>
+          <Diagnostic Id="CA1050">
+            <Severity>Info</Severity>
+            <Message>Declare types in namespaces</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\ApiResponse.cs</FilePath>
+            <Location Line="3" Character="14" />
+          </Diagnostic>
+          <Diagnostic Id="CA1822">
+            <Severity>Info</Severity>
+            <Message>Mark members as static</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\Controllers\AccountController.cs</FilePath>
+            <Location Line="27" Character="30" />
+          </Diagnostic>
+          <Diagnostic Id="CA1822">
+            <Severity>Info</Severity>
+            <Message>Mark members as static</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\Controllers\AccountController.cs</FilePath>
+            <Location Line="113" Character="30" />
+          </Diagnostic>
+          <Diagnostic Id="CA1822">
+            <Severity>Info</Severity>
+            <Message>Mark members as static</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\Controllers\AccountController.cs</FilePath>
+            <Location Line="176" Character="30" />
+          </Diagnostic>
+          <Diagnostic Id="CA1822">
+            <Severity>Info</Severity>
+            <Message>Mark members as static</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\Controllers\BlogController.cs</FilePath>
+            <Location Line="50" Character="30" />
+          </Diagnostic>
+          <Diagnostic Id="CA1822">
+            <Severity>Info</Severity>
+            <Message>Mark members as static</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\Controllers\CartController.cs</FilePath>
+            <Location Line="18" Character="22" />
+          </Diagnostic>
+          <Diagnostic Id="CA1822">
+            <Severity>Info</Severity>
+            <Message>Mark members as static</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\Controllers\CheckoutController.cs</FilePath>
+            <Location Line="217" Character="30" />
+          </Diagnostic>
+          <Diagnostic Id="CA1822">
+            <Severity>Info</Severity>
+            <Message>Mark members as static</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\Controllers\HomeController.cs</FilePath>
+            <Location Line="28" Character="30" />
+          </Diagnostic>
+          <Diagnostic Id="CA1822">
+            <Severity>Info</Severity>
+            <Message>Mark members as static</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\Controllers\HomeController.cs</FilePath>
+            <Location Line="31" Character="30" />
+          </Diagnostic>
+          <Diagnostic Id="CA1822">
+            <Severity>Info</Severity>
+            <Message>Mark members as static</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\Controllers\HomeController.cs</FilePath>
+            <Location Line="34" Character="30" />
+          </Diagnostic>
+          <Diagnostic Id="CA1822">
+            <Severity>Info</Severity>
+            <Message>Mark members as static</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\Controllers\StatusCodeController.cs</FilePath>
+            <Location Line="18" Character="30" />
+          </Diagnostic>
+          <Diagnostic Id="CA2211">
+            <Severity>Info</Severity>
+            <Message>Non-constant fields should not be visible</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\Data\NorthwindContext.cs</FilePath>
+            <Location Line="27" Character="31" />
+          </Diagnostic>
+          <Diagnostic Id="CA1822">
+            <Severity>Info</Severity>
+            <Message>Mark members as static</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\Startup.cs</FilePath>
+            <Location Line="157" Character="20" />
+          </Diagnostic>
+          <Diagnostic Id="CA1822">
+            <Severity>Info</Severity>
+            <Message>Mark members as static</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\ViewModels\CheckoutViewModel.cs</FilePath>
+            <Location Line="56" Character="41" />
+          </Diagnostic>
+          <Diagnostic Id="CA1822">
+            <Severity>Info</Severity>
+            <Message>Mark members as static</Message>
+            <FilePath>C:\Users\luidg\AppData\Local\Temp\tmp6m73rn0y\WebGoatCore-master\WebGoatCore\ViewModels\CheckoutViewModel.cs</FilePath>
+            <Location Line="69" Character="27" />
+          </Diagnostic>
+        </Diagnostics>
+      </Project>
+    </Projects>
+  </CodeAnalysis>
+</Roslynator>

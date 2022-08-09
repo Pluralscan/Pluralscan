@@ -7,8 +7,8 @@ from pluralscan.data.inmemory.packages.package_repository import (
 from pluralscan.data.inmemory.packages.package_seeder import (
     InMemoryPackageRepositorySeeder,
 )
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
-from pluralscan.domain.executables.executable_action import ExecutableAction
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
+from pluralscan.domain.analyzers.executables.executable_action import ExecutableAction
 from pluralscan.domain.packages.package_id import PackageId
 from pluralscan.infrastructure.processor.executables.dependency_check_runner import DependencyCheckExecRunner
 

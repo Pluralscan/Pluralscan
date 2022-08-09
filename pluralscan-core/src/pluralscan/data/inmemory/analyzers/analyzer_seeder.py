@@ -1,14 +1,16 @@
 from pluralscan.data.inmemory.analyzers.analyzer_repository import (
     InMemoryAnalyzerRepository,
 )
-from pluralscan.domain.analyzer.analyzer import Analyzer
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
-from pluralscan.domain.executables.executable import Executable
-from pluralscan.domain.executables.executable_action import ExecutableAction
-from pluralscan.domain.executables.executable_command import ExecutableCommand
-from pluralscan.domain.executables.executable_platform import ExecutablePlatform
-from pluralscan.domain.executables.executable_runner import ExecutableRunner
-from pluralscan.domain.technologies.technology import Technology
+from pluralscan.domain.analyzers.analyzer import Analyzer
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
+from pluralscan.domain.analyzers.executables.executable import Executable
+from pluralscan.domain.analyzers.executables.executable_action import ExecutableAction
+from pluralscan.domain.analyzers.executables.executable_command import ExecutableCommand
+from pluralscan.domain.analyzers.executables.executable_platform import (
+    ExecutablePlatform,
+)
+from pluralscan.domain.analyzers.executables.executable_runner import ExecutableRunner
+from pluralscan.domain.shared.technology import Technology
 
 
 class InMemoryAnalyzerRepositorySeeder:
@@ -45,21 +47,46 @@ class InMemoryAnalyzerRepositorySeeder:
                         commands=[
                             ExecutableCommand(
                                 action=ExecutableAction.SCAN,
-                                arguments=["dotnet", "roslynator"],
+                                arguments=["roslynator", "analyze", "-v", "diag"],
                             )
                         ],
                     ),
+                    # Executable(
+                    #     analyzer_id=AnalyzerId("Roslynator"),
+                    #     platform=ExecutablePlatform.WIN,
+                    #     name="Roslynator Fork",
+                    #     path="roslynator-fork-0.3.3.0\\Roslynator.exe",
+                    #     version="0.3.3.0F",
+                    #     runner=ExecutableRunner.ROSLYNATOR,
+                    #     commands=[
+                    #         ExecutableCommand(
+                    #             action=ExecutableAction.SCAN,
+                    #             arguments=["analyze"],
+                    #         )
+                    #     ],
+                    # ),
+                ],
+            )
+        )
+
+        self._analyzer_repository.add(
+            Analyzer(
+                analyzer_id=AnalyzerId("SecurityCodeScan"),
+                name="Security Code Scan",
+                technologies=[
+                    Technology.dotnet(),
+                ],
+                executables=[
                     Executable(
-                        analyzer_id=AnalyzerId("Roslynator"),
-                        platform=ExecutablePlatform.WIN,
-                        name="Roslynator Fork",
-                        path="roslynator-fork-0.3.3.0\\Roslynator.exe",
-                        version="0.3.3.0F",
-                        runner=ExecutableRunner.ROSLYNATOR,
+                        analyzer_id=AnalyzerId("SecurityCodeScan"),
+                        platform=ExecutablePlatform.DOTNET,
+                        name="Security Code Scan",
+                        version="5.6.2",
+                        runner=ExecutableRunner.SECURITYCODESCAN,
                         commands=[
                             ExecutableCommand(
                                 action=ExecutableAction.SCAN,
-                                arguments=["analyze"],
+                                arguments=["security-scan"],
                             )
                         ],
                     ),
@@ -76,6 +103,7 @@ class InMemoryAnalyzerRepositorySeeder:
                     Technology.golang(),
                     Technology.java(),
                     Technology.nodejs(),
+                    Technology.rust(),
                 ],
                 executables=[
                     Executable(
@@ -89,6 +117,57 @@ class InMemoryAnalyzerRepositorySeeder:
                             ExecutableCommand(
                                 action=ExecutableAction.SCAN,
                                 arguments=["--scan"],
+                            )
+                        ],
+                    )
+                ],
+            )
+        )
+
+        self._analyzer_repository.add(
+            Analyzer(
+                analyzer_id=AnalyzerId("Clippy"),
+                name="Clippy",
+                technologies=[Technology.rust()],
+                executables=[
+                    Executable(
+                        analyzer_id=AnalyzerId("Clippy"),
+                        platform=ExecutablePlatform.CARGO,
+                        name="Clippy",
+                        version="0.1.57",
+                        runner=ExecutableRunner.CLIPPY,
+                        commands=[
+                            ExecutableCommand(
+                                action=ExecutableAction.SCAN,
+                                arguments=[
+                                    "cargo",
+                                    "clippy",
+                                    "-Zunstable-options",
+                                    "--keep-going",
+                                ],
+                            )
+                        ],
+                    )
+                ],
+            )
+        )
+
+        self._analyzer_repository.add(
+            Analyzer(
+                analyzer_id=AnalyzerId("Staticcheck"),
+                name="Staticcheck",
+                technologies=[Technology.golang()],
+                executables=[
+                    Executable(
+                        analyzer_id=AnalyzerId("Staticcheck"),
+                        platform=ExecutablePlatform.GOLANG,
+                        name="Staticcheck",
+                        version="2022.1.3 (v0.3.3)",
+                        runner=ExecutableRunner.STATICCHECK,
+                        commands=[
+                            ExecutableCommand(
+                                action=ExecutableAction.SCAN,
+                                arguments=["staticcheck"],
                             )
                         ],
                     )

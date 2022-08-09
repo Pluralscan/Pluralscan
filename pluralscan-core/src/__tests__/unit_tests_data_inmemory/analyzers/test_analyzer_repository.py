@@ -3,8 +3,8 @@ from pluralscan.data.inmemory.analyzers.analyzer_repository import \
     InMemoryAnalyzerRepository
 from pluralscan.data.inmemory.analyzers.analyzer_seeder import \
     InMemoryAnalyzerRepositorySeeder
-from pluralscan.domain.analyzer.analyzer import Analyzer
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.domain.analyzers.analyzer import Analyzer
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
 
 
 @pytest.fixture

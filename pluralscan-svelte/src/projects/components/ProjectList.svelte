@@ -36,7 +36,7 @@
 
 <DataTable
     title="Projects"
-    description="Pluralscan source projects registry."
+    description="Pluralscan source project registry."
     size="medium"
     sortable
     expandable

@@ -21,19 +21,13 @@ class InMemoryPackageRepository(AbstractPackageRepository):
         self._packages: Dict[PackageId, Package] = {}
 
     def next_id(self) -> PackageId:
-        return PackageId(uuid.uuid4())
+        return PackageId(str(uuid.uuid4()))
 
     def find_by_id(self, package_id: PackageId) -> Optional[Package]:
         return self._packages.get(package_id)
 
     def find_by_project(self, project_id: ProjectId) -> List[Package]:
         return [x for x in self._packages.values() if str(x.project_id) == project_id]
-
-    def get_one(self, package_id: PackageId) -> Package:
-        package = self._packages.get(package_id)
-        if package is None:
-            raise ValueError
-        return package
 
     def find_all(self, pageable: Pageable = Pageable()) -> Page[Package]:
         packages = list(self._packages.values())
@@ -55,17 +49,25 @@ class InMemoryPackageRepository(AbstractPackageRepository):
         )
 
     def update(self, package: Package) -> Package:
-        package = self.get_one(package.package_id)
-        self._packages[package.package_id] = package
+        exists = self.find_by_id(package.package_id)
 
-        return package
+        if exists is None:
+            raise RuntimeError
+
+        self._packages[exists.package_id] = package
+
+        return self._packages[exists.package_id]
 
     def add(self, package: Package) -> Package:
         self._packages[package.package_id] = package
         return package
 
     def remove(self, package_id: PackageId):
-        package = self.get_one(package_id)
+        package = self.find_by_id(package_id)
+
+        if package is None:
+            raise RuntimeError
+
         self._packages.pop(package.package_id)
 
     def count(self) -> int:

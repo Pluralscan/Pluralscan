@@ -1,15 +1,14 @@
 from dataclasses import dataclass
-from typing import Any
 
 
 @dataclass(frozen=True, repr=False)
 class PackageId:
     """A package ID."""
 
-    identity: Any
+    identity: str
 
     def __str__(self) -> str:
-        return str(self.identity)
+        return self.identity
 
     def __repr__(self) -> str:
-        return str(self.identity)
+        return self.identity

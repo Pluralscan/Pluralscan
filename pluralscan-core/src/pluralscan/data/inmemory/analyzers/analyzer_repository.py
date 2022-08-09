@@ -2,11 +2,11 @@ from math import ceil
 import uuid
 from typing import Dict, List, Optional
 
-from pluralscan.domain.analyzer.analyzer import Analyzer
-from pluralscan.domain.analyzer.analyzer_filter import AnalyzerFilter
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
-from pluralscan.domain.analyzer.analyzer_repository import AbstractAnalyzerRepository
-from pluralscan.domain.technologies.technology import Technology
+from pluralscan.domain.analyzers.analyzer import Analyzer
+from pluralscan.domain.analyzers.analyzer_filter import AnalyzerFilter
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
+from pluralscan.domain.analyzers.analyzer_repository import AbstractAnalyzerRepository
+from pluralscan.domain.shared.technology import Technology
 from pluralscan.libs.ddd.repositories.page import Page
 from pluralscan.libs.ddd.repositories.pagination import Pageable
 
@@ -22,10 +22,7 @@ class InMemoryAnalyzerRepository(AbstractAnalyzerRepository):
         self._analyzers: Dict[AnalyzerId, Analyzer] = {}
 
     def next_id(self) -> AnalyzerId:
-        return AnalyzerId(uuid.uuid4())
-
-    def get_one_by_id(self, analyzer_id: AnalyzerId) -> Analyzer:
-        return self._analyzers[analyzer_id]
+        return AnalyzerId(str(uuid.uuid4()))
 
     def find_by_id(self, analyzer_id: AnalyzerId) -> Optional[Analyzer]:
         return self._analyzers.get(analyzer_id)
@@ -61,21 +58,25 @@ class InMemoryAnalyzerRepository(AbstractAnalyzerRepository):
         ]
 
     def update(self, analyzer: Analyzer) -> Analyzer:
-        analyzer = self.get_one_by_id(analyzer.analyzer_id)
+        exists = self.find_by_id(analyzer.analyzer_id)
 
-        if analyzer is None:
+        if exists is None:
             raise Exception
 
-        self._analyzers[analyzer.analyzer_id] = analyzer
+        self._analyzers[exists.analyzer_id] = analyzer
 
-        return analyzer
+        return self._analyzers[exists.analyzer_id]
 
     def add(self, analyzer: Analyzer) -> Analyzer:
         self._analyzers[analyzer.analyzer_id] = analyzer
         return analyzer
 
     def remove(self, analyzer_id: AnalyzerId):
-        analyzer = self.get_one_by_id(analyzer_id)
+        analyzer = self.find_by_id(analyzer_id)
+
+        if analyzer is None:
+            raise Exception
+
         self._analyzers.pop(analyzer.analyzer_id)
 
     def count(self, _: AnalyzerFilter = None) -> int:

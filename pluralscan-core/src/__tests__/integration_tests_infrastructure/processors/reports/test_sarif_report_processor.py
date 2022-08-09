@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pytest
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
 from pluralscan.infrastructure.processor.reports.sarif_report_processor import (
     SarifReportProcessor,
 )

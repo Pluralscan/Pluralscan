@@ -17,14 +17,15 @@ from pluralscan.data.inmemory.projects.project_seeder import (
     InMemoryProjectRepositorySeeder,
 )
 from pluralscan.data.inmemory.scans.scan_repository import InMemoryScanRepository
+from pluralscan.libs.ddd.event_dispatcher import AbstractEventDispatcher, MemoryEventDispatcher
 
 
 class MemoryContext:
     """Provide a seeded memory database context."""
 
-    def __init__(self) -> None:
+    def __init__(self, event_dispatcher: AbstractEventDispatcher) -> None:
         # Initialize and seed Projects store
-        self.project_repository: InMemoryProjectRepository = InMemoryProjectRepository()
+        self.project_repository: InMemoryProjectRepository = InMemoryProjectRepository(event_dispatcher)
         InMemoryProjectRepositorySeeder(self.project_repository).seed()
 
         # Initialize and seed Packages store
@@ -38,4 +39,4 @@ class MemoryContext:
         InMemoryAnalyzerRepositorySeeder(self.analyzer_repository).seed()
 
         # Initialize Scan store
-        self.scan_repository: InMemoryScanRepository = InMemoryScanRepository()
+        self.scan_repository: InMemoryScanRepository = InMemoryScanRepository(event_dispatcher)

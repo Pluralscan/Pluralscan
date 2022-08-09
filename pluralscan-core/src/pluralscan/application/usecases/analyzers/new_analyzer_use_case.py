@@ -2,10 +2,10 @@ from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
 from typing import Set
 
-from pluralscan.domain.analyzer.analyzer import Analyzer
-from pluralscan.domain.analyzer.analyzer_repository import \
+from pluralscan.domain.analyzers.analyzer import Analyzer
+from pluralscan.domain.analyzers.analyzer_repository import \
     AbstractAnalyzerRepository
-from pluralscan.domain.technologies.technology import Technology
+from pluralscan.domain.shared.technology import Technology
 from pluralscan.libs.utils.validable import Validable
 
 

@@ -2,8 +2,8 @@ import pytest
 from pluralscan.data.mongodb.analyzers.analyzer_document import \
     AnalyzerDocument
 from pluralscan.data.mongodb.analyzers.analyzer_mapper import AnalyzerMapper
-from pluralscan.domain.analyzer.analyzer import Analyzer
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.domain.analyzers.analyzer import Analyzer
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
 
 
 @pytest.fixture

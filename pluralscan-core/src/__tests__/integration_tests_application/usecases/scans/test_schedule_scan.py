@@ -1,6 +1,6 @@
 import pytest
 from __tests__.test_helpers import FIXTURES_DIR
-from pluralscan.application.usecases.scans.schedule_scan import (
+from pluralscan.application.usecases.scans.schedule_package_scan import (
     ScheduleScanCommand,
     ScheduleScanUseCase,
 )
@@ -17,7 +17,7 @@ from pluralscan.data.inmemory.packages.package_seeder import (
     InMemoryPackageRepositorySeeder,
 )
 from pluralscan.data.inmemory.scans.scan_repository import InMemoryScanRepository
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
 from pluralscan.domain.packages.package_id import PackageId
 from pluralscan.infrastructure.processor.jobs.rq_job_runner import RqJobRunner
 

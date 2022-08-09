@@ -1,80 +1,85 @@
-# Pluralscan
+<h1 align="center">Pluralscan</h1>
 
-Pluralscan is a quality and security analysis platform aimed to provides a single solution for :
-- Static Application Security Testing (SAST)
-- Software Composition Analysis (SCA)
-- License Checking
-- Code Quality Analisys
-- Open-souce solution benchmarking
+![Project scraping](BatchAnalysis.gif)
 
-## Abstract
 
-Pluralscan should be currently considered as a **POC/POW project** that try to demonstrate how to realize a complexe business oriented software in Python by following **clean architecture practices**.
+Pluralscan is a source code analysis software, that's combine the best features of open sources security tools into a single solution. 
+- Software Composition Analysis aka SCA.
+- Static Application Security Testing aka [SAST](https://en.wikipedia.org/wiki/Static_application_security_testing).
+- Dynamic Application Security Testing aka [DAST](https://en.wikipedia.org/wiki/Dynamic_application_security_testing).
+- Code Quality Analysis with [Linter's](https://en.wikipedia.org/wiki/Lint_(software)).
+- Active security testing with [Fuzzing Tools](https://en.wikipedia.org/wiki/Fuzzing).
+- Prevents unwanted law complication by checking open source **license compliance**.
+- Open source benchmarking.
+- ...
 
-## Goals
+## WARNING
+
+Pluralscan should be currently considered as a **POC/POW project** that try to demonstrate how to realize a complexe business oriented software in Python by following **Domain Driven Design concepts**.
+
+## Features
 
 - Fetch source code from **various locations** *(Git, Github, Gitlab, Disk...)*.
-- Fetch package built with **various packaging system** *(pip, poetry, npm, pip, cargo...)*
-- Perform code analysis on a package with **various analyzer's** *(Roslyn, Sonar, Security Code Scan...)*.
+- Fetch package built with **various packaging systems** *(pip, poetry, npm, pip, cargo...)*
+- Plan code analysis batch on a package with **various analyzers** *(Roslyn, Sonar, Security Code Scan...)*.
 - Centralize and persist analysis reports into a **generic business model representation**.
+- Monitor and provide assistance to reduce technical debt.
+
+![Project scraping](PluralscanProjectScrapFlow.gif)
+
+## UML
+
+![UML DRAFT](Pluralscan-Scans.png)
+
+![UML DRAFT](Pluralscan-Tools.png)
 
 ## Roadmap
 
-### Pre-Release
+![Pluralscan Roadmap](roadmap.png)
 
-- Ensure validation logic exists for each layer of pluralscan-core.
-- Ensure consistency
-- Review any entities identifier and **prefer natural identifier** when possible.
-- At least 60% code coverage for pluralscan-core.
-- Logging.
-- Clean exception handling.
-- Documentation for pluralscan-core.
-- Documentation for API.
+- Fast overview of software analysis concepts and markets.
+- Study Python packages eco-system and estimate tech choices for API and presentation layers.
+- Proof of concept partially driven by tests.
+- Ensure that system can be run into Docker containers.
+- Try cloud deployment to Azure App Service.
+- Light Study Case (Bounded Context/Features...) with agile development (CI/CD)
+- Refactor POC into Large Scale Distributed System.
+- Supported coding languages:
+	- Python
+	- Java
+	- JavaScript
+- Ensure at least 60% code coverage for whole project and **100% for any Command/CommandHandler/EventHandler !**
 
-### Release V1
+## Getting started with Docker
 
-- Move from Svelte 3 to **Svelte Kit**
-  - Justification: Even if svelte kit is still in beta, must have features likes routing are natively implemented. However, the opinated way to realize scallable and maintenable front-end application, is the foremost reason of this choice.
-- Implements abstract filesystem for store resources (packages, source code, tools...)
-- Build a rules registry:
-  - Mapper:
-    - Dependency Check
-    - Roslyn
-    - ...
-- Ensure aggregates consistency.
-- Ensure scalability.
+### docker-compose
 
-
-## Main Convention
-
-- Hint Typing
-
-## Try with Docker
-
-### Build fresh image
-
-##### Dotnet
+Setup a complete stack with MongoDB, Redis and Pluralscan.
 ```bash
-mkdir pluralscan
-cd pluralscan
-git clone https://github.com/pluralscan/pluralscan.git
-docker build -t pluralscan/pluralscan .
+docker-compose up
 ```
 
-### Run image
-
+Remove containers.
 ```bash
-docker run -dp 5400:5400 pluralscan/pluralscan
+docker-compose down
 ```
 
-Navigate to http://localhost:5400
+### Check Redis
 
+- Navigate to http://localhost:8001
+- Accept RedisInsight license.
+- Login with the password defined inside `.docker.env`
+
+### Check Mongo
+
+- Navigate to http://localhost:
 
 ## Stack Overview
 
 ### Core Business Packages
 
 - **Python 3.10** as language and runtime environment.
+- [asyncio](https://docs.python.org/3/library/asyncio-task.html#coroutine) to declare coroutines and execute concurrent code
 - [poetry](https://python-poetry.org/) for packaging and dependency management.
 - [pytest](https://docs.pytest.org/en/7.1.x/) framework for testing.
 - [pytest-cov](https://pytest-cov.readthedocs.io/en/latest/readme.html)
@@ -88,12 +93,15 @@ Navigate to http://localhost:5400
 ### Commandline CLI Application
 
 - **Python 3.10*** as language and runtime environment
+- [asyncio](https://docs.python.org/3/library/asyncio-task.html#coroutine) to declare coroutines and execute concurrent code
+
 
 ### Backend Web Application (API + Front Serving)
 
 - **Python 3.10*** as language and runtime environment
-- [FastApi]() as web framework used for API and serving SPA
-- [python-rq](https://python-rq.org/) for queuing jobs and process them in background with workers **(Redis is required)**.
+- [FastApi]() is used as web framework used for API and serving SPA
+- [python-rq](https://python-rq.org/) is used for queuing jobs and process them in background with workers **(Redis is required)**.
+- [asyncio](https://docs.python.org/3/library/asyncio-task.html#coroutine) is used to declare coroutines and execute concurrent code
 
 ### Front-end Web Application
 
@@ -114,7 +122,8 @@ Navigate to http://localhost:5400
 
 ### Containerization
 
-- Docker
+- Docker 
+- docker-compose 3.9
 
 ### Cloud Infrastructure
 
@@ -123,7 +132,12 @@ Navigate to http://localhost:5400
 
 ### Static Code Analyzis Tools
 
-- Security Code Scan
+#### Security Analisys
+
+#### Linter
+
+- Staticcheck (Golang)
+- [Security Code Scan](https://security-code-scan.github.io/)
 - Dependency Check
 - Roslyn
 - Roslynator
@@ -152,11 +166,17 @@ Navigate to http://localhost:5400
 
 **Architecture:** 
 
-Clean Architecture/Onion Architecture/Ports & Adapters (Hexagonal)... all these are pretty much names for the same thing, and they all boil down to the dependency inversion principle: **high-level modules** (the domain) **MUST NOT** depend on **low-level** ones (the infrastructure)
+Pluralscan adopt a Monolith Clean Architecture/Onion Architecture/Ports & Adapters (Hexagonal) with Tactical DDD Patterns... All boil down to the dependency inversion principle: **high-level modules** (the domain) **MUST NOT** depend on **low-level** ones (the infrastructure). Each bounded context has it's own set of modules.
 
 #### Domain
 
-Contains all the entities related to the business.
+The domain encapsulate a user or business concern that can be used to draw clear boundaries around features integration.
+
+- **Entity**: An entity is an object that has an independent identifier and a lifecycle.
+- **Aggregate**: An aggregate is a collection of one or more related entities. An aggregate has a root entity called the aggregate root. Aggregates can also contain references to other entities, but not the referenced entity metadata. It’s then up to the consuming services to call other services to synthesize the entity references.
+- **Value Object**: Value objects contain metadata related to a given entity; they’re also tied to the lifecycle of the given entity.
+- **Domain Events**:
+  - If you **dispatch the domain events right before committing the original transaction**, it is because you want the side effects of those events to be included in the same transaction. This recommandation is applicable according to the ORM transaction mecanisms used in a given domain.
 
 #### Application
 
@@ -251,6 +271,24 @@ cd htmlcov
 
 ## References
 
+### Books
+
+- Vaughn Vernon - Implementing Domain Design
+
 ### Python
 
 - [PEP 563 – Postponed Evaluation of Annotations](https://peps.python.org/pep-0563/)
+
+### DDD
+
+#### Methodology
+
+- [The Bounded Context Canvas](https://github.com/ddd-crew/bounded-context-canvas)
+
+#### Events
+
+- [Handle events consistancy](https://enterprisecraftsmanship.com/posts/domain-events-simple-reliable-solution/) - Committing before dispatching
+
+## Usefull resources
+
+- [SVG Repo](https://www.svgrepo.com/)

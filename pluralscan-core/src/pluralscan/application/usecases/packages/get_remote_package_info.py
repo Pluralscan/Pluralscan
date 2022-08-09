@@ -6,7 +6,7 @@
 #     AbstractPackageFetcher
 # from pluralscan.domain.packages.package_origin import PackageOrigin
 # from pluralscan.domain.packages.package_system import PackageSystem
-# from pluralscan.domain.technologies.technology import Technology
+# from pluralscan.domain.shared.technology import Technology
 
 
 # @dataclass(frozen=True)

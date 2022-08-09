@@ -4,8 +4,8 @@ from pluralscan.data.mongodb.analyzers.analyzer_repository import \
 from pluralscan.data.mongodb.analyzers.analyzer_seeder import \
     AnalyzerMongoRepositorySeeder
 from pluralscan.data.mongodb.options import MongoRepositoryOptions
-from pluralscan.domain.analyzer.analyzer import Analyzer
-from pluralscan.domain.analyzer.analyzer_id import AnalyzerId
+from pluralscan.domain.analyzers.analyzer import Analyzer
+from pluralscan.domain.analyzers.analyzer_id import AnalyzerId
 from pymongo import MongoClient
 
 
