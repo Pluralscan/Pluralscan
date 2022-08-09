@@ -31,6 +31,8 @@ Pluralscan should be currently considered as a **POC/POW project** that try to d
 
 ![UML DRAFT](Pluralscan-Scans.png)
 
+![UML DRAFT](Pluralscan-Tools.png)
+
 ## Roadmap
 
 ![Pluralscan Roadmap](roadmap.png)
