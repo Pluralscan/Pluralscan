@@ -19,21 +19,37 @@ Pluralscan should be currently considered as a **POC/POW project** that try to d
 
 ## Features
 
-- Fetch source code from **various locations** *(Git, Github, Gitlab, Disk...)*.
-- Fetch package built with **various packaging systems** *(pip, poetry, npm, pip, cargo...)*
+- Fetch open-source projects from **various locations** *(Git, Github, Gitlab, Disk...)*.
+- Fetch software packages built with **various packaging systems** *(pip, poetry, npm, pip, cargo, go...)*
 - Plan code analysis batch on a package with **various analyzers** *(Roslyn, Sonar, Security Code Scan...)*.
 - Centralize and persist analysis reports into a **generic business model representation**.
 - Monitor and provide assistance to reduce technical debt.
 
 ![Project scraping](PluralscanProjectScrapFlow.gif)
 
-## UML
+## Domain Model
 
-![UML DRAFT](Pluralscan-Scans.png)
+Ongoing work, so many changes should be expected.
 
-![UML DRAFT](Pluralscan-Tools.png)
+### Projects Bounded Context
 
-## Roadmap
+![UML DRAFT](Pluralscan-Projects.png)
+
+### Packages Bounded Context
+
+![UML DRAFT](Pluralscan-Packages.png)
+
+## Technologies
+
+### Back
+
+![Backend](Pluralscan-Backend-Stack.png)
+
+### Front
+
+![Frontend](Pluralscan-Frontend-Stack.png)
+
+## Roadmap - Q4 2022
 
 ![Pluralscan Roadmap](roadmap.png)
 
@@ -42,12 +58,24 @@ Pluralscan should be currently considered as a **POC/POW project** that try to d
 - Proof of concept partially driven by tests.
 - Ensure that system can be run into Docker containers.
 - Try cloud deployment to Azure App Service.
-- Light Study Case (Bounded Context/Features...) with agile development (CI/CD)
-- Refactor POC into Large Scale Distributed System.
+- Light Study Case (Bounded Context/Features...).
+- Refactor POC into **Large Scale Distributed System** (Microservice + Eventsourcing) with agile development (Sprint/CI/CD).
 - Supported coding languages:
 	- Python
+	- C
+	- C++
+	- C#
+	- VB#
+	- Go
 	- Java
 	- JavaScript
+	- Typescript
+	- PHP
+	- Swift
+	- Kotlin
+	- Rust
+	- Ruby
+	- SQL
 - Ensure at least 60% code coverage for whole project and **100% for any Command/CommandHandler/EventHandler !**
 
 ## Getting started with Docker
@@ -74,9 +102,13 @@ docker-compose down
 
 - Navigate to http://localhost:
 
+### Check Apache Solr
+
+- Navigate to http://localhost:8983
+
 ## Stack Overview
 
-### Core Business Packages
+### Core Developement
 
 - **Python 3.10** as language and runtime environment.
 - [asyncio](https://docs.python.org/3/library/asyncio-task.html#coroutine) to declare coroutines and execute concurrent code
@@ -89,19 +121,20 @@ docker-compose down
 
 - Use [pathlib]() for handling cross-platform file path.
 
+### Backend Web Application (API)
 
-### Commandline CLI Application
-
-- **Python 3.10*** as language and runtime environment
-- [asyncio](https://docs.python.org/3/library/asyncio-task.html#coroutine) to declare coroutines and execute concurrent code
-
-
-### Backend Web Application (API + Front Serving)
-
-- **Python 3.10*** as language and runtime environment
-- [FastApi]() is used as web framework used for API and serving SPA
-- [python-rq](https://python-rq.org/) is used for queuing jobs and process them in background with workers **(Redis is required)**.
-- [asyncio](https://docs.python.org/3/library/asyncio-task.html#coroutine) is used to declare coroutines and execute concurrent code
+- **Python 3.10*** as language and runtime environment.
+- [FastApi]() is used as web framework used for API and serving SPA.
+- [asyncio](https://docs.python.org/3/library/asyncio-task.html#coroutine) is used to declare coroutines and execute concurrent code.
+- [esdbclient](https://github.com/pyeventsourcing/esdbclient) as gRPC client for EventStoreDB.
+- [Celery]()
+- [python-kafka]()
+- [grpcio]()
+- [grpcio-tools]()
+- [pymongo]()
+- [sse-starlette]() for performs Server Sent Event.
+- [uvicorn]()
+- [pydantic]()
 
 ### Front-end Web Application
 
@@ -113,17 +146,36 @@ docker-compose down
 - [ts-jest](https://github.com/kulshekhar/ts-jest) for writing tests in Typescript.
 - [svelte-jester](https://github.com/svelteness/svelte-jester) for precompile svelte components before importing them in to tests.
 - [tailwindcss](https://tailwindcss.com/) as utility css framework.
+- [PouchDB]() used to sync data from CouchDB Server on client device for offline usage.
+
+### Commandline CLI Application
+
+- **Python 3.10*** as language and runtime environment
+- [asyncio](https://docs.python.org/3/library/asyncio-task.html#coroutine) to declare coroutines and execute concurrent code
+
+
+## Technologies Overview
 
 ### Data Management & Persistence
 
-- Memory
-- MongoDB 5+
+- InMemory
+- MongoDB
 - Redis
+ ElasticSearch
+- [CouchDB]() used to persist data that's can be sync on client for offline usage.
+- [EventSourceDB]()
+- [Apache Cassandra]()
+- [Apache Solr](https://solr.apache.org/)
+- [debezium]()
+
+### Messaging
+
+- [RabbitMQ]()
+- [Apache Kafka]()
 
 ### Containerization
 
-- Docker 
-- docker-compose 3.9
+- Docker
 
 ### Cloud Infrastructure
 
@@ -132,17 +184,27 @@ docker-compose down
 
 ### Static Code Analyzis Tools
 
-#### Security Analisys
+#### Security Analysis
 
-#### Linter
+- [KICS - Keeping Infrastructure as Code Secure](https://github.com/Checkmarx/kics) [Cloud]
+- [Security Code Scan](https://security-code-scan.github.io/) **[C# | VB#]**
+- [OWASP Dependency Check](https://github.com/jeremylong/DependencyCheck)
 
-- Staticcheck (Golang)
-- [Security Code Scan](https://security-code-scan.github.io/)
-- Dependency Check
-- Roslyn
-- Roslynator
-- SonarQube
-- KICS
+#### Linters
+
+- [Staticcheck](https://github.com/dominikh/go-tools) **[Go]**
+- [pylint](https://github.com/PyCQA/pylint) **[Python]**
+- [cpplint](https://github.com/cpplint/cpplint) **[C | C++]**
+- [Roslynator](https://github.com/JosefPihrt/Roslynator) **[C# | VB#]**
+- [SQLFluff](https://github.com/sqlfluff/sqlfluff) **[SQL]**
+- [Checkstyle](https://github.com/checkstyle/checkstyle) **[Java]**
+- [ESLint](https://github.com/eslint/eslint) **[Javascript | Typescript]**
+- [prettier](https://github.com/prettier/prettier) **[Javascript | Typescript]**
+- [ktlint](https://github.com/pinterest/ktlint) **[Kotlin]**
+- [php](https://github.com/php/php-src) **[PHP]**
+- [rubucop](https://github.com/rubocop/rubocop) **[Ruby]**
+- [clippy](https://github.com/rust-lang/rust-clippy) **[Rust]**
+- [SwiftLint](https://github.com/realm/SwiftLint) **[Swift]**
 
 ## Development
 
@@ -166,7 +228,7 @@ docker-compose down
 
 **Architecture:** 
 
-Pluralscan adopt a Monolith Clean Architecture/Onion Architecture/Ports & Adapters (Hexagonal) with Tactical DDD Patterns... All boil down to the dependency inversion principle: **high-level modules** (the domain) **MUST NOT** depend on **low-level** ones (the infrastructure). Each bounded context has it's own set of modules.
+Pluralscan adopt a Clean Architecture/Onion Architecture/Ports & Adapters (Hexagonal) with Tactical DDD Patterns for each microservices... All boil down to the dependency inversion principle: **high-level modules** (the domain) **MUST NOT** depend on **low-level** ones (the infrastructure). Each bounded context has it's own set of modules.
 
 #### Domain
 
@@ -186,12 +248,10 @@ This project is using DTO to define commands, queries, and their respective use 
 
 This package also defines abstract interactors that are used for things like **Data Access** or **Business Logic Processing** inside the use-cases. However, the implementation for the interfaces lives in the Infrastructure package.
 
-
 #### Data
 
 The data folder contains sub-packages related to data access implementation.
 
-Pluralsec currently provides implementation for persist data insides **Memory** and **MongoDB**.
 
 #### Infrastructure
 
@@ -273,11 +333,16 @@ cd htmlcov
 
 ### Books
 
-- Vaughn Vernon - Implementing Domain Design
+- [Domain-Driven Design: Tackling Complexity in the Heart of Software]() by **Eric Evans**
+- [Implementing Domain-Driven Design]() by **Vaughn Vernon**
+- [Patterns, Principles, and Practices of Domain-Driven Design]() by **Scott Millett**
+- [Clean Architecture: A Craftsman's Guide to Software Structure and Design: A Craftsman's Guide to Software Structure and Design]() by **Robert C. Martin** aka "Uncle Bob"
+- [Living Documentation: Continuous Knowledge Sharing By Design]() by **Cyrille Martraire**
 
 ### Python
 
 - [PEP 563 – Postponed Evaluation of Annotations](https://peps.python.org/pep-0563/)
+- [ABC - Abstract Base Class](https://docs.python.org/3/library/abc.html?highlight=metaclass)
 
 ### DDD
 
@@ -287,8 +352,9 @@ cd htmlcov
 
 #### Events
 
-- [Handle events consistancy](https://enterprisecraftsmanship.com/posts/domain-events-simple-reliable-solution/) - Committing before dispatching
+- [Handle events consistancy - Committing before dispatching](https://enterprisecraftsmanship.com/posts/domain-events-simple-reliable-solution/)
 
 ## Usefull resources
 
 - [SVG Repo](https://www.svgrepo.com/)
+- [PNG Repo](https://www.pngrepo.com/)
