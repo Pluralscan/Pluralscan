@@ -15,6 +15,7 @@ class DownloadPackageResult:
     success: bool = error is None
 
 
+# TODO: Local DTO anti pattern / Fix: return a Package
 @dataclass(frozen=True)
 class PackageInfoResult:
     """Data returned when querying a package details."""

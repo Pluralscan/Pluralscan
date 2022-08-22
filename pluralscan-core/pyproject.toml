@@ -17,6 +17,7 @@ python-gitlab = "^3.5.0"
 rq = "^1.10.1"
 sarif-tools = "^1.0.0"
 eventsourcing = "^9.2.16"
+kafka-python = "^2.0.2"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.14.1"

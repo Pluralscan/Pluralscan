@@ -84,7 +84,7 @@ class GitlabProjectFetcher(AbstractProjectFetcher):
         with open(archive_path, "wb") as stream:
             project.repository_archive(format="zip", streamed=True, action=stream.write)
 
-        return DownloadProjectResult(output_dir=output_dir)
+        return DownloadProjectResult(output_dir=output_dir, archive_path=str(archive_path))
 
     @classmethod
     def parse_gitlab_url(cls, uri: str) -> str:

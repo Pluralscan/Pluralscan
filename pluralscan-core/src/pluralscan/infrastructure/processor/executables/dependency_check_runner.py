@@ -40,7 +40,7 @@ class DependencyCheckExecRunner(AbstractExecRunner):
         with Popen([path, *process_args]) as process:
             exit_code = process.wait()
             if exit_code == 0:
-                return ProcessRunResult(None, None)
+                return ProcessRunResult("", "", "Err")
 
             return ProcessRunResult()
 
@@ -59,7 +59,7 @@ class DependencyCheckExecRunner(AbstractExecRunner):
 
         # Extract package
         temp_dir = tempfile.mkdtemp()
-        with zipfile.ZipFile(options.package.storage_path + "/package.zip", "r") as zip_ref:
+        with zipfile.ZipFile(options.package.storage_path, "r") as zip_ref:
             zip_ref.extractall(temp_dir)
 
         # Combine executable default arguments with options extra arguments.

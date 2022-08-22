@@ -1,17 +1,17 @@
-<h1 align="center">Pluralscan</h1>
-
-![Project scraping](BatchAnalysis.gif)
-
+![Project scraping](docs/Pluralscan-Overview.png)
 
 Pluralscan is a source code analysis software, that's combine the best features of open sources security tools into a single solution. 
-- Software Composition Analysis aka SCA.
-- Static Application Security Testing aka [SAST](https://en.wikipedia.org/wiki/Static_application_security_testing).
-- Dynamic Application Security Testing aka [DAST](https://en.wikipedia.org/wiki/Dynamic_application_security_testing).
-- Code Quality Analysis with [Linter's](https://en.wikipedia.org/wiki/Lint_(software)).
-- Active security testing with [Fuzzing Tools](https://en.wikipedia.org/wiki/Fuzzing).
-- Prevents unwanted law complication by checking open source **license compliance**.
-- Open source benchmarking.
+- Software Composition Analysis aka SCA
+- Static Application Security Testing aka [SAST](https://en.wikipedia.org/wiki/Static_application_security_testing)
+- Dynamic Application Security Testing aka [DAST](https://en.wikipedia.org/wiki/Dynamic_application_security_testing)
+- Code Quality Analysis with [Linter's](https://en.wikipedia.org/wiki/Lint_(software))
+- Active security testing with [Fuzzing Tools](https://en.wikipedia.org/wiki/Fuzzing)
+- Prevents unwanted law complication by checking open source **license compliance**
+- Benchmark results provided by different tools
 - ...
+
+![Project scraping](docs/PluralscanPartOne.gif)
+
 
 ## WARNING
 
@@ -25,11 +25,11 @@ Pluralscan should be currently considered as a **POC/POW project** that try to d
 - Centralize and persist analysis reports into a **generic business model representation**.
 - Monitor and provide assistance to reduce technical debt.
 
-![Project scraping](PluralscanProjectScrapFlow.gif)
+![Project scraping](docs/PluralscanPartTwo.gif)
 
 ## Team Shared Vision
 
-![Pluralscan-Technical Knowledge](Pluralscan-Technical-Knowledge.png)
+![Pluralscan-Technical Knowledge](docs/Pluralscan-Technical-Knowledge.png)
 
 ## Domain Model
 
@@ -37,54 +37,29 @@ Ongoing work, so many changes should be expected.
 
 ### Projects Management
 
-![Projects Management](Pluralscan-Projects.png)
+![Projects Management](docs/Pluralscan-Projects.png)
 
 ### Packages Management Domain
 
-![Packages Management](Pluralscan-Packages.png)
+![Packages Management](docs/Pluralscan-Packages.png)
 
 ### Security Tools Domain
 
-![Security Tools](Pluralscan-Security-Tools.png)
+![Security Tools](docs/Pluralscan-Security-Tools.png)
 
 ### Scan Proces Domain
 
-![Security Tools](Pluralscan-Scans.png)
+![Security Tools](docs/Pluralscan-Scans.png)
 
-## Roadmap - Q4 2022
+## Roadmap from June 2022 to December 2022
 
-![Pluralscan Roadmap](roadmap.png)
-
-- Fast overview of software analysis concepts and markets.
-- Study Python packages eco-system and estimate tech choices for API and presentation layers.
-- Proof of concept partially driven by tests.
-- Ensure that system can be run into Docker containers.
-- Try cloud deployment to Azure App Service.
-- Light Study Case (Bounded Context/Features...).
-- Refactor POC into **Large Scale Distributed System** (Microservice + Eventsourcing) with agile development (Sprint/CI/CD).
-- Supported coding languages:
-	- Python
-	- C
-	- C++
-	- C#
-	- VB#
-	- Go
-	- Java
-	- JavaScript
-	- Typescript
-	- PHP
-	- Swift
-	- Kotlin
-	- Rust
-	- Ruby
-	- SQL
-- Ensure at least 60% code coverage for whole project and **100% for any Command/CommandHandler/EventHandler !**
+![Pluralscan Roadmap](docs/Pluralscan-Roadmap.png)
 
 ## Getting started with Docker
 
 ### docker-compose
 
-Setup a complete stack with MongoDB, Redis and Pluralscan.
+Setup a complete stack with MongoDB, Redis and Pluralscan. (Known issue with analyzer execution, fix comming soon)
 ```bash
 docker-compose up
 ```
@@ -143,12 +118,12 @@ docker-compose down
 - **NodeJS 16.13.0** as runtime environment.
 - **Typescript** as main language.
 - [Svelte 3](https://svelte.dev/) as front-end framework.
-- [Carbon Design System for Svelte]() as design framework. 
+- [Carbon Design System for Svelte](https://github.com/carbon-design-system/carbon-components-svelte) as design framework. 
 - [jest](https://jestjs.io/fr/) as testing framework.
 - [ts-jest](https://github.com/kulshekhar/ts-jest) for writing tests in Typescript.
 - [svelte-jester](https://github.com/svelteness/svelte-jester) for precompile svelte components before importing them in to tests.
 - [tailwindcss](https://tailwindcss.com/) as utility css framework.
-- [PouchDB]() used to sync data from CouchDB Server on client device for offline usage.
+- [PouchDB](https://pouchdb.com/) used to sync data from CouchDB Server on client device for offline usage.
 
 ### Commandline CLI Application
 
@@ -160,29 +135,31 @@ docker-compose down
 
 ### Data Management & Persistence
 
-- InMemory
-- MongoDB
-- Redis
- ElasticSearch
-- [CouchDB]() used to persist data that's can be sync on client for offline usage.
-- [EventSourceDB]()
-- [Neo4j]()
+- InMemory - only for tests purpose
+- [MongoDB](https://www.mongodb.com/fr-fr)
+- [Redis](https://redis.io/)
+- [ElasticSearch](https://www.elastic.co/fr/elasticsearch/)
+- [Apache CouchDB](https://couchdb.apache.org/) used to persist data that's can be sync on client for offline usage.
+- [EventStoreDB](https://www.eventstore.com/)
+- [Neo4j](https://neo4j.com/)
 - [Apache Solr](https://solr.apache.org/)
-- [debezium]()
+- [debezium](https://debezium.io/)
 
 ### Messaging
 
-- [RabbitMQ]()
-- [Apache Kafka]()
+- [RabbitMQ](https://www.rabbitmq.com/)
+- [Apache Kafka](https://kafka.apache.org/)
 
 ### Containerization
 
-- Docker
+- [Docker](https://www.docker.com/)
+- [Kubernetes](https://kubernetes.io/)
+
 
 ### Cloud Infrastructure
 
-- Azure App Service
-- Azure Registry
+- [Azure App Service]()
+- [Azure Container Registry]()
 
 ### Static Code Analyzis Tools
 
@@ -210,54 +187,9 @@ docker-compose down
 
 ## Development
 
-### Recommended IDE Setup
+### IDE
 
-[VSCode](https://code.visualstudio.com/) with:
-
-#### Extensions for Python
-
-- [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
-
-#### Extensions for Svelte
-
-- [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
-
-### Core
-
-**Location:** pluralscan-core
-
-**Language:** Python 3.10
-
-**Architecture:** 
-
-Pluralscan adopt a Clean Architecture/Onion Architecture/Ports & Adapters (Hexagonal) with Tactical DDD Patterns for each microservices... All boil down to the dependency inversion principle: **high-level modules** (the domain) **MUST NOT** depend on **low-level** ones (the infrastructure). Each bounded context has it's own set of modules.
-
-#### Domain
-
-The domain encapsulate a user or business concern that can be used to draw clear boundaries around features integration.
-
-- **Entity**: An entity is an object that has an independent identifier and a lifecycle.
-- **Aggregate**: An aggregate is a collection of one or more related entities. An aggregate has a root entity called the aggregate root. Aggregates can also contain references to other entities, but not the referenced entity metadata. It’s then up to the consuming services to call other services to synthesize the entity references.
-- **Value Object**: Value objects contain metadata related to a given entity; they’re also tied to the lifecycle of the given entity.
-- **Domain Events**:
-  - If you **dispatch the domain events right before committing the original transaction**, it is because you want the side effects of those events to be included in the same transaction. This recommandation is applicable according to the ORM transaction mecanisms used in a given domain.
-
-#### Application
-
-The Application package references the Domain package.
-
-This project is using DTO to define commands, queries, and their respective use cases. The use cases are the processes that can be triggered in our Application Core by one or several User Interfaces in our application.
-
-This package also defines abstract interactors that are used for things like **Data Access** or **Business Logic Processing** inside the use-cases. However, the implementation for the interfaces lives in the Infrastructure package.
-
-#### Data
-
-The data folder contains sub-packages related to data access implementation.
-
-
-#### Infrastructure
-
-This package contains the implementation for the interfaces defined in the Application package.
+[Visual Studio Code](https://code.visualstudio.com/)
 
 ### Commandline
 
@@ -265,7 +197,15 @@ TODO.
 
 ### Web Application
 
-#### **Svelte SPA (Single Page Application)**
+#### Pluralscan TS Api Client
+
+```bash
+cd pluralscan-api-client
+npm install
+npm run build
+```
+
+#### **Svelte (Single Page Application)**
 
 ##### Install
 
@@ -299,15 +239,6 @@ To verifiy if the project is error free, you can use the CLI tool svelte-check. 
 npx svelte-check
 ```
 
-#### **FastApi Backend + SSR (Server Side Rendering)**
-
-##### Run development server (Windows)
-
-```powershell
-cd scripts
-./run_fastapi_dev.ps1
-```
-
 ##### Debug
 
 From VS Code Debug View, run the "Debug FastApi" profile for start a dev web service with debuging.
@@ -335,10 +266,10 @@ cd htmlcov
 
 ### Books
 
-- [Domain-Driven Design: Tackling Complexity in the Heart of Software]() by **Eric Evans**
-- [Implementing Domain-Driven Design]() by **Vaughn Vernon**
-- [Patterns, Principles, and Practices of Domain-Driven Design]() by **Scott Millett**
-- [Clean Architecture: A Craftsman's Guide to Software Structure and Design: A Craftsman's Guide to Software Structure and Design]() by **Robert C. Martin** aka "Uncle Bob"
+- [Domain-Driven Design: Tackling Complexity in the Heart of Software](https://www.amazon.com/gp/product/0321125215) by **Eric Evans**
+- [Implementing Domain-Driven Design](https://www.amazon.fr/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577) by **Vaughn Vernon**
+- [Patterns, Principles, and Practices of Domain-Driven Design](https://www.amazon.fr/Patterns-Principles-Practices-Domain-Driven-Design/dp/1118714709) by **Scott Millett**
+- [Clean Architecture: A Craftsman's Guide to Software Structure and Design]() by **Robert C. Martin** aka "Uncle Bob"
 - [Living Documentation: Continuous Knowledge Sharing By Design]() by **Cyrille Martraire**
 
 ### Python

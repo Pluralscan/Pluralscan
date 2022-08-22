@@ -47,7 +47,7 @@ class InMemoryAnalyzerRepositorySeeder:
                         commands=[
                             ExecutableCommand(
                                 action=ExecutableAction.SCAN,
-                                arguments=["roslynator", "analyze", "-v", "diag"],
+                                arguments=["dotnet", "run","roslynator", "analyze", "-v", "diag"],
                             )
                         ],
                     ),

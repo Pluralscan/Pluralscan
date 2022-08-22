@@ -16,6 +16,8 @@
   import DefaultLayout from "../common/layouts/DefaultLayout.svelte";
   import { delay, getErrorMessage } from "../utils";
   import { push } from "svelte-spa-router";
+  import { projectStore } from "../store/ProjectStore";
+  import { packageStore } from "../store/PackageStore";
 
   const API_OPTIONS = new RestClientOptions(process.env.API_URI);
   const searchData = {
@@ -26,8 +28,7 @@
     project: null,
     package: null,
   };
-  let loadingMessage =
-    "Loading...";
+  let loadingMessage = "Loading...";
   let isLoading = false;
   let errorMessage = "";
   let hasError = false;
@@ -70,19 +71,32 @@
       }
 
       loadingMessage = "Snapshot is ready !";
+      projectStore.pagination.set({
+        pageIndex: 0,
+        pageSize: 10,
+        pageCount: 0,
+        itemCount: 0,
+      });
+
+      packageStore.pagination.set({
+        pageIndex: 0,
+        pageSize: 10,
+        pageCount: 0,
+        itemCount: 0,
+      });
       await delay(2000);
       push("/scans/schedule/packages/" + state.package["id"]);
     } catch (error) {
-        errorMessage = error
-        hasError = true;
-        reportError({ message: getErrorMessage(error) });
+      errorMessage = error;
+      hasError = true;
+      reportError({ message: getErrorMessage(error) });
     } finally {
       isLoading = false;
     }
   }
 </script>
 
-<DefaultLayout showError={hasError} errorMessage={errorMessage}>
+<DefaultLayout showError={hasError} {errorMessage}>
   <div slot="content">
     <OverlayLoading duration="400" message={loadingMessage} active={isLoading}>
       <Wave />

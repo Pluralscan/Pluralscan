@@ -99,4 +99,4 @@ class GithubProjectFetcher(AbstractProjectFetcher):
         with open(archive_path, "wb") as stream:
             repo.archive(stream, format="zip")
 
-        return DownloadProjectResult(output_dir=output_dir)
+        return DownloadProjectResult(output_dir=output_dir, archive_path=str(archive_path))

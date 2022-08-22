@@ -12,10 +12,12 @@ class DownloadProjectResult:
     """DownloadProjectResult"""
 
     output_dir: str
+    archive_path: str
     error: Optional[str] = None
     success: bool = error is None
 
 
+# TODO: Local DTO anti pattern / Fix: return a Project
 @dataclass(frozen=True)
 class ProjectInfoResult:
     """Data returned when querying a package details."""

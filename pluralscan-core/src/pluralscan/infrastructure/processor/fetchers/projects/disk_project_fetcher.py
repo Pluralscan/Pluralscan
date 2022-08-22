@@ -31,7 +31,7 @@ class DiskProjectFetcher(AbstractProjectFetcher):
 
     def _copy_archive(self, source: str, destination: str) -> DownloadProjectResult:
         shutil.copy(source, destination)
-        return DownloadProjectResult(output_dir=destination)
+        return DownloadProjectResult(output_dir=destination, archive_path="")
 
     # def _extract_archive(self, source: str, destination: str) -> DownloadProjectResult:
     #     with zipfile.ZipFile(source,"r") as zip_ref:

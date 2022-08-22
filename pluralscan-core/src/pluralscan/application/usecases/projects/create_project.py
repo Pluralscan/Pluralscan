@@ -136,7 +136,7 @@ class CreateProjectUseCase(AbstractCreateProjectUseCase):
             published_at=project.last_snapshot,
             project_id=project_id,
             system=PackageSystem.LOCAL,
-            storage_path=download_result.output_dir,
+            storage_path=download_result.archive_path,
             technologies=project_info.technologies,
             links=[PackageLink(PackageLinkLabel.SOURCE_REPO, project.homepage)]
         )

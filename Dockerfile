@@ -14,7 +14,7 @@ RUN wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-p
 RUN dpkg -i packages-microsoft-prod.deb
 RUN apt update
 RUN apt install apt-transport-https 
-RUN apt install -y dotnet-sdk-${DOTNET_VERSION} dotnet-runtime-${DOTNET_VERSION}
+RUN apt install -y aspnetcore-runtime-6.0=6.0.8-1 dotnet-apphost-pack-6.0=6.0.8-1 dotnet-host=6.0.8-1 dotnet-hostfxr-6.0=6.0.8-1 dotnet-runtime-6.0=6.0.8-1 dotnet-sdk-6.0=6.0.400-1 dotnet-targeting-pack-6.0=6.0.8-1
 
 # Install Golang
 RUN apt install -y golang-go
@@ -38,6 +38,10 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt update && apt install -y nodejs
 
 # Install Rust
+
+# Install Tools
+RUN dotnet tool install -g roslynator.dotnet.cli
+
 
 FROM base AS builder
 # Copy application and resources
@@ -70,7 +74,10 @@ RUN poetry install --no-dev
 FROM base AS production
 COPY --from=builder /home/pluralscan-fastapi /app
 COPY --from=builder /home/pluralscan-svelte /app/pluralscan-svelte
-COPY --from=builder /home/resources /resources
+RUN mkdir -p /opt/venv/lib/resources/packages
+RUN mkdir -p /opt/venv/lib/resources/sources
+RUN mkdir -p /opt/venv/lib/resources/reports
+COPY --from=builder /home/resources /opt/venv/lib/resources
 COPY --from=builder $VIRTUAL_ENV $VIRTUAL_ENV
 WORKDIR /app
 
