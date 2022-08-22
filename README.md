@@ -27,27 +27,29 @@ Pluralscan should be currently considered as a **POC/POW project** that try to d
 
 ![Project scraping](PluralscanProjectScrapFlow.gif)
 
+## Team Shared Vision
+
+![Pluralscan-Technical Knowledge](Pluralscan-Technical-Knowledge.png)
+
 ## Domain Model
 
 Ongoing work, so many changes should be expected.
 
-### Projects Bounded Context
+### Projects Management
 
-![UML DRAFT](Pluralscan-Projects.png)
+![Projects Management](Pluralscan-Projects.png)
 
-### Packages Bounded Context
+### Packages Management Domain
 
-![UML DRAFT](Pluralscan-Packages.png)
+![Packages Management](Pluralscan-Packages.png)
 
-## Technologies
+### Security Tools Domain
 
-### Back
+![Security Tools](Pluralscan-Security-Tools.png)
 
-![Backend](Pluralscan-Backend-Stack.png)
+### Scan Proces Domain
 
-### Front
-
-![Frontend](Pluralscan-Frontend-Stack.png)
+![Security Tools](Pluralscan-Scans.png)
 
 ## Roadmap - Q4 2022
 
@@ -164,7 +166,7 @@ docker-compose down
  ElasticSearch
 - [CouchDB]() used to persist data that's can be sync on client for offline usage.
 - [EventSourceDB]()
-- [Apache Cassandra]()
+- [Neo4j]()
 - [Apache Solr](https://solr.apache.org/)
 - [debezium]()
 
@@ -344,6 +346,10 @@ cd htmlcov
 - [PEP 563 – Postponed Evaluation of Annotations](https://peps.python.org/pep-0563/)
 - [ABC - Abstract Base Class](https://docs.python.org/3/library/abc.html?highlight=metaclass)
 
+### Microservices
+
+- [Microservices.io is edited by Chris Richardson an experienced software architect.](https://microservices.io/patterns)
+
 ### DDD
 
 #### Methodology
@@ -353,6 +359,15 @@ cd htmlcov
 #### Events
 
 - [Handle events consistancy - Committing before dispatching](https://enterprisecraftsmanship.com/posts/domain-events-simple-reliable-solution/)
+- [Domain-Driven Design: Domain Events and Integration Events in .Net](https://betterprogramming.pub/domain-driven-design-domain-events-and-integration-events-in-net-5a2a58884aaa)
+- [Should you publish Domain Events or Integration Events?](https://codeopinion.com/should-you-publish-domain-events-or-integration-events/)
+
+
+### Patterns
+
+#### CQRS
+
+- [What is CQRS?](https://codeopinion.com/is-cqrs-complicated/)
 
 ## Usefull resources
 
